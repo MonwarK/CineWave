@@ -14,7 +14,7 @@ export default function BackgroundImage() {
       </div>
 
       {/* Logo */}
-      <div className="absolute z-50 top-5 left-5 right-5 max-w-screen-xl mx-auto w-full">
+      <div className="absolute z-50 top-0 left-0 p-5 max-w-screen-xl mx-auto w-full">
         <Link href="/">
           <img
             className="h-16 object-fit cursor-pointer hover:animate-pulse"
