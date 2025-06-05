@@ -1,5 +1,6 @@
-import { useMotionValue, useTransform } from "framer-motion";
-import React, { useRef } from "react";
+"use client";
+
+import React from "react";
 import { motion } from "framer-motion";
 import { itemVariants } from "@/motion/variants/motion";
 
