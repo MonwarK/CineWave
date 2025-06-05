@@ -3,6 +3,18 @@
 import React, { useState } from "react";
 import MovieRowSection from "./MovieRowSection";
 import MovieModal from "../movie-modal/MovieModal";
+import { Movie } from "@/types/Movie";
+
+interface Props {
+  trending: Movie[];
+  popularMovie: Movie[];
+  topRated: Movie[];
+  upcomingMovies: Movie[];
+  popularTv: Movie[];
+  actionMovies: Movie[];
+  comedyShows: Movie[];
+  horrorMovies: Movie[];
+}
 
 export default function Sections({
   trending,
@@ -13,7 +25,7 @@ export default function Sections({
   actionMovies,
   comedyShows,
   horrorMovies,
-}: any) {
+}: Props) {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   return (

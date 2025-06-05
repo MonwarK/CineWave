@@ -1,5 +1,5 @@
 import { Movie } from "@/types/Movie";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface Props {
   movie: Movie;
@@ -14,6 +14,13 @@ export default function Hero({
   dominantColor,
   openMovie,
 }: Props) {
+  const [color, setColor] = useState<string>("white");
+
+  useEffect(() => {
+    const isDark = isColorDark(dominantColor || "#000000"); // your color logic
+    setColor(isDark ? "black" : "white");
+  }, [dominantColor]);
+
   function isColorDark(hex: string): boolean {
     // Remove # if present
     const cleanHex = hex.replace("#", "");
@@ -55,7 +62,7 @@ export default function Hero({
               onClick={openMovie}
               style={{
                 backgroundColor: dominantColor || undefined,
-                color: isColorDark(dominantColor) ? "black" : "white",
+                color,
               }}
               className="hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition"
             >
