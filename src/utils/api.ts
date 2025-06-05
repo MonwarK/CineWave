@@ -48,3 +48,16 @@ export async function fetchHorrorMovies() {
     `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=27`
   );
 }
+
+export async function searchTMDB(
+  query: string,
+  type: "movie" | "tv" | "multi" = "multi"
+) {
+  if (!query.trim()) return [];
+
+  const url = `${BASE_URL}/search/${type}?api_key=${
+    process.env.NEXT_PUBLIC_TMDB_API_KEY
+  }&language=en-US&include_adult=false&query=${encodeURIComponent(query)}`;
+
+  return handleFetch(url);
+}

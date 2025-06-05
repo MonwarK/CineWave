@@ -10,4 +10,5 @@ export type Movie = {
   genres: { id: number; name: string }[];
   media_type?: string;
   first_air_date: string;
+  genre_ids: number[];
 };

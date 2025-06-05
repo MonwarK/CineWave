@@ -24,7 +24,9 @@ export default function Header() {
         {/* Profile */}
         <div className="flex items-center space-x-5">
           <div>
-            <Search className="text-white/80 cursor-pointer hover:animate-pulse" />
+            <Link href="/search">
+              <Search className="text-white/80 cursor-pointer hover:animate-pulse" />
+            </Link>
           </div>
           <div>
             {isLoaded && (
