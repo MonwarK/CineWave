@@ -5,6 +5,7 @@ const isProtectedRoute = createRouteMatcher(["/discover(.*)", "/profile(.*)"]);
 const isNonAuthRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)",
+  "/verify-email(.*)",
   "/sign-up(.*)",
   "/forgot-password(.*)",
 ]);
@@ -13,13 +14,13 @@ export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
 
   if (isProtectedRoute(req) && !userId) {
-    const signInUrl = new URL("/sign-in", req.url);
+    const signInUrl = new URL("/", req.url);
     return NextResponse.redirect(signInUrl);
   }
 
   if (isNonAuthRoute(req) && userId) {
-    const signInUrl = new URL("/discover", req.url);
-    return NextResponse.redirect(signInUrl);
+    const mainUrl = new URL("/discover", req.url);
+    return NextResponse.redirect(mainUrl);
   }
 
   return NextResponse.next();

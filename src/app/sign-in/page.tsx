@@ -10,8 +10,8 @@ import ErrorText from "@/components/auth/ErrorText";
 import AuthFormButton from "@/components/auth/AuthFormButton";
 import BottomLink from "@/components/auth/BottomLink";
 
-export default function page() {
-  const { signIn, isLoaded } = useSignIn();
+export default function SignInPage() {
+  const { signIn, isLoaded, setActive } = useSignIn();
   const router = useRouter();
 
   const [isFormOpen, setIsFormOpen] = useState(true);
@@ -24,15 +24,17 @@ export default function page() {
     if (!isLoaded) return;
 
     try {
-      const result = await signIn.create({
-        identifier: email,
-        password,
-      });
-
-      if (result.status === "complete") {
-        router.push("/discover");
-      }
+      const result = await signIn
+        .create({
+          identifier: email,
+          password,
+        })
+        .then((result) => {
+          setActive({ session: result.createdSessionId });
+          router.push("/discover");
+        });
     } catch (err: any) {
+      console.log();
       setError(err.errors?.[0]?.longMessage || "Sign-in failed");
     }
   };

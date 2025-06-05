@@ -36,8 +36,6 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
     return l < 0.5;
   }
 
-  console.log(movie);
-
   return (
     <div className="max-w-screen-xl mx-auto w-full px-10">
       <div className="space-y-4 md:space-y-6 md:w-1/2">

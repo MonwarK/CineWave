@@ -20,7 +20,11 @@ export default function CustomProfilePage() {
         <div className="bg-zinc-800/50 rounded-2xl p-5 border border-gray-600 backdrop:blur-2xl">
           <div className="flex items-center space-x-5">
             <div>
-              <img className="w-20" src={user?.imageUrl} />
+              <img
+                className="w-20 rounded-full border border-gray-700"
+                src={user?.imageUrl}
+                alt=""
+              />
             </div>
             <div className="space-y-1 flex-1">
               <p className="text-xl font-bold mb-2">{user?.fullName}</p>

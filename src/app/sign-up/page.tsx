@@ -44,7 +44,7 @@ export default function SignUpPage() {
 
       router.push("/verify-email");
     } catch (err: any) {
-      setError(err.errors?.[0]?.longMessage || "Sign-in failed");
+      setError(err.errors?.[0]?.longMessage || "Sign-up failed");
     }
   };
 
@@ -92,7 +92,7 @@ export default function SignUpPage() {
             <TextBox
               type="password"
               placeholder="Confirm Password"
-              value={password}
+              value={confirmPassword}
               onChange={(e: any) => setConfirmPassword(e.target.value)}
               required
             />
