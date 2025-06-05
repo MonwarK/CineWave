@@ -6,7 +6,12 @@ import { PricingTable, useUser } from "@clerk/nextjs";
 export default function CustomProfilePage() {
   const { user } = useUser();
 
-  const dateCreated = new Date(user?.createdAt).toDateString();
+  const dateCreated = new Date(user?.createdAt || "");
+  const formatted = dateCreated.toLocaleString("en-UK", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <div className="pt-20">
@@ -22,9 +27,7 @@ export default function CustomProfilePage() {
               <p className="text-xs text-gray-300">
                 {user?.primaryEmailAddress?.emailAddress}
               </p>
-              <p className="text-xs text-gray-400">
-                Member since {dateCreated}
-              </p>
+              <p className="text-xs text-gray-400">Member since {formatted}</p>
             </div>
           </div>
         </div>
@@ -34,16 +37,11 @@ export default function CustomProfilePage() {
 
           <PricingTable
             appearance={{
-              variables: {
-                colorPrimary: "#d86020",
-                colorText: "#ffffff",
-                colorBackground: "rgba(39, 39, 42, 0.5)",
-                borderRadius: "8px",
-                fontSize: "1rem",
-              },
               elements: {
                 pricingTableCardBody: "bg-black",
                 pricingTableCardFooter: "bg-zinc-700/50",
+                pricingTableCardDescription: "pt-1 pb-3",
+                pricingTable: "z-0 relative",
               },
             }}
           />

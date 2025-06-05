@@ -8,10 +8,11 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const { isLoaded } = useUser();
   const router = useRouter();
 
   return (
-    <div className="bg-black/50 backdrop-blur-sm w-full fixed top-0 left-0 px-5 z-40">
+    <div className="bg-black/50 backdrop-blur-sm w-full fixed top-0 left-0 px-5 z-10">
       <div className="flex items-center justify-between max-w-screen-xl mx-auto px-5">
         {/* Logo */}
         <div className="p-2 py-5">
@@ -26,15 +27,17 @@ export default function Header() {
             <Search className="text-white/80 cursor-pointer hover:animate-pulse" />
           </div>
           <div>
-            <UserButton>
-              <UserButton.MenuItems>
-                <UserButton.Action
-                  label="Subscription Plans"
-                  labelIcon={<CreditCard size={16} />}
-                  onClick={() => router.push("/profile")}
-                />
-              </UserButton.MenuItems>
-            </UserButton>
+            {isLoaded && (
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Action
+                    label="Subscription Plans"
+                    labelIcon={<CreditCard size={16} />}
+                    onClick={() => router.push("/profile")}
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
+            )}
           </div>
         </div>
       </div>
