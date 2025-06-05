@@ -1,5 +1,5 @@
 import Header from "@/components/main/Header";
-import { PricingTable, UserProfile } from "@clerk/nextjs";
+import { PricingTable } from "@clerk/nextjs";
 import React from "react";
 
 export default function page() {
@@ -10,7 +10,7 @@ export default function page() {
       <div className="h-[50vh]"></div>
 
       <div className="max-w-screen-xl mx-auto w-full px-5">
-        <PricingTable appearance={{}} />
+        <PricingTable />
       </div>
     </div>
   );
