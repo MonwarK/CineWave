@@ -1,4 +1,6 @@
-import { CircleUser, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import { UserButton } from "@clerk/nextjs";
+
 import Link from "next/link";
 import React from "react";
 
@@ -14,9 +16,9 @@ export default function Header() {
         </div>
 
         {/* Profile */}
-        <div className="flex space-x-5 justify-end">
+        <div className="flex items-center space-x-5">
           <Search className="text-white/80 cursor-pointer hover:animate-pulse" />
-          <CircleUser className="text-white/80 cursor-pointer hover:animate-pulse" />
+          <UserButton />
         </div>
       </div>
     </div>

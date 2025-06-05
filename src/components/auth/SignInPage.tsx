@@ -8,7 +8,7 @@ import ErrorText from "./ErrorText";
 import AuthFormButton from "./AuthFormButton";
 import BottomLink from "./BottomLink";
 import { useSignIn } from "@clerk/nextjs";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const { signIn, isLoaded } = useSignIn();

@@ -8,7 +8,7 @@ import TextBox from "./TextBox";
 import HeightAnimationContainer from "../animation/HeightAnimationContainer";
 import BackgroundImage from "./BackgroundImage";
 import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const { signUp, setActive, isLoaded } = useSignUp();
