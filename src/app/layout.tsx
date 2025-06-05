@@ -5,6 +5,7 @@ import ClerkWrapper from "@/components/providers/ClerkWrapper"; // adjust path i
 
 const roboto = Roboto({
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {

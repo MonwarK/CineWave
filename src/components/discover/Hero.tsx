@@ -3,17 +3,11 @@ import React, { useEffect, useState } from "react";
 
 interface Props {
   movie: Movie;
-  loading: boolean;
   dominantColor: string | null;
   openMovie: () => void;
 }
 
-export default function Hero({
-  movie,
-  loading,
-  dominantColor,
-  openMovie,
-}: Props) {
+export default function Hero({ movie, dominantColor, openMovie }: Props) {
   const [color, setColor] = useState<string>("white");
 
   useEffect(() => {
@@ -26,15 +20,20 @@ export default function Hero({
     const cleanHex = hex.replace("#", "");
 
     // Convert to RGB
-    const r = parseInt(cleanHex.substring(0, 2), 16);
-    const g = parseInt(cleanHex.substring(2, 4), 16);
-    const b = parseInt(cleanHex.substring(4, 6), 16);
+    const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
+    const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
+    const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
 
-    // Calculate luminance (per W3C)
-    const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+    // Convert to linear RGB
+    const linear = (channel: number) =>
+      channel <= 0.03928
+        ? channel / 12.92
+        : Math.pow((channel + 0.055) / 1.055, 2.4);
 
-    // Threshold: if it's < 128, it's "dark"
-    return luminance < 128;
+    const l = 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b);
+
+    // If luminance is below 0.5, it's considered dark
+    return l < 0.5;
   }
 
   console.log(movie);

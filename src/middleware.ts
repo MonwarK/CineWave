@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 const isProtectedRoute = createRouteMatcher(["/discover(.*)", "/profile(.*)"]);
 const isNonAuthRoute = createRouteMatcher([
-  "/(.*)",
+  "/",
   "/sign-in(.*)",
   "/sign-up(.*)",
   "/forgot-password(.*)",

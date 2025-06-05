@@ -17,7 +17,7 @@ export default function Main({ movie }: Props) {
     `https://image.tmdb.org/t/p/w1920${movie.backdrop_path}`
   )}`;
 
-  const { lighterColor, loading } = useExtractColors(proxiedImage);
+  const { lighterColor } = useExtractColors(proxiedImage);
 
   const openMovie = () => setSelectedMovie(movie);
 
@@ -36,7 +36,6 @@ export default function Main({ movie }: Props) {
 
         <Hero
           movie={movie}
-          loading={loading}
           openMovie={openMovie}
           dominantColor={lighterColor}
         />
