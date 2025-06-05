@@ -7,7 +7,7 @@ export default function Hero() {
     <div className="relative h-[90vh] overflow-hidden p-5 flex flex-col">
       <img
         className="w-full h-full top-0 left-0 object-cover brightness-50 absolute -z-50"
-        src="https://media.discordapp.net/attachments/655822636277825588/1379578672498868274/ChatGPT_Image_Jun_3_2025_10_35_36_PM.png?ex=6840c042&is=683f6ec2&hm=cdfc2ac986eb5284ead90c11b9a0d4377bd1e2dd07322b54830920f8616e7a7e&=&format=webp&quality=lossless&width=916&height=611"
+        src="https://i.ibb.co/20WjVpkH/Chat-GPT-Image-Jun-3-2025-10-35-36-PM.png"
         alt="Background"
       />
 

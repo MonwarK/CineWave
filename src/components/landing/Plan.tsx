@@ -15,7 +15,7 @@ export default function Plan() {
         <div>
           <img
             className="w-20 hidden md:block"
-            src="https://media.discordapp.net/attachments/655822636277825588/1379790592690749470/tj5dsgH3BYkRWoeyPay8rtxK9tCjjgRbKTP8AzFPTQFNjrN8AAAAASUVORK5CYII.png?ex=684185a0&is=68403420&hm=f088cacf6fe6c619db9c275a56ddd71078b151d6fe3983f421d3e773db959bf1&=&format=webp&quality=lossless&width=80&height=70"
+            src="https://i.ibb.co/ccgJ38zz/tj5dsg-H3-BYk-RWoey-Pay8rtx-K9t-Cjjg-Rb-KTP8-Az-FPTQFNjr-N8-AAAAASUVORK5-CYII.png"
             alt="popcorn"
           />
         </div>

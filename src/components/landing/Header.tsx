@@ -7,7 +7,7 @@ export default function Header() {
       <Link href="/">
         <img
           className="h-16 object-fit cursor-pointer hover:animate-pulse"
-          src="https://media.discordapp.net/attachments/655822636277825588/1379584370620370945/image-removebg-preview_16.png?ex=6840c591&is=683f7411&hm=df888960b39c65f0f138910690bf88baa7711bd08b68f96a954397ab5d79cf48&=&format=webp&quality=lossless&width=491&height=301"
+          src="https://i.ibb.co/5xXyfHkM/image-removebg-preview-16.png"
           alt="Logo"
         />
       </Link>
