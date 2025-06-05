@@ -38,7 +38,7 @@ export default function Features() {
 
       <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-5">
         {features.map((feature) => (
-          <FeatureCard feature={feature} />
+          <FeatureCard key={feature.title} feature={feature} />
         ))}
       </div>
     </motion.div>

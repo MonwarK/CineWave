@@ -1,69 +1,73 @@
-import React from "react";
+"use client";
 
-export default function Main() {
+import React, { useState } from "react";
+import Hero from "./Hero";
+import { Movie } from "@/types/Movie";
+import { useExtractColors } from "react-extract-colors";
+import MovieModal from "../movie-modal/MovieModal";
+
+interface Props {
+  movie: Movie;
+}
+
+export default function Main({ movie }: Props) {
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+
+  const proxiedImage = `/api/image-proxy?url=${encodeURIComponent(
+    `https://image.tmdb.org/t/p/w1920${movie.backdrop_path}`
+  )}`;
+
+  const { lighterColor, loading } = useExtractColors(proxiedImage);
+
+  const openMovie = () => setSelectedMovie(movie);
+
   return (
-    <div className="relative flex flex-col min-h-[90vh] overflow-hidden justify-between">
-      <div className="absolute w-full h-full">
-        <img
-          className="absolute -z-10 top-0 left-0 brightness-75 w-full h-full object-cover object-top"
-          src="https://image.tmdb.org/t/p/w1920/nAxGnGHOsfzufThz20zgmRwKur3.jpg"
-          alt=""
+    <>
+      <div className="relative flex flex-col min-h-[90vh] overflow-hidden justify-between">
+        <div className="absolute w-full h-full">
+          <img
+            className="absolute -z-10 top-0 left-0 brightness-75 w-full h-full object-cover object-top"
+            src={proxiedImage}
+            alt=""
+          />
+        </div>
+
+        <div />
+
+        <Hero
+          movie={movie}
+          loading={loading}
+          openMovie={openMovie}
+          dominantColor={lighterColor}
         />
-      </div>
 
-      <div />
-
-      <div className="max-w-screen-xl mx-auto w-full px-10">
-        <div className="space-y-4 md:space-y-6 md:w-1/2">
-          <div className="flex space-x-4">
-            <div>7.5</div>
-            <div>2025</div>
-            <div>2 Seasons</div>
-          </div>
-          <div>
-            <div className="text-4xl font-medium tracking-[0.2em] uppercase">
-              sinners
-            </div>
-          </div>
-          <div>
-            <div>
-              Trying to leave their troubled lives behind, twin brothers return
-              to their hometown to start again, only to discover that an even
-              greater evil is waiting to welcome them back.
-            </div>
-          </div>
-          <div className="sm:flex space-y-5 md:space-y-0 md:space-x-5 uppercase py-5">
-            <div className="bg-primary hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition">
-              Watch
-            </div>
-            <div className="bg-gray-600/40 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition">
-              Add To List
+        <div className="bg-black/20 backdrop-blur-xl">
+          <div className="max-w-screen-xl mx-auto hidden md:block px-10">
+            <div className="grid grid-cols-5 text-center text-sm">
+              <div className="py-5 border-b-2 border-orange-500">
+                Trending Now
+              </div>
+              <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
+                TV Shows
+              </div>
+              <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
+                Movies
+              </div>
+              <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
+                Recently Added
+              </div>
+              <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
+                My List
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-orange-900/30 backdrop-blur-xl">
-        <div className="max-w-screen-xl mx-auto hidden md:block px-10">
-          <div className="grid grid-cols-5 text-center text-sm">
-            <div className="py-5 border-b-2 border-orange-500">
-              Trending Now
-            </div>
-            <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
-              TV Shows
-            </div>
-            <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
-              Movies
-            </div>
-            <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
-              Recently Added
-            </div>
-            <div className="py-5 text-white/50 hover:text-white/90 cursor-pointer">
-              My List
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <MovieModal
+        movie={selectedMovie}
+        onClose={() => setSelectedMovie(null)}
+      />
+    </>
   );
 }

@@ -9,4 +9,5 @@ export type Movie = {
   vote_average: number;
   genres: { id: number; name: string }[];
   media_type?: string;
+  first_air_date: string;
 };

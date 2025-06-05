@@ -66,7 +66,7 @@ export default function MovieModal({ movie, onClose }: Props) {
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
             transition={{ type: "spring", stiffness: 200, damping: 25 }}
-            className="bg-neutral-900 text-white rounded-xl overflow-hidden w-full max-w-xl relative shadow-lg py-5"
+            className="bg-neutral-900 text-white rounded-xl overflow-hidden w-full max-w-xl relative shadow-lg pb-5"
             onClick={(e) => e.stopPropagation()}
           >
             {trailerKey ? (

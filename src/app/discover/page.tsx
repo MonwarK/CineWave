@@ -27,7 +27,7 @@ export default async function page() {
     <div className="bg-zinc-900/50 pb-10 relative">
       <Header />
 
-      <Main />
+      <Main movie={trending[Math.floor(Math.random() * trending.length)]} />
 
       <Categories />
 
