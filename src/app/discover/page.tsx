@@ -1,6 +1,6 @@
 import Categories from "@/components/discover/Categories";
 import Main from "@/components/discover/Main";
-import MovieRowSection from "@/components/discover/MovieRowSection";
+import Sections from "@/components/discover/Sections";
 import Header from "@/components/main/Header";
 import {
   fetchActionMovies,
@@ -12,7 +12,6 @@ import {
   fetchTrending,
   fetchUpcoming,
 } from "@/utils/api";
-import React from "react";
 
 export default async function page() {
   const trending = await fetchTrending();
@@ -32,16 +31,16 @@ export default async function page() {
 
       <Categories />
 
-      <div className="py-10 space-y-18">
-        <MovieRowSection title="Trending Now" movies={trending} />
-        <MovieRowSection title="Popular Movies" movies={popularMovie} />
-        <MovieRowSection title="Top Rated" movies={topRated} />
-        <MovieRowSection title="Upcoming Movies" movies={upcomingMovies} />
-        <MovieRowSection title="Popular TV Shows" movies={popularTv} />
-        <MovieRowSection title="Action Movies" movies={actionMovies} />
-        <MovieRowSection title="Comedy Shows" movies={comedyShows} />
-        <MovieRowSection title="Horror Films" movies={horrorMovies} />
-      </div>
+      <Sections
+        trending={trending}
+        popularMovie={popularMovie}
+        topRated={topRated}
+        upcomingMovies={upcomingMovies}
+        popularTv={popularTv}
+        actionMovies={actionMovies}
+        comedyShows={comedyShows}
+        horrorMovies={horrorMovies}
+      />
     </div>
   );
 }

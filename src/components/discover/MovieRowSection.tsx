@@ -3,8 +3,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/motion/variants/motion";
+import MovieRowItem from "./MovieRowItem";
+import { Movie } from "@/types/Movie";
 
-export default function MovieRowSection({ title, movies }: any) {
+export default function MovieRowSection({
+  title,
+  movies,
+  setSelectedMovie,
+}: any) {
   const containerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [dragWidth, setDragWidth] = useState(0);
@@ -38,22 +44,12 @@ export default function MovieRowSection({ title, movies }: any) {
           className="flex space-x-4 cursor-grab py-5"
           viewport={{ once: true, amount: 0.3 }}
         >
-          {movies.map((movie) => (
-            <motion.div
+          {movies.map((movie: Movie) => (
+            <MovieRowItem
               key={movie.id}
-              className="flex-shrink-0 w-40"
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.name}
-                className="w-full h-60 object-cover rounded-xl overflow-hidden transition"
-              />
-              <p className="text-sm mt-2 text-center">
-                {movie.title || movie.name}
-              </p>
-            </motion.div>
+              movie={movie}
+              selectMovie={() => setSelectedMovie(movie)}
+            />
           ))}
         </motion.div>
       </motion.div>
