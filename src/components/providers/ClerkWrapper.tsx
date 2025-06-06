@@ -22,6 +22,9 @@ export default function ClerkWrapper({
         elements: {
           drawerRoot: "z-50 bg-black/80",
           drawerBody: "bg-zinc-900",
+          pricingTableCardFeatures: "pb-5",
+          pricingTableCardFeaturesListItemContent: "mb-1.5",
+          pricingTableCardFeaturesListItemTitle: "pl-2",
         },
       }}
     >
