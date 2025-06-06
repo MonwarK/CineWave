@@ -9,14 +9,22 @@ import { SearchIcon } from "lucide-react";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Movie } from "@/types/Movie";
+import FullPageLoader from "@/components/loading/FullPageLoader";
 
 export default function page() {
+  const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("All");
 
-  const searchForResults = () =>
-    searchTMDB(search, "multi").then((results) => setResults(results));
+  const searchForResults = () => {
+    setIsLoading(true);
+
+    searchTMDB(search, "multi").then((results) => {
+      setResults(results);
+      setTimeout(() => setIsLoading(false), 500);
+    });
+  };
 
   return (
     <div className="bg-zinc-900/50 min-h-screen py-10">
@@ -57,24 +65,33 @@ export default function page() {
           />
         </div>
 
-        {/* Search Results */}
-        {results.length > 0 && (
+        {isLoading ? (
+          <FullPageLoader />
+        ) : (
           <div className="space-y-5">
             <div>
               <h2 className="text-xl font-semibold">Results</h2>
             </div>
 
-            <motion.div
-              variants={containerVariants}
-              initial="invisible"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              className="space-y-4"
-            >
-              {results.map((result: Movie) => (
-                <SearchResult key={result?.id} result={result} />
-              ))}
-            </motion.div>
+            {/* Search Results */}
+
+            {results.length > 0 ? (
+              <motion.div
+                variants={containerVariants}
+                initial="invisible"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.3 }}
+                className="space-y-4"
+              >
+                {results.map((result: Movie) => (
+                  <SearchResult key={result?.id} result={result} />
+                ))}
+              </motion.div>
+            ) : (
+              <div className="py-10">
+                <p className="text-xs text-gray-400">No Results Found</p>
+              </div>
+            )}
           </div>
         )}
       </div>

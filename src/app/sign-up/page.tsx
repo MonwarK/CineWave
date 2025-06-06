@@ -13,6 +13,7 @@ import BottomLink from "@/components/auth/BottomLink";
 export default function SignUpPage() {
   const { signUp, setActive, isLoaded } = useSignUp();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -32,6 +33,8 @@ export default function SignUpPage() {
       return;
     }
 
+    setIsLoading(true);
+
     try {
       await signUp.create({
         firstName,
@@ -45,6 +48,7 @@ export default function SignUpPage() {
       router.push("/verify-email");
     } catch (err: any) {
       setError(err.errors?.[0]?.longMessage || "Sign-up failed");
+      setIsLoading(false);
     }
   };
 
@@ -99,7 +103,7 @@ export default function SignUpPage() {
 
             {error && <ErrorText>{error}</ErrorText>}
 
-            <AuthFormButton>Register</AuthFormButton>
+            <AuthFormButton disabled={isLoading}>Register</AuthFormButton>
           </form>
 
           <hr className="h-1 my-8 border-gray-500/20" />

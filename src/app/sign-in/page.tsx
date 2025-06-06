@@ -9,12 +9,14 @@ import TextBox from "@/components/auth/TextBox";
 import ErrorText from "@/components/auth/ErrorText";
 import AuthFormButton from "@/components/auth/AuthFormButton";
 import BottomLink from "@/components/auth/BottomLink";
+import LoadingSpinner from "@/components/loading/LoadingSpinner";
 
 export default function SignInPage() {
   const { signIn, isLoaded, setActive } = useSignIn();
   const router = useRouter();
 
   const [isFormOpen, setIsFormOpen] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,6 +24,8 @@ export default function SignInPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isLoaded) return;
+
+    setIsLoading(true);
 
     try {
       const result = await signIn
@@ -36,6 +40,7 @@ export default function SignInPage() {
     } catch (err: any) {
       console.log();
       setError(err.errors?.[0]?.longMessage || "Sign-in failed");
+      setIsLoading(false);
     }
   };
 
@@ -68,7 +73,13 @@ export default function SignInPage() {
 
             {error && <ErrorText>{error}</ErrorText>}
 
-            <AuthFormButton>Sign in</AuthFormButton>
+            {isLoading ? (
+              <div className="flex justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <AuthFormButton disabled={isLoading}>Sign in</AuthFormButton>
+            )}
           </form>
 
           <div>
