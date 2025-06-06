@@ -10,6 +10,7 @@ import AuthFormButton from "@/components/auth/AuthFormButton";
 import BottomLink from "@/components/auth/BottomLink";
 
 export default function ForgotPasswordPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -38,7 +39,9 @@ export default function ForgotPasswordPage() {
 
             {error && <ErrorText>{error}</ErrorText>}
 
-            <AuthFormButton>Send Reset Link</AuthFormButton>
+            <AuthFormButton disabled={isLoading}>
+              Send Reset Link
+            </AuthFormButton>
           </form>
 
           <div>

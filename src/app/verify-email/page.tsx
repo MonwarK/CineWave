@@ -13,6 +13,8 @@ import { useSignUp } from "@clerk/nextjs";
 export default function ForgotPasswordPage() {
   const [isFormOpen, setIsFormOpen] = useState(true);
   const { signUp, isLoaded, setActive } = useSignUp();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
@@ -23,12 +25,14 @@ export default function ForgotPasswordPage() {
 
     try {
       const result = await signUp.attemptEmailAddressVerification({ code });
+      setIsLoading(true);
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
         router.push("/discover");
       } else {
         setError("Verification incomplete. Please try again.");
+        setIsLoading(false);
       }
     } catch (err: any) {
       setError(err.errors?.[0]?.longMessage || "Verification failed.");
@@ -55,7 +59,7 @@ export default function ForgotPasswordPage() {
 
             {error && <ErrorText>{error}</ErrorText>}
 
-            <AuthFormButton>Verify</AuthFormButton>
+            <AuthFormButton disabled={isLoading}>Verify</AuthFormButton>
           </form>
         </div>
       </HeightAnimationContainer>
