@@ -2,15 +2,14 @@
 
 import Genres from "@/components/main/Genres";
 import Header from "@/components/main/Header";
-import SearchResult from "@/components/search/SearchResult";
-import { containerVariants } from "@/motion/variants/motion";
 import { searchTMDB } from "@/utils/api";
-import { SearchIcon } from "lucide-react";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { Movie } from "@/types/Movie";
 import FullPageLoader from "@/components/loading/FullPageLoader";
 import MovieModal from "@/components/movie-modal/MovieModal";
+import SearchBarSection from "@/components/search/SearchBarSection";
+import SearchResults from "@/components/search/SearchResults";
+import SearchNoResults from "@/components/search/SearchNoResults";
 
 export default function page() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +18,7 @@ export default function page() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [selectedGenre, setSelectedGenre] = useState("All");
 
-  const searchForResults = () => {
+  const handleSearch = () => {
     setIsLoading(true);
 
     searchTMDB(search, "multi").then((results) => {
@@ -34,78 +33,45 @@ export default function page() {
 
       <div className="pt-20 max-w-screen-xl mx-auto w-full px-7 space-y-14">
         {/* Search Section */}
-        <div className="space-y-5">
+        <div className="space-y-7">
+          <SearchBarSection
+            search={search}
+            setSearch={setSearch}
+            handleSearch={handleSearch}
+          />
+
           <div>
-            <h2 className="text-3xl font-semibold">Search</h2>
+            <Genres
+              selectedGenre={selectedGenre}
+              setSelectedGenre={setSelectedGenre}
+            />
           </div>
 
-          <div className="bg-zinc-700 p-2 rounded-md flex items-center">
-            <div className="flex-1 px-4">
-              <input
-                className="w-full outline-none"
-                type="text"
-                placeholder="Search for movies, TV Shows, actors..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
-            <div className="px-2">
-              <SearchIcon
-                onClick={searchForResults}
-                className="cursor-pointer"
-                color="lightgray"
-                size={20}
-              />
-            </div>
-          </div>
-        </div>
+          {isLoading ? (
+            <FullPageLoader />
+          ) : (
+            <div className="space-y-5">
+              <div>
+                <h2 className="text-xl font-semibold">Results</h2>
+              </div>
 
-        <div>
-          <Genres
-            selectedGenre={selectedGenre}
-            setSelectedGenre={setSelectedGenre}
+              {/* Search Results */}
+              {results.length > 0 ? (
+                <SearchResults
+                  results={results}
+                  selectMovie={setSelectedMovie}
+                />
+              ) : (
+                <SearchNoResults />
+              )}
+            </div>
+          )}
+
+          <MovieModal
+            movie={selectedMovie}
+            onClose={() => setSelectedMovie(null)}
           />
         </div>
-
-        {isLoading ? (
-          <FullPageLoader />
-        ) : (
-          <div className="space-y-5">
-            <div>
-              <h2 className="text-xl font-semibold">Results</h2>
-            </div>
-
-            {/* Search Results */}
-
-            {results.length > 0 ? (
-              <motion.div
-                variants={containerVariants}
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                className="space-y-4"
-              >
-                {results.map((result: Movie) => (
-                  <SearchResult
-                    key={result?.id}
-                    result={result}
-                    selectMovie={() => setSelectedMovie(result)}
-                  />
-                ))}
-              </motion.div>
-            ) : (
-              <div className="py-10">
-                <p className="text-xs text-gray-400 text-center uppercase">
-                  No Results Found
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-
-        <MovieModal
-          movie={selectedMovie}
-          onClose={() => setSelectedMovie(null)}
-        />
       </div>
     </div>
   );

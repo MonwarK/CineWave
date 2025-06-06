@@ -1,3 +1,5 @@
+"use client";
+
 import { Movie } from "@/types/Movie";
 import { Play, Plus, Star } from "lucide-react";
 import React from "react";
@@ -20,7 +22,17 @@ export default function SearchResult({ result, selectMovie }: Props) {
       }
   );
 
-  console.log(result.vote_average);
+  const getLength = () => {
+    if (result.name) {
+      const seasonCount = Math.floor(Math.random() * 6) + 1;
+      return `${seasonCount} seasons`;
+    }
+
+    const randomHour = Math.round(Math.random() * 2) + 1;
+    const randomMinutes = Math.floor(Math.random() * 60) + 1;
+
+    return `${randomHour}h ${randomMinutes}min`;
+  };
 
   return (
     <motion.div
@@ -30,7 +42,7 @@ export default function SearchResult({ result, selectMovie }: Props) {
       viewport={{ once: true, amount: 0.3 }}
       variants={itemVariants}
       whileHover={{ scale: 1.05 }}
-      className="bg-zinc-800/50 rounded-2xl  border border-gray-900 backdrop:blur-2xl overflow-hidden  cursor-pointer flex items-center"
+      className="bg-zinc-800/50 rounded-2xl backdrop:blur-2xl overflow-hidden cursor-pointer flex items-center"
     >
       {/* Thumbnail */}
       <div className="flex items-center h-60">
@@ -80,7 +92,7 @@ export default function SearchResult({ result, selectMovie }: Props) {
                 <span>•</span>
               </>
             )}
-            <span>2h 15min</span>
+            <span>{getLength()}</span>
             <span>•</span>
             <Genres genres={genres as any} />
           </div>
