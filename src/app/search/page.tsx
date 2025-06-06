@@ -10,11 +10,13 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Movie } from "@/types/Movie";
 import FullPageLoader from "@/components/loading/FullPageLoader";
+import MovieModal from "@/components/movie-modal/MovieModal";
 
 export default function page() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [selectedGenre, setSelectedGenre] = useState("All");
 
   const searchForResults = () => {
@@ -78,22 +80,32 @@ export default function page() {
             {results.length > 0 ? (
               <motion.div
                 variants={containerVariants}
-                initial="invisible"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
                 className="space-y-4"
               >
                 {results.map((result: Movie) => (
-                  <SearchResult key={result?.id} result={result} />
+                  <SearchResult
+                    key={result?.id}
+                    result={result}
+                    selectMovie={() => setSelectedMovie(result)}
+                  />
                 ))}
               </motion.div>
             ) : (
               <div className="py-10">
-                <p className="text-xs text-gray-400">No Results Found</p>
+                <p className="text-xs text-gray-400 text-center uppercase">
+                  No Results Found
+                </p>
               </div>
             )}
           </div>
         )}
+
+        <MovieModal
+          movie={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
       </div>
     </div>
   );

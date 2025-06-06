@@ -2,6 +2,7 @@ import React from "react";
 import Meta from "./Meta";
 import Genres from "./Genres";
 import { Movie } from "@/types/Movie";
+import classNames from "classnames";
 
 interface Props {
   fullMovie: Movie;
@@ -14,7 +15,14 @@ export default function MainInfo({ fullMovie }: Props) {
         {fullMovie.title || fullMovie.name}
       </h2>
 
-      <div className="md:flex justify-between items-center space-y-5 md:space-y-0 space-x-4 text-xs">
+      <div
+        className={classNames(
+          "justify-between items-center space-y-5 space-x-4 text-xs",
+          {
+            "md:flex md:space-y-0": fullMovie.genres.length < 4,
+          }
+        )}
+      >
         <Meta
           vote_average={fullMovie.vote_average}
           release_date={fullMovie.release_date}

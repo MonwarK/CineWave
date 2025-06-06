@@ -5,7 +5,7 @@ import ClerkWrapper from "@/components/providers/ClerkWrapper"; // adjust path i
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={roboto.className}>
-      <body>
+    <html lang="en">
+      <body className={roboto.className}>
         <ClerkWrapper>{children}</ClerkWrapper>
       </body>
     </html>

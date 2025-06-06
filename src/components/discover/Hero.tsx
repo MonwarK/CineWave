@@ -46,15 +46,15 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
           </div>
         </div>
         <div>
-          <div className="text-4xl font-medium tracking-[0.2em] uppercase">
+          <div className="text-3xl md:text-4xl font-medium tracking-[0.2em] uppercase">
             {movie.title || movie.name}
           </div>
         </div>
         <div>
-          <div>{movie.overview}</div>
+          <p>{movie.overview}</p>
         </div>
         {dominantColor && (
-          <div className="sm:flex space-y-5 md:space-y-0 md:space-x-5 uppercase py-5">
+          <div className="sm:flex space-y-5 sm:space-y-0 sm:space-x-5 uppercase py-5">
             <div
               onClick={openMovie}
               style={{
