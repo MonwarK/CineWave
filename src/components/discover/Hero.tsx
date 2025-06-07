@@ -16,24 +16,18 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
   }, [dominantColor]);
 
   function isColorDark(hex: string): boolean {
-    // Remove # if present
     const cleanHex = hex.replace("#", "");
 
-    // Convert to RGB
     const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
     const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
     const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
 
-    // Convert to linear RGB
-    const linear = (channel: number) =>
-      channel <= 0.03928
-        ? channel / 12.92
-        : Math.pow((channel + 0.055) / 1.055, 2.4);
+    const linear = (c: number) =>
+      c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
 
     const l = 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b);
 
-    // If luminance is below 0.5, it's considered dark
-    return l < 0.5;
+    return l <= 0.179;
   }
 
   return (
