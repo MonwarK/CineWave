@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingSpinner from "../loading/LoadingSpinner";
 
 interface Props {
   children: React.ReactNode;
@@ -6,7 +7,11 @@ interface Props {
 }
 
 export default function AuthFormButton({ children, disabled }: Props) {
-  return (
+  return disabled ? (
+    <div className="flex justify-center w-full">
+      <LoadingSpinner />
+    </div>
+  ) : (
     <button
       disabled={disabled}
       type="submit"

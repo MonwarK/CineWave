@@ -7,11 +7,9 @@ import HeightAnimationContainer from "@/components/animation/HeightAnimationCont
 import TextBox from "@/components/auth/TextBox";
 import ErrorText from "@/components/auth/ErrorText";
 import AuthFormButton from "@/components/auth/AuthFormButton";
-import BottomLink from "@/components/auth/BottomLink";
 import { useSignUp } from "@clerk/nextjs";
 
 export default function ForgotPasswordPage() {
-  const [isFormOpen, setIsFormOpen] = useState(true);
   const { signUp, isLoaded, setActive } = useSignUp();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +19,7 @@ export default function ForgotPasswordPage() {
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) return;
+    if (!isLoaded || isLoading) return;
 
     try {
       const result = await signUp.attemptEmailAddressVerification({ code });
@@ -45,7 +43,7 @@ export default function ForgotPasswordPage() {
       <BackgroundImage />
 
       {/* Forgot Password Container */}
-      <HeightAnimationContainer isFormOpen={isFormOpen}>
+      <HeightAnimationContainer isFormOpen={true}>
         <div className="bg-black/70 p-8 rounded w-full max-w-xl py-14 space-y-4 text-center">
           <form className="space-y-6" onSubmit={handleVerify}>
             <h2 className="text-2xl py-4 font-bold">Verify Email</h2>
