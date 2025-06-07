@@ -33,6 +33,7 @@ export default function ProfilePage({ currentPlan }: Props) {
           <h2 className="text-3xl font-semibold mb-5">Your Plans</h2>
 
           <PricingTable
+            newSubscriptionRedirectUrl="/profile"
             appearance={{
               elements: {
                 pricingTableCardDescription: "pt-1 pb-3",
