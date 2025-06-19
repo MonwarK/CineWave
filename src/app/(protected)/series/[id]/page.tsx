@@ -1,14 +1,14 @@
 import Header from "@/components/main/Header";
 import { fetchTVById } from "@/utils/api";
 import {
-    Calendar,
-    Clock,
-    Heart,
-    Play,
-    Plus,
-    Share2,
-    Star,
-    Tv,
+  Calendar,
+  Clock,
+  Heart,
+  Play,
+  Plus,
+  Share2,
+  Star,
+  Tv,
 } from "lucide-react";
 
 type Params = Promise<{ id: string }>;
@@ -90,17 +90,15 @@ export default async function SeriePage({ params }: { params: Params }) {
                   </p>
                 </div>
                 <div>
-                    {serie.adult === true ? (
-                  <p className="bg-orange-700/50 px-3 py-1 rounded-full">
-                    Adult
-                  </p>
-                    
-                    ) : (
-                        <p className="bg-orange-900/50 px-3 py-1 rounded-full">
-                            Not Adult
-                        </p>
-
-                    )}
+                  {serie.adult === true ? (
+                    <p className="bg-orange-700/50 px-3 py-1 rounded-full">
+                      Adult
+                    </p>
+                  ) : (
+                    <p className="bg-orange-900/50 px-3 py-1 rounded-full">
+                      Not Adult
+                    </p>
+                  )}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {serie.genres.map((genre: any) => (
@@ -198,19 +196,31 @@ export default async function SeriePage({ params }: { params: Params }) {
                     </div>
                     <div className="flex gap-3 items-center">
                       <div>
-                        <p className="text-sm text-muted-foreground">Episodes</p>
-                        <p className="font-medium">{serie.number_of_episodes}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Episodes
+                        </p>
+                        <p className="font-medium">
+                          {serie.number_of_episodes}
+                        </p>
                       </div>
                     </div>
                     <div className="flex gap-3 items-center">
                       <div>
-                        <p className="text-sm text-muted-foreground">Created By</p>
-                        <p className="font-medium">{serie.created_by.length > 0 ? serie.created_by : "Unknown"}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Created By
+                        </p>
+                        <p className="font-medium">
+                          {serie.created_by.length > 0
+                            ? serie.created_by
+                            : "Unknown"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex gap-3 items-center">
                       <div>
-                        <p className="text-sm text-muted-foreground">Language</p>
+                        <p className="text-sm text-muted-foreground">
+                          Language
+                        </p>
                         <p className="font-medium">{serie.languages[0]}</p>
                       </div>
                     </div>
@@ -221,30 +231,41 @@ export default async function SeriePage({ params }: { params: Params }) {
 
             {/* Seasons */}
             <div className="space-y-4">
-                <h2 className="text-2xl font-semibold">Seasons</h2>
-                <div className="grid gap-4">
-                    {serie.seasons.map((season:any) => (
-                        <div key={season.season_number} className="rounded-lg border">
-                            <div className="p-4">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <div className="h-16 w-16 bg-gray-700/50 rounded-lg flex items-center justify-center">
-                                            <span className="font-boldtext-lg">{season.season_number}</span>
-                                        </div>
-                                        <div>
-                                        <h4>{season.name}</h4>
-                                        <p>{season.episode_count} episodes • {season.air_date.slice(0,4)}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                        <span className="font-medium">{season.vote_average}</span>
-                                    </div>
-                                </div>
-                            </div>
+              <h2 className="text-2xl font-semibold">Seasons</h2>
+              <div className="grid gap-4">
+                {serie.seasons.map((season: any) => (
+                  <div key={season.season_number} className="rounded-lg border">
+                    <div className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="h-16 w-16 bg-gray-700/50 rounded-lg flex items-center justify-center">
+                            <span className="font-boldtext-lg">
+                              {season.season_number}
+                            </span>
+                          </div>
+                          <div>
+                            <h4>{season.name}</h4>
+                            <p>
+                              {season.episode_count} episodes •{" "}
+                              {season.air_date.slice(0, 4)}
+                            </p>
+                          </div>
                         </div>
-                    ))}
-                </div>
+                        {season.vote_average > 0 ? (
+                          <div className="flex items-center gap-2">
+                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <span className="font-medium">
+                              {season.vote_average}
+                            </span>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
