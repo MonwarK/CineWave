@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import MovieRowSection from "./MovieRowSection";
-import MovieModal from "../movie-modal/MovieModal";
 import { Movie } from "@/types/Movie";
+import { useState } from "react";
+import MovieModal from "../movie-modal/MovieModal";
+import MovieRowSection from "./MovieRowSection";
 
 interface Props {
   trending: Movie[];
@@ -14,6 +14,8 @@ interface Props {
   actionMovies: Movie[];
   comedyShows: Movie[];
   horrorMovies: Movie[];
+  airingToday?: Movie[]
+  nowPlaying: Movie[];
 }
 
 export default function Sections({
@@ -25,12 +27,24 @@ export default function Sections({
   actionMovies,
   comedyShows,
   horrorMovies,
+  airingToday,
+  nowPlaying
 }: Props) {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   return (
     <>
       <div className="py-10 space-y-18">
+      <MovieRowSection
+          title="Shows Airing Today"
+          movies={airingToday}
+          setSelectedMovie={setSelectedMovie}
+        />
+            <MovieRowSection
+          title="Movies In Cinema"
+          movies={nowPlaying}
+          setSelectedMovie={setSelectedMovie}
+        />
         <MovieRowSection
           title="Trending Now"
           movies={trending}
