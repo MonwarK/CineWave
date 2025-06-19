@@ -49,9 +49,34 @@ export async function fetchHorrorMovies() {
   );
 }
 
+export async function fetchAiringToday() {
+  return handleFetch(
+    `${BASE_URL}/tv/airing_today?language=en-US&api_key=${API_KEY}`
+  )
+}
+
+export async function fetchNowPlaying() {
+  return handleFetch(
+    `${BASE_URL}/movie/now_playing?language=en-US&api_key=${API_KEY}`
+  )
+}
+
+export async function fetchSeries() {
+  return handleFetch(
+    `${BASE_URL}/discover/tv?language=en-US&api_key=${API_KEY}`
+  )
+}
+
+export async function fetchMovies() {
+  return handleFetch(
+    `${BASE_URL}/discover/movie?language=en-US&api_key=${API_KEY}`
+  )
+}
+
 export async function searchTMDB(
   query: string,
-  type: "movie" | "tv" | "multi" = "multi"
+  type: "movie" | "tv" | "multi" = "multi",
+  genre?: string,
 ) {
   if (!query.trim()) return [];
 

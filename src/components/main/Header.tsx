@@ -1,10 +1,9 @@
 "use client";
 
-import { CreditCard, Search } from "lucide-react";
 import { UserButton, useUser } from "@clerk/nextjs";
+import { CreditCard, Search } from "lucide-react";
 
 import Link from "next/link";
-import React from "react";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
@@ -26,6 +25,16 @@ export default function Header() {
           <div>
             <Link href="/search">
               <Search className="text-white/80 cursor-pointer hover:animate-pulse" />
+            </Link>
+          </div>
+          <div>
+            <Link href="/series">
+            Series
+            </Link>
+          </div>
+          <div>
+            <Link href="/movies">
+            Movies
             </Link>
           </div>
           <div>

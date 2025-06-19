@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import Hero from "./Hero";
 import { Movie } from "@/types/Movie";
+import { useState } from "react";
 import { useExtractColors } from "react-extract-colors";
 import MovieModal from "../movie-modal/MovieModal";
+import Hero from "./Hero";
 
 interface Props {
   movie: Movie;
@@ -23,7 +23,7 @@ export default function Main({ movie }: Props) {
 
   return (
     <>
-      <div className="relative flex flex-col min-h-[90vh] overflow-hidden justify-between">
+      <div className="relative flex flex-col min-h-[100vh] overflow-hidden justify-center">
         <div className="absolute w-full h-full">
           <img
             className="absolute -z-10 top-0 left-0 brightness-75 w-full h-full object-cover object-top"
@@ -40,7 +40,7 @@ export default function Main({ movie }: Props) {
           dominantColor={lighterColor}
         />
 
-        <div className="bg-black/20 backdrop-blur-xl">
+        {/* <div className="bg-black/20 backdrop-blur-xl">
           <div className="max-w-screen-xl mx-auto hidden md:block px-10">
             <div className="grid grid-cols-5 text-center text-sm">
               <div className="py-5 border-b-2 border-orange-500">
@@ -60,7 +60,7 @@ export default function Main({ movie }: Props) {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <MovieModal

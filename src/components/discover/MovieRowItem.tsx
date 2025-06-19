@@ -1,12 +1,11 @@
-import React from "react";
-import { motion } from "framer-motion";
 import { itemVariants } from "@/motion/variants/motion";
 import { Movie } from "@/types/Movie";
+import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
 interface Props {
   movie: Movie;
-  selectMovie: () => void;
+  selectMovie?: () => void;
 }
 
 export default function MovieRowItem({ movie, selectMovie }: Props) {

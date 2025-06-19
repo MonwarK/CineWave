@@ -1,5 +1,6 @@
 import { Movie } from "@/types/Movie";
-import React, { useEffect, useState } from "react";
+import { Star } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface Props {
   movie: Movie;
@@ -34,7 +35,7 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
     <div className="max-w-screen-xl mx-auto w-full px-10">
       <div className="space-y-4 md:space-y-6 md:w-1/2">
         <div className="flex space-x-4 items-center">
-          <div>{movie.vote_average.toFixed(1)}</div>
+          <div>{movie.vote_average.toFixed(1)} <Star className="inline-flex ml-2 fill-orange-500 text-orange-500 items-center"/></div>
           <div>
             {new Date(movie.release_date || movie.first_air_date).getFullYear()}
           </div>

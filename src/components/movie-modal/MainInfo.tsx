@@ -1,14 +1,20 @@
-import React from "react";
-import Meta from "./Meta";
-import Genres from "./Genres";
+"use client"
 import { Movie } from "@/types/Movie";
 import classNames from "classnames";
+import { useState } from "react";
+import MovieRowItem from "../discover/MovieRowItem";
+import Genres from "./Genres";
+import Meta from "./Meta";
+import MovieModal from "./MovieModal";
 
 interface Props {
   fullMovie: Movie;
+  similarMovies?: Movie[];
 }
 
-export default function MainInfo({ fullMovie }: Props) {
+export default function MainInfo({ fullMovie, similarMovies }: Props) {
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
   return (
     <div className="p-4 space-y-5 items-center">
       <h2 className="text-2xl font-bold">
@@ -31,7 +37,7 @@ export default function MainInfo({ fullMovie }: Props) {
       </div>
 
       <div className="col-span-2">
-        <p className="text-sm text-neutral-300">{fullMovie.overview}</p>
+        <p className="text-sm text-neutral-300 line-clamp-4 ">{fullMovie.overview}</p>
       </div>
 
       <div>
@@ -39,6 +45,31 @@ export default function MainInfo({ fullMovie }: Props) {
           Add to List
         </button>
       </div>
+
+        {similarMovies ? (
+          <div className="mt-6">
+              <h2 className="mb-2">Similar Movies</h2>
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
+                {similarMovies.slice(0,3).map((movie: Movie, id) => (
+                  <MovieRowItem
+                  movie={movie}
+                  key={id}
+                  selectMovie={() => setSelectedMovie(movie as any)}
+                  />
+                ))}
+
+                <MovieModal 
+                movie={selectedMovie}
+                onClose={() => setSelectedMovie(null)}
+                />
+            
+              </div>
+          </div>
+        ) : 
+        (
+          <>
+          </>
+        )}
     </div>
   );
 }

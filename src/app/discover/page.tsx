@@ -1,11 +1,12 @@
-import Categories from "@/components/discover/Categories";
 import Main from "@/components/discover/Main";
 import Sections from "@/components/discover/Sections";
 import Header from "@/components/main/Header";
 import {
   fetchActionMovies,
+  fetchAiringToday,
   fetchComedyTV,
   fetchHorrorMovies,
+  fetchNowPlaying,
   fetchPopularMovies,
   fetchPopularTV,
   fetchTopRated,
@@ -22,6 +23,8 @@ export default async function page() {
   const actionMovies = await fetchActionMovies();
   const comedyShows = await fetchComedyTV();
   const horrorMovies = await fetchHorrorMovies();
+  const airingToday = await fetchAiringToday()
+  const nowPlaying = await fetchNowPlaying();
 
   return (
     <div className="bg-zinc-900/50 pb-10 relative">
@@ -33,7 +36,6 @@ export default async function page() {
         }
       />
 
-      <Categories />
 
       <Sections
         trending={trending}
@@ -44,6 +46,8 @@ export default async function page() {
         actionMovies={actionMovies}
         comedyShows={comedyShows}
         horrorMovies={horrorMovies}
+        airingToday={airingToday}
+        nowPlaying={nowPlaying}
       />
     </div>
   );

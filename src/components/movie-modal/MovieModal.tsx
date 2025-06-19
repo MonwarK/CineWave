@@ -2,7 +2,7 @@
 
 import { noOpacity, visibleOpacity } from "@/motion/variants/opacity";
 import { Movie } from "@/types/Movie";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import MainInfo from "./MainInfo";
 
@@ -14,6 +14,8 @@ type Props = {
 export default function MovieModal({ movie, onClose }: Props) {
   const [trailerKey, setTrailerKey] = useState("");
   const [fullMovie, setFullMovie] = useState<Movie>();
+  const [similarMovies, setSimilarMovies] = useState<Movie[]>([])
+  
 
   useEffect(() => {
     if (!movie) return;
@@ -45,8 +47,29 @@ export default function MovieModal({ movie, onClose }: Props) {
       }
     }
 
+    async function getSimilarMovies() {
+    if (!movie) return;
+      
+    console.log(movie?.media_type)
+    console.log(mediaType)
+      try {
+        const similarMovies = await fetch(
+          `https://api.themoviedb.org/3/${mediaType}/${movie?.id}/similar?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+        )
+
+        const data = await similarMovies.json();
+        setSimilarMovies(data.results)
+  
+      } catch(err) {
+        console.error("Failed to fetch similar movies", err)
+      }
+    }
+
     fetchDetailsAndTrailer();
+    getSimilarMovies();
   }, [movie]);
+
+
 
   if (!fullMovie) return null;
 
@@ -84,7 +107,7 @@ export default function MovieModal({ movie, onClose }: Props) {
               </div>
             )}
 
-            <MainInfo fullMovie={fullMovie} />
+            <MainInfo fullMovie={fullMovie} similarMovies={similarMovies} />
 
             <button
               onClick={onClose}
