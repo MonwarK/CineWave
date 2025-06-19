@@ -1,129 +1,139 @@
 import Header from "@/components/main/Header";
+import { Movie } from "@/types/Movie";
 import { fetchMovieById } from "@/utils/api";
 import { Calendar, Clock, Heart, Play, Plus, Share2, Star } from "lucide-react";
 
-type Params = Promise<{id: string}>
+type Params = Promise<{ id: string }>;
 
-export default async function MoviePage({ params}: {params: Params}) {
+export default async function MoviePage({ params }: { params: Params }) {
+  const { id } = await params;
 
-    const { id } = await params;
+  const movie: Movie = await fetchMovieById(id);
 
-    const movie = await fetchMovieById(id);
+  console.log(movie);
 
-    console.log(movie)
+  const renderStars = (rating: number) => {
+    const stars = [];
+    const fullStars = Math.floor(rating / 2);
+    const hasHalfStar = rating % 2 >= 1;
 
-    const renderStars = (rating: number) => {
-      const stars = [];
-      const fullStars = Math.floor(rating / 2);
-      const hasHalfStar = rating % 2 >= 1;
-  
-      for (let i = 0; i < fullStars; i++) {
-        stars.push(
-          <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-        );
-      }
-  
-      if (hasHalfStar) {
-        stars.push(
-          <Star
-            key="half"
-            className="w-5 h-5 fill-yellow-400/50 text-yellow-400"
-          />
-        );
-      }
-  
-      const remainingStars = 5 - Math.ceil(rating / 2);
-      for (let i = 0; i < remainingStars; i++) {
-        stars.push(<Star key={`empty-${i}`} className="w-5 h-5 text-gray-300" />);
-      }
-  
-      return stars;
-    };
-    
-    
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+      );
+    }
+
+    if (hasHalfStar) {
+      stars.push(
+        <Star
+          key="half"
+          className="w-5 h-5 fill-yellow-400/50 text-yellow-400"
+        />
+      );
+    }
+
+    const remainingStars = 5 - Math.ceil(rating / 2);
+    for (let i = 0; i < remainingStars; i++) {
+      stars.push(<Star key={`empty-${i}`} className="w-5 h-5 text-gray-300" />);
+    }
+
+    return stars;
+  };
 
   return (
     <div>
-        <Header />
-        <div className="pt-[7rem] pb-[1rem] container mx-auto max-w-8xl">
-        <div className="grid lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-1">
-            <div className="overflow-hidden shadow-2xl">
-              <img
-                src={`https://image.tmdb.org/t/p/w400${movie.backdrop_path}`}
-                alt={movie.name}
-                className="w-full aspect-video object-cover"
-              />
-            </div>
+      <Header />
+      <div className="flex flex-col justify-center items-center p-0">
+        <div className="relative w-full overflow-hidden h-[500px]">
+          <div className="absolute z-0 inset-0 h-full">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/55  to-black/40 z-10"></div>
+            <img
+              src={`https://image.tmdb.org/t/p/w1920${movie.backdrop_path}`}
+            />
           </div>
-          <div className="lg:col-span-3 space-y-6">
-            <div className="space-y-4">
-              <div>
-                {/* Title & Tagling */}
-                <h1 className="text-4xl lg:text-5xl font-bold mb-2">
-                  {movie.original_title}
-                </h1>
-                <p className="text-xl text-muted-foreground italic">
-                  {movie.tagline}
-                </p>
+        </div>
+      </div>
+
+      <div className="pt-10 px-5 pb-[1rem] container mx-auto max-w-8xl">
+        <div className="gap-8">
+          <div className="space-y-6">
+            <div className="flex gap-5">
+              <div className="hidden lg:block overflow-hidden shadow-2xl">
+                <img
+                  src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+                  alt={movie.name}
+                  className="h-80 rounded-xl mx-auto"
+                />
               </div>
 
-              {/* Rating  & Genre */}
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center">
-                    {renderStars(movie.vote_average)}
-                  </div>
-                  <span className="text-lg font-semibold">
-                    {movie.vote_average}/10
-                  </span>
-                </div>
+              <div className="space-y-4">
                 <div>
-                  <p className="bg-orange-700/50 px-3 py-1 rounded-full">
-                    {movie.status}
+                  {/* Title & Tagling */}
+                  <h1 className="text-4xl lg:text-5xl font-bold mb-2">
+                    {movie.title}
+                  </h1>
+                  <p className="text-xl text-muted-foreground italic">
+                    {movie.tagline}
                   </p>
                 </div>
-                <div>
-                    {movie.adult === true ? (
-                  <p className="bg-orange-700/50 px-3 py-1 rounded-full">
-                    Adult
-                  </p>
-                    
-                    ) : (
-                        <p className="bg-orange-900/50 px-3 py-1 rounded-full">
-                            Not Adult
-                        </p>
 
-                    )}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {movie.genres.map((genre: any) => (
-                    <div className="bg-gray-700/50 px-3 py-1 rounded-full">
-                      {genre.name}
+                {/* Rating  & Genre */}
+                <div className="flex flex-wrap items-center gap-4 mb-7">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center">
+                      {renderStars(movie.vote_average)}
                     </div>
-                  ))}
+                    <span className="text-lg font-semibold">
+                      {movie.vote_average}/10
+                    </span>
+                  </div>
+                  <div>
+                    <p className="bg-orange-700/50 px-3 py-1 rounded-full">
+                      {movie.status}
+                    </p>
+                  </div>
+                  <div>
+                    {movie.adult === true ? (
+                      <p className="bg-orange-700/50 px-3 py-1 rounded-full">
+                        Adult
+                      </p>
+                    ) : (
+                      <p className="bg-orange-900/50 px-3 py-1 rounded-full">
+                        Not Adult
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {movie.genres.map((genre: any) => (
+                      <div className="bg-gray-700/50 px-3 py-1 rounded-full">
+                        {genre.name}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-wrap gap-3">
-                <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch Now
-                </button>
-                <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center font-semibold">
-                  <Plus className="w-5 h-5  mr-2" />
-                  Watchlist
-                </button>
-                <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
-                  <Heart className="w-5 h-5  mr-2" />
-                  Favorite
-                </button>
-                <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
-                  <Share2 className="w-5 h-5  mr-2" />
-                  Share
-                </button>
+                <div className="flex flex-wrap gap-3">
+                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
+                    <Play className="w-5 h-5 mr-2" />
+                    Watch Now
+                  </button>
+                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center font-semibold">
+                    <Plus className="w-5 h-5  mr-2" />
+                    Watchlist
+                  </button>
+                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
+                    <Heart className="w-5 h-5  mr-2" />
+                    Favorite
+                  </button>
+                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
+                    <Share2 className="w-5 h-5  mr-2" />
+                    Share
+                  </button>
+                </div>
               </div>
             </div>
+            <div className="space-y-4"></div>
+
             {/* Overview */}
             <div className="space-y-3">
               <h2 className="text-2xl font-semibold">Overview</h2>
@@ -141,70 +151,86 @@ export default async function MoviePage({ params}: {params: Params}) {
                       <Calendar className="h-5 w-5 text-muted-foreground" />
                       <div>
                         <p className="text-sm text-muted-foreground">
-                          First Air Date
+                          Release Date
                         </p>
-                        <p className="font-medium">{movie.release_date}</p>
+                        <p className="font-medium">
+                          {new Date(movie.release_date).toDateString()}
+                        </p>
                       </div>
                     </div>
-         
+
                     <div className="flex gap-3 items-center">
                       <Clock className="h-5 w-5 text-muted-foreground" />
                       <div>
-                        <p className="text-sm text-muted-foreground">
-                          Runtime
-                        </p>
-                        <p className="font-medium">
-                          {movie.runtime} Min
-                        </p>
+                        <p className="text-sm text-muted-foreground">Runtime</p>
+                        <p className="font-medium">{movie.runtime} Min</p>
                       </div>
                     </div>
-               
                   </div>
                 </div>
               </div>
-              <div className="rounded-lg border shadow-sm"> 
+              <div className="rounded-lg border shadow-sm">
                 <div className="p-6 space-y-4">
                   <h3 className="text-xl font-semibold">Box Office</h3>
                   <div className="space-y-3">
                     <div className="flex gap-3 items-center">
                       <div>
                         <p className="text-sm text-muted-foreground">Budget</p>
-                        <p className="font-medium">{movie.budget}</p>
+                        <p className="font-medium">
+                          {movie.budget
+                            ? new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              }).format(movie.budget)
+                            : "Unknown"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex gap-3 items-center">
                       <div>
                         <p className="text-sm text-muted-foreground">Revenue</p>
-                        <p className="font-medium">{movie.revenue}</p>
+                        <p className="font-medium">
+                          {movie.budget
+                            ? new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              }).format(movie.revenue)
+                            : "Unknown"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex gap-3 items-center">
                       <div>
-                        <p className="text-sm text-muted-foreground">Language</p>
-                        {movie.spoken_languages.map((language:any) => (
-                          <p className="font-medium">{language.name}</p>
-                        ))}
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Language
+                        </p>
+                        <div className="flex flex-wrap space-x-3">
+                          {movie.spoken_languages?.map((language: any) => (
+                            <p className="font-medium bg-gray-300 text-gray-800 text-center rounded-xl uppercase text-sm px-2">
+                              {language.iso_639_1}
+                            </p>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                 
                   </div>
                 </div>
               </div>
-              
             </div>
             <div>
-                <div className="space-y-4">
-                  <div className="text-2xl font-semibold">Production Companies</div>
-                  <div className="flex gap-4">
-                    {movie.production_companies.map((company: any) => (
-                      <div className="flex items-center">
-                  
-                <p className="font-medium">{company.name}</p>
-                      </div>
-                    ))}
-                  </div>
+              <div className="space-y-4">
+                <div className="text-2xl font-semibold">
+                  Production Companies
+                </div>
+                <div className="flex gap-4">
+                  {movie.production_companies?.map((company: any) => (
+                    <div className="flex items-center">
+                      <p className="font-medium">{company.name}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
+            </div>
 
             {/* Seasons */}
             {/* <div className="space-y-4">
@@ -234,8 +260,8 @@ export default async function MoviePage({ params}: {params: Params}) {
                 </div>
             </div> */}
           </div>
-       </div>
         </div>
+      </div>
     </div>
-  )
+  );
 }

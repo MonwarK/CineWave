@@ -2,6 +2,9 @@ export type Movie = {
   id: number;
   title?: string;
   name?: string;
+  status: string;
+  adult: boolean;
+  tagline?: string;
   overview: string;
   poster_path: string;
   backdrop_path: string;
@@ -11,4 +14,13 @@ export type Movie = {
   media_type?: string;
   first_air_date: string;
   genre_ids: number[];
+  runtime: number;
+  budget: number;
+  revenue: number;
+  spoken_languages?: {
+    iso_639_1: string;
+  }[];
+  production_companies?: {
+    name: string;
+  }[];
 };
