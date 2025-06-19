@@ -23,7 +23,7 @@ export default async function page() {
   const actionMovies = await fetchActionMovies();
   const comedyShows = await fetchComedyTV();
   const horrorMovies = await fetchHorrorMovies();
-  const airingToday = await fetchAiringToday()
+  const airingToday = await fetchAiringToday();
   const nowPlaying = await fetchNowPlaying();
 
   return (
@@ -35,7 +35,6 @@ export default async function page() {
           trending ? trending[Math.floor(Math.random() * trending.length)] : []
         }
       />
-
 
       <Sections
         trending={trending}

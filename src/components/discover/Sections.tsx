@@ -14,7 +14,7 @@ interface Props {
   actionMovies: Movie[];
   comedyShows: Movie[];
   horrorMovies: Movie[];
-  airingToday?: Movie[]
+  airingToday?: Movie[];
   nowPlaying: Movie[];
 }
 
@@ -28,19 +28,19 @@ export default function Sections({
   comedyShows,
   horrorMovies,
   airingToday,
-  nowPlaying
+  nowPlaying,
 }: Props) {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   return (
     <>
       <div className="py-10 space-y-18">
-      <MovieRowSection
+        <MovieRowSection
           title="Shows Airing Today"
           movies={airingToday}
           setSelectedMovie={setSelectedMovie}
         />
-            <MovieRowSection
+        <MovieRowSection
           title="Movies In Cinema"
           movies={nowPlaying}
           setSelectedMovie={setSelectedMovie}

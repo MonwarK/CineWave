@@ -23,13 +23,15 @@ export default function Main({ movie }: Props) {
 
   return (
     <>
-      <div className="relative flex flex-col min-h-[100vh] overflow-hidden justify-center">
+      <div className="relative flex flex-col min-h-[95vh] overflow-hidden justify-center">
         <div className="absolute w-full h-full">
           <img
             className="absolute -z-10 top-0 left-0 brightness-75 w-full h-full object-cover object-top"
             src={proxiedImage}
             alt=""
           />
+
+          <div className="left-0 bottom-0 absolute w-full bg-gradient-to-t from-zinc-950/80 to-transparent h-10 "></div>
         </div>
 
         <div />

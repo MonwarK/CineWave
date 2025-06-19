@@ -34,7 +34,7 @@ export default function MovieRowSection({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
       className="max-w-screen-xl w-full mx-auto px-10"
     >
       <h2 className="text-3xl font-bold mb-8">{title}</h2>
