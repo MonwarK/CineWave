@@ -82,7 +82,7 @@ export default async function SeriePage({ params }: { params: Params }) {
                     {renderStars(serie.vote_average)}
                   </div>
                   <span className="text-lg font-semibold">
-                    {serie.vote_average}/10
+                    {serie.vote_average.toFixed(1)}/10
                   </span>
                 </div>
                 <div>

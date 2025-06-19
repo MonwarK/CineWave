@@ -85,7 +85,7 @@ export default async function MoviePage({ params }: { params: Params }) {
                       {renderStars(movie.vote_average)}
                     </div>
                     <span className="text-lg font-semibold">
-                      {movie.vote_average}/10
+                      {movie.vote_average.toFixed(1)}/10
                     </span>
                   </div>
                   <div>
