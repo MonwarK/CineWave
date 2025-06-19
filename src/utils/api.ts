@@ -73,6 +73,26 @@ export async function fetchMovies() {
   )
 }
 
+export async function fetchTVById(slug: string) {
+  const res = await fetch(
+    `${BASE_URL}/tv/${slug}?language=en-US&api_key=${API_KEY}`
+  )
+  if(!res.ok) return undefined;
+
+  const data = await res.json();
+  return data;
+}
+
+export async function fetchMovieById(slug: string) {
+  const res = await fetch(
+    `${BASE_URL}/movie/${slug}?language=en-US&api_key=${API_KEY}`
+  )
+  if(!res.ok) return undefined;
+
+  const data = await res.json();
+  return data;
+}
+
 export async function searchTMDB(
   query: string,
   type: "movie" | "tv" | "multi" = "multi",
