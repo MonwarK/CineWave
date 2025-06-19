@@ -1,7 +1,5 @@
 import { useSavedMovies } from "@/context/SavedMoviesProvider";
 import { Movie } from "@/types/Movie";
-import { SavedMovie } from "@/types/SavedMovies";
-import { saveMovie } from "@/utils/saveMovie";
 import React, { useEffect, useState } from "react";
 
 interface Props {
@@ -12,11 +10,9 @@ interface Props {
 
 export default function Hero({ movie, dominantColor, openMovie }: Props) {
   const [color, setColor] = useState<string>("white");
-  const { savedMovies, addMovie } = useSavedMovies();
+  const { addMovie, isSaved } = useSavedMovies();
 
-  const isMovieSaved = savedMovies.find(
-    (x: SavedMovie) => parseInt(x.movie_id) === movie.id
-  );
+  const isMovieSaved = isSaved(movie.id);
 
   useEffect(() => {
     const isDark = isColorDark(dominantColor || "#000000"); // your color logic
@@ -37,8 +33,6 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
 
     return l <= 0.179;
   }
-
-  console.log(savedMovies, isMovieSaved);
 
   return (
     <div className="max-w-screen-xl mx-auto w-full px-10">

@@ -3,7 +3,6 @@
 import { Movie } from "@/types/Movie";
 import { SavedMovie } from "@/types/SavedMovies";
 import { saveMovie } from "@/utils/saveMovie";
-import { data } from "framer-motion/client";
 import { createContext, useContext, useState } from "react";
 
 type SavedMoviesContextType = {
@@ -36,9 +35,8 @@ export const SavedMoviesProvider = ({
   const [savedMovies, setSavedMovies] = useState<SavedMovie[]>(initialMovies);
 
   const addMovie = (movie: Movie) => {
-    const isSaved = savedMovies.find((x) => parseInt(x.movie_id) === movie.id);
-
-    if (isSaved) return;
+    const isMovieSaved = isSaved(movie.id);
+    if (isMovieSaved) return;
 
     saveMovie(movie)
       .then((res) => res.json())
