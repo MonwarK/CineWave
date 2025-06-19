@@ -6,10 +6,9 @@ import { Movie } from "@/types/Movie";
 
 interface Props {
   results: Movie[];
-  selectMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
 }
 
-export default function SearchResults({ results, selectMovie }: Props) {
+export default function SearchResults({ results }: Props) {
   return (
     <motion.div
       variants={containerVariants}
@@ -18,11 +17,7 @@ export default function SearchResults({ results, selectMovie }: Props) {
       className="space-y-4"
     >
       {results.map((result: Movie) => (
-        <SearchResult
-          key={result?.id}
-          result={result}
-          selectMovie={() => selectMovie(result)}
-        />
+        <SearchResult key={result?.id} result={result} />
       ))}
     </motion.div>
   );

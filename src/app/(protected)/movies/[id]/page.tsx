@@ -1,4 +1,5 @@
 import Header from "@/components/main/Header";
+import SquaredButton from "@/components/ui/SquaredButton";
 import { Movie } from "@/types/Movie";
 import { fetchMovieById } from "@/utils/api";
 import { Calendar, Clock, Heart, Play, Plus, Share2, Star } from "lucide-react";
@@ -113,22 +114,34 @@ export default async function MoviePage({ params }: { params: Params }) {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
+                  <SquaredButton
+                    variant="secondary"
+                    className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold"
+                  >
                     <Play className="w-5 h-5 mr-2" />
                     Watch Now
-                  </button>
-                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center font-semibold">
+                  </SquaredButton>
+                  <SquaredButton
+                    variant="secondary"
+                    className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center font-semibold"
+                  >
                     <Plus className="w-5 h-5  mr-2" />
                     Watchlist
-                  </button>
-                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
+                  </SquaredButton>
+                  <SquaredButton
+                    variant="secondary"
+                    className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold"
+                  >
                     <Heart className="w-5 h-5  mr-2" />
                     Favorite
-                  </button>
-                  <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold">
+                  </SquaredButton>
+                  <SquaredButton
+                    variant="secondary"
+                    className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2 inline-flex items-center  font-semibold"
+                  >
                     <Share2 className="w-5 h-5  mr-2" />
                     Share
-                  </button>
+                  </SquaredButton>
                 </div>
               </div>
             </div>

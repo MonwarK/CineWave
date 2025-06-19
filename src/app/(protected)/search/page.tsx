@@ -4,9 +4,7 @@ import Genres from "@/components/main/Genres";
 import Header from "@/components/main/Header";
 import { searchTMDB } from "@/utils/api";
 import React, { useState } from "react";
-import { Movie } from "@/types/Movie";
 import FullPageLoader from "@/components/loading/FullPageLoader";
-import MovieModal from "@/components/movie-modal/MovieModal";
 import SearchBarSection from "@/components/search/SearchBarSection";
 import SearchResults from "@/components/search/SearchResults";
 import SearchNoResults from "@/components/search/SearchNoResults";
@@ -15,7 +13,6 @@ export default function page() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [search, setSearch] = useState("");
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [selectedGenre, setSelectedGenre] = useState("All");
 
   const handleSearch = () => {
@@ -57,20 +54,12 @@ export default function page() {
 
               {/* Search Results */}
               {results.length > 0 ? (
-                <SearchResults
-                  results={results}
-                  selectMovie={setSelectedMovie}
-                />
+                <SearchResults results={results} />
               ) : (
                 <SearchNoResults />
               )}
             </div>
           )}
-
-          <MovieModal
-            movie={selectedMovie}
-            onClose={() => setSelectedMovie(null)}
-          />
         </div>
       </div>
     </div>
