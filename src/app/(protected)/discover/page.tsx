@@ -2,6 +2,7 @@ import Categories from "@/components/discover/Categories";
 import Main from "@/components/discover/Main";
 import Sections from "@/components/discover/Sections";
 import Header from "@/components/main/Header";
+import { useSavedMovies } from "@/context/SavedMoviesProvider";
 import {
   fetchActionMovies,
   fetchComedyTV,
