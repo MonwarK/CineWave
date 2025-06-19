@@ -40,6 +40,7 @@ export default function TopNav({ navigation, setIsSidenavOpen }: Props) {
         <div className="hidden lg:flex items-center text-sm text-gray-300 text-center font-medium">
           {navigation.map((navItem) => (
             <div
+              key={`top-nav-${navItem.name}`}
               className={classNames(
                 "hover:text-white cursor-pointer border-b-3 py-5 w-28",
                 {
