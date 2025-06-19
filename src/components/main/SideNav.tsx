@@ -54,18 +54,20 @@ export default function SideNav({
 
               <div className="space-y-4 py-10">
                 {navigation.map((navItem) => (
-                  <div
-                    className={classNames(
-                      "hover:text-white cursor-pointer py-2 whitespace-nowrap",
-                      {
-                        "text-gray-400": pathname !== navItem.link,
-                        "border-orange-500 text-white":
-                          pathname === navItem.link,
-                      }
-                    )}
-                  >
-                    {navItem.name}
-                  </div>
+                  <Link href={navItem.link}>
+                    <div
+                      className={classNames(
+                        "hover:text-white cursor-pointer py-2 whitespace-nowrap",
+                        {
+                          "text-gray-400": pathname !== navItem.link,
+                          "border-orange-500 text-white":
+                            pathname === navItem.link,
+                        }
+                      )}
+                    >
+                      {navItem.name}
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>
