@@ -1,5 +1,5 @@
 import ProfilePage from "@/components/profile/ProfilePage";
-import { getCurrentPlan } from "@/libs/getCurrentPlan";
+import { getCurrentPlan } from "@/utils/getCurrentPlan";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function CustomProfilePage() {
