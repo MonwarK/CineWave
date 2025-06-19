@@ -1,4 +1,5 @@
 "use client"
+import { useSavedMovies } from "@/context/SavedMoviesProvider";
 import { Movie } from "@/types/Movie";
 import classNames from "classnames";
 import Link from "next/link";
@@ -14,6 +15,10 @@ interface Props {
 }
 
 export default function MainInfo({ fullMovie, similarMovies }: Props) {
+  const { addMovie, isSaved } = useSavedMovies();
+
+  const isMovieSaved = isSaved(fullMovie.id);
+
   const [selectedMovie, setSelectedMovie] = useState(null);
   const mediaType = fullMovie.media_type || (fullMovie.name ? "series" : "movies");
 
@@ -46,8 +51,11 @@ export default function MainInfo({ fullMovie, similarMovies }: Props) {
       </div>
 
       <div className="flex flex-row gap-2">
-        <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2  font-semibold">
-          Add to List
+        <button
+          onClick={() => addMovie(fullMovie)}
+          className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2  font-semibold"
+        >
+          {isMovieSaved ? "Saved" : "Add To List"}
         </button>
         <Link
           href={`/${mediaType}/${fullMovie.id}`}>

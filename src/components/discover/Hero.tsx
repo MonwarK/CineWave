@@ -1,3 +1,4 @@
+import { useSavedMovies } from "@/context/SavedMoviesProvider";
 import { Movie } from "@/types/Movie";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -10,6 +11,9 @@ interface Props {
 
 export default function Hero({ movie, dominantColor, openMovie }: Props) {
   const [color, setColor] = useState<string>("white");
+  const { addMovie, isSaved } = useSavedMovies();
+
+  const isMovieSaved = isSaved(movie.id);
 
   useEffect(() => {
     const isDark = isColorDark(dominantColor || "#000000"); // your color logic
@@ -49,19 +53,26 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
           <p>{movie.overview}</p>
         </div>
         {dominantColor && (
-          <div className="sm:flex space-y-5 sm:space-y-0 sm:space-x-5 uppercase py-5">
-            <div
-              onClick={openMovie}
-              style={{
-                backgroundColor: dominantColor || undefined,
-                color,
-              }}
-              className="hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition"
-            >
-              Watch
+          <div className="sm:flex space-y-5 sm:space-y-0 sm:space-x-5 py-5">
+            <div>
+              <button
+                onClick={openMovie}
+                style={{
+                  backgroundColor: dominantColor || undefined,
+                  color,
+                }}
+                className="hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition uppercase"
+              >
+                Watch
+              </button>
             </div>
-            <div className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition">
-              Add To List
+            <div>
+              <button
+                onClick={() => addMovie(movie)}
+                className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition uppercase"
+              >
+                {isMovieSaved ? "Saved" : "Add To List"}
+              </button>
             </div>
           </div>
         )}
