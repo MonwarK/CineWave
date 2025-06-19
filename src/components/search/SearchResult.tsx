@@ -1,19 +1,25 @@
 "use client";
 
 import { Movie } from "@/types/Movie";
-import { Play, Plus, Star } from "lucide-react";
+import { Check, Info, Play, Plus, Star } from "lucide-react";
 import React from "react";
 import Genres from "../movie-modal/Genres";
 import { getGenreNameFromId } from "@/utils/genreMap";
 import { motion } from "framer-motion";
 import { itemVariants } from "@/motion/variants/motion";
+import Link from "next/link";
+import { useSavedMovies } from "@/context/SavedMoviesProvider";
+import SquaredButton from "../ui/SquaredButton";
 
 interface Props {
   result: Movie;
-  selectMovie: () => void;
 }
 
-export default function SearchResult({ result, selectMovie }: Props) {
+export default function SearchResult({ result }: Props) {
+  const { addMovie, isSaved } = useSavedMovies();
+
+  const isResultSaved = isSaved(result.id);
+
   const genres = result.genre_ids.map(
     (id, i) =>
       i < 3 && {
@@ -33,6 +39,10 @@ export default function SearchResult({ result, selectMovie }: Props) {
 
     return `${randomHour}h ${randomMinutes}min`;
   };
+
+  const resultType = result?.name
+    ? { name: "Series", url: "series" }
+    : { name: "Movies", url: "movies" };
 
   return (
     <motion.div
@@ -78,8 +88,8 @@ export default function SearchResult({ result, selectMovie }: Props) {
                   </span>
                 </div>
               )}
-              <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded">
-                {result?.name ? "SERIES" : "MOVIE"}
+              <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded uppercase">
+                {resultType.name}
               </span>
             </div>
           </div>
@@ -103,16 +113,29 @@ export default function SearchResult({ result, selectMovie }: Props) {
 
         {/* Buttons */}
         <div className="flex items-center space-x-3 mt-4">
-          <button
-            onClick={selectMovie}
-            className="bg-white text-black px-6 py-2 rounded-md hover:bg-gray-200 transition-colors flex items-center space-x-2 cursor-pointer"
-          >
+          <SquaredButton variant="primary">
             <Play className="w-4 h-4 fill-current" />
             <span className="font-semibold">Play</span>
-          </button>
-          <button className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
-            <Plus className="w-4 h-4" />
-          </button>
+          </SquaredButton>
+          <Link href={`/${resultType.url}/${result.id}`} target="_blank">
+            <SquaredButton
+              variant="secondary"
+              className="border-none hover:opacity-95"
+            >
+              <span className="font-semibold">Details</span>
+            </SquaredButton>
+          </Link>
+          <SquaredButton
+            variant="info"
+            className="rounded-3xl"
+            onClick={() => addMovie(result)}
+          >
+            {isResultSaved ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Plus className="w-4 h-4" />
+            )}
+          </SquaredButton>
         </div>
       </div>
     </motion.div>
