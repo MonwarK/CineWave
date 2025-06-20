@@ -1,9 +1,11 @@
 // components/movie/MovieBanner.tsx
-import { Play, Plus, Heart, Share2 } from "lucide-react";
+"use client"
 import SquaredButton from "@/components/ui/SquaredButton";
 import { Movie } from "@/types/Movie";
+import { Heart, Play, Plus, Share2 } from "lucide-react";
 
 export default function MovieBanner({ movie }: { movie: Movie }) {
+
   return (
     <div className="flex flex-col justify-center items-center p-0">
       <div className="relative w-full overflow-hidden min-h-[50vh] text-white flex flex-col justify-end">
@@ -38,7 +40,11 @@ export default function MovieBanner({ movie }: { movie: Movie }) {
               <Heart className="w-5 h-5" />
               <p>Favorite</p>
             </SquaredButton>
-            <SquaredButton variant="secondary">
+            <SquaredButton onClick={() => {
+              navigator.clipboard.writeText(
+                window.location.href
+              )
+            }} variant="secondary">
               <Share2 className="w-5 h-5" />
               <p>Share</p>
             </SquaredButton>

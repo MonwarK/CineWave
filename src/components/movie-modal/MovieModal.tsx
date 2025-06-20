@@ -16,6 +16,8 @@ export default function MovieModal({ movie, onClose }: Props) {
   const [fullMovie, setFullMovie] = useState<Movie>();
   
 
+  console.log(trailerKey);
+  console.log(fullMovie);
   
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function MovieModal({ movie, onClose }: Props) {
         );
         const videoData = await videoRes.json();
         const trailer = videoData.results?.find(
-          (v: any) => v.type === "Trailer" && v.site === "YouTube"
+          (v: any) => (v.type === "Trailer" || v.type === "Featurette") && ( v.site === "YouTube")
         );
         setTrailerKey(trailer?.key || "");
       } catch (err) {
