@@ -16,8 +16,8 @@ export default function MovieBanner({ movie }: { movie: Movie }) {
 
         <div className="relative z-0 p-4 mx-auto w-full container space-y-10 mb-5">
           <div className="space-y-5 lg:w-1/2">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-2">
-              {movie.title}
+            <h1 className="text-4xl lg:text-5xl font-bold mb-5">
+              {movie.title || movie.name}
             </h1>
             {movie.tagline && (
               <p className="text-xl text-gray-300 italic">"{movie.tagline}"</p>
