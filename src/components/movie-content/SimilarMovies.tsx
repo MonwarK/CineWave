@@ -13,7 +13,6 @@ export default function SimilarMovies({ similarMovies}: { similarMovies: Movie[]
     <div className='bg-zinc-900 p-5 rounded-lg border border-zinc-700'>
     <div className='space-y-8'>
     <h2 className="text-2xl font-semibold mb-4">Similar Movies</h2>
-    </div>        
     <div className='flex flex-wrap gap-4 justify-center'>
     {similarMovies.slice(0,8).map((similar: Movie) => (
                 <motion.div
@@ -41,6 +40,8 @@ export default function SimilarMovies({ similarMovies}: { similarMovies: Movie[]
                  </div>
               </motion.div>
         ))}
+    </div>        
+
     </div>
     </div>
   )
