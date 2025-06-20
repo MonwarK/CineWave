@@ -8,6 +8,7 @@ import { createContext, useContext, useState } from "react";
 type SavedMoviesContextType = {
   savedMovies: SavedMovie[];
   addMovie: (movie: Movie) => void;
+  // removeMovie: (movie: Movie) => void;
   isSaved: (movie_id: number) => boolean;
 };
 
@@ -49,6 +50,18 @@ export const SavedMoviesProvider = ({
   const isSaved = (movie_id: number) => {
     return savedMovies.some((m) => parseInt(m.movie_id) === movie_id);
   };
+
+  // const deleteMovie = (movie: Movie) => {
+  //   const isMovieSaved = isSaved(movie.id);
+  //   if(!isMovieSaved) return;
+
+  //   removeMovie(movie)
+  //   .then((res) => res.json())
+  //   .then((json) => {
+  //     setSavedMovies((prev) => [...prev, json.data[0]])
+  //   })
+  //   .catch((e) => console.log(3, e))
+  // }
 
   return (
     <SavedMoviesContext.Provider value={{ savedMovies, addMovie, isSaved }}>

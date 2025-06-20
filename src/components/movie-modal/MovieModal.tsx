@@ -15,6 +15,7 @@ export default function MovieModal({ movie, onClose }: Props) {
   const [trailerKey, setTrailerKey] = useState("");
   const [fullMovie, setFullMovie] = useState<Movie>();
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([])
+
   
 
   useEffect(() => {
@@ -50,8 +51,6 @@ export default function MovieModal({ movie, onClose }: Props) {
     async function getSimilarMovies() {
     if (!movie) return;
       
-    console.log(movie?.media_type)
-    console.log(mediaType)
       try {
         const similarMovies = await fetch(
           `https://api.themoviedb.org/3/${mediaType}/${movie?.id}/similar?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`

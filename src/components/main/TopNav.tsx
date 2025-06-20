@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { CreditCard, Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   navigation: {
@@ -39,18 +39,17 @@ export default function TopNav({ navigation, setIsSidenavOpen }: Props) {
         {/* Navigation */}
         <div className="hidden lg:flex items-center text-sm text-gray-300 text-center font-medium">
           {navigation.map((navItem) => (
-            <div
-              key={`top-nav-${navItem.name}`}
-              className={classNames(
-                "hover:text-white cursor-pointer border-b-3 py-5 w-28",
-                {
-                  "border-transparent": pathname !== navItem.link,
-                  "border-orange-500 text-white": pathname === navItem.link,
-                }
-              )}
-            >
-              <Link href={navItem.link}>{navItem.name}</Link>
-            </div>
+      
+              <Link 
+               key={`top-nav-${navItem.name}`}
+               className={classNames(
+                 "hover:text-white cursor-pointer border-b-3 py-5 w-28",
+                 {
+                   "border-transparent": pathname !== navItem.link,
+                   "border-orange-500 text-white": pathname === navItem.link,
+                 }
+               )}
+              href={navItem.link}>{navItem.name}</Link>
           ))}
         </div>
 

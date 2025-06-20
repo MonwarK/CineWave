@@ -3,7 +3,7 @@ export type SavedMovie = {
   user_id: string;
   movie_id: string;
   title: string;
-  poster: string;
+  poster_path: string;
   hasWatched: boolean;
   created_at: Date;
 };
