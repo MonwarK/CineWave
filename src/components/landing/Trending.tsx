@@ -19,7 +19,7 @@ export default function Trending() {
         <div className="flex space-x-6 px-6">
           {movies.map((item, i) => (
             <div
-              key={i}
+              key={`movie-${item.name}`}
               className="relative w-40 h-60 rounded-xl overflow-hidden group"
             >
               <img

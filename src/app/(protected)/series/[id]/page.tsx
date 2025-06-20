@@ -103,7 +103,10 @@ export default async function SeriePage({ params }: { params: Params }) {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {serie.genres.map((genre: any) => (
-                    <div className="bg-gray-700/50 px-3 py-1 rounded-full">
+                    <div
+                      key={`genre-${genre.name}`}
+                      className="bg-gray-700/50 px-3 py-1 rounded-full"
+                    >
                       {genre.name}
                     </div>
                   ))}
@@ -189,7 +192,7 @@ export default async function SeriePage({ params }: { params: Params }) {
                       <div>
                         <p className="text-sm text-muted-foreground">Network</p>
                         {serie.networks.map((network: any) => (
-                          <p>{network.name}</p>
+                          <p key={`network-${network.name}`}>{network.name}</p>
                         ))}
                       </div>
                     </div>

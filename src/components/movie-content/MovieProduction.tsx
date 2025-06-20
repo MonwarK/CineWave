@@ -8,7 +8,10 @@ export default function MovieProduction({ movie }: { movie: Movie }) {
         <div className="text-2xl font-semibold">Production Companies</div>
         <div className="flex gap-4">
           {movie.production_companies?.map((company: any) => (
-            <div className="flex items-center flex-col gap-3 w-32 text-center">
+            <div
+              key={`company-${company.name}`}
+              className="flex items-center flex-col gap-3 w-32 text-center"
+            >
               <div className="w-20 h-20 grid place-items-center rounded-full bg-zinc-800">
                 <p className="text-2xl">
                   {company.name.split(" ").map((x: string) => x.charAt(0))}
