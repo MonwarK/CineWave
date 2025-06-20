@@ -16,7 +16,7 @@ export default function MovieAdditional({ movie }: { movie: Movie }) {
               </p>
             </div>
             <div>
-              <div className="flex space-x-3">
+              <div className="flex flex-wrap gap-2">
                 {movie.spoken_languages?.map((language) => (
                   <div
                     key={`language-${language.iso_639_1}`}
