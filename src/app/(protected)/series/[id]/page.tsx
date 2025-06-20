@@ -83,7 +83,7 @@ export default async function SeriePage({ params }: { params: Params }) {
                             </span>
                           </div>
                         ) : (
-                          <></>
+                          null
                         )}
                       </div>
                     </div>
