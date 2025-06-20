@@ -33,5 +33,5 @@ export type Movie = {
   episode_run_time?: number;
   networks: string[];
   number_of_seasons: number;
-  created_by: string;
+  created_by: { name: string }[];
 };

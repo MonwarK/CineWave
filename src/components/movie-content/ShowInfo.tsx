@@ -13,7 +13,10 @@ export default function ShowInfo({ show }: { show: Movie }) {
     },
     {
       heading: "Episode Runtime",
-      content: `${show.episode_run_time} Min`,
+      content:
+        show.episode_run_time && show.episode_run_time > 0
+          ? `${show.episode_run_time} Min`
+          : "Unknown",
     },
     {
       heading: "Network",
@@ -29,7 +32,10 @@ export default function ShowInfo({ show }: { show: Movie }) {
     },
     {
       heading: "Created By",
-      content: show.created_by.length > 0 ? show.created_by : "Unknown",
+      content:
+        show.created_by.length > 0
+          ? show.created_by?.map((x: any) => x.name).join(", ")
+          : "Unknown",
     },
     {
       heading: "Language",
