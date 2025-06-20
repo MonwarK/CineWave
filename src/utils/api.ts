@@ -105,6 +105,19 @@ export async function getSimilar(id: string, mediaType: string) {
   return data.results;
 }
 
+export async function getCredits(id: string, mediaType: string) {
+  const res = await fetch(
+      `https://api.themoviedb.org/3/${mediaType}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+  )
+
+  if(!res.ok) return
+
+  const data = await res.json();
+
+  return data.cast;
+}
+
+
 export async function searchTMDB(
   query: string,
   type: "movie" | "tv" | "multi" = "multi",
