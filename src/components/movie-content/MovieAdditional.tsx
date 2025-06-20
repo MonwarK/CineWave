@@ -18,7 +18,10 @@ export default function MovieAdditional({ movie }: { movie: Movie }) {
             <div>
               <div className="flex space-x-3">
                 {movie.spoken_languages?.map((language) => (
-                  <div className="bg-gray-700/50 border border-gray-600 text-gray-400 text-xs px-3 py-1 rounded-full">
+                  <div
+                    key={`language-${language.iso_639_1}`}
+                    className="bg-gray-700/50 border border-gray-600 text-gray-400 text-xs px-3 py-1 rounded-full"
+                  >
                     {language.name}
                   </div>
                 ))}

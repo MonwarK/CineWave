@@ -17,6 +17,7 @@ export default function SeriesSection({ series }: Props) {
         <div className="flex justify-center flex-wrap gap-4">
           {series.map((serie: Movie) => (
             <MovieRowItem
+              key={serie.id}
               movie={serie}
               selectMovie={() => setSelectedSeries(serie as any)}
             />

@@ -5,7 +5,7 @@ import { useState } from "react";
 import MovieRowItem from "../discover/MovieRowItem";
 
 interface Props {
-  savedMovies: SavedMovie[]
+  savedMovies: SavedMovie[];
 }
 
 export default function WatchlistSection({ savedMovies }: Props) {
@@ -17,9 +17,7 @@ export default function WatchlistSection({ savedMovies }: Props) {
       <div className="py-10 space-y-18">
         <div className="flex justify-center flex-wrap gap-4">
           {savedMovies.map((saved: SavedMovie) => (
-            <MovieRowItem
-              savedMovie={saved}
-            />
+            <MovieRowItem key={saved.id} savedMovie={saved} />
           ))}
         </div>
       </div>

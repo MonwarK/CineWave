@@ -54,7 +54,7 @@ export default function SideNav({
 
               <div className="space-y-4 py-10">
                 {navigation.map((navItem) => (
-                  <Link href={navItem.link}>
+                  <Link key={navItem.link} href={navItem.link}>
                     <div
                       className={classNames(
                         "hover:text-white cursor-pointer py-2 whitespace-nowrap",
