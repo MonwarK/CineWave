@@ -5,18 +5,14 @@ import MovieGenres from "@/components/movie-content/MovieGenres";
 import MovieProduction from "@/components/movie-content/MovieProduction";
 import MovieRating from "@/components/movie-content/MovieRating";
 import MovieStatsGrid from "@/components/movie-content/MovieStatsGrid";
-import SquaredButton from "@/components/ui/SquaredButton";
 import { Movie } from "@/types/Movie";
 import { fetchMovieById } from "@/utils/api";
-import { Calendar, Clock, Heart, Play, Plus, Share2, Star } from "lucide-react";
 
 type Params = Promise<{ id: string }>;
 
 export default async function MoviePage({ params }: { params: Params }) {
   const { id } = await params;
   const movie: Movie = await fetchMovieById(id);
-
-  console.log(movie);
 
   return (
     <div>

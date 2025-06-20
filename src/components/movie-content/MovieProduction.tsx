@@ -10,7 +10,7 @@ export default function MovieProduction({ movie }: { movie: Movie }) {
           {movie.production_companies?.map((company: any) => (
             <div
               key={`company-${company.name}`}
-              className="flex items-center flex-col gap-3 w-32 text-center"
+              className="flex flex-wrap items-center flex-col gap-3 w-32 text-center"
             >
               <div className="w-20 h-20 grid place-items-center rounded-full bg-zinc-800">
                 <p className="text-2xl">
