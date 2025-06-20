@@ -2,16 +2,16 @@
 
 import { itemVariants } from "@/motion/variants/motion";
 import { Movie } from "@/types/Movie";
-import { Info, Play, Plus, Star } from "lucide-react";
-import React from "react";
 import { motion } from "framer-motion";
+import { Info, Play, Plus, Star } from "lucide-react";
 import Link from "next/link";
 
 interface Props {
   movie: Movie;
+  mediaType: string
 }
 
-export default function MovieLandscapeThumbnail({ movie }: Props) {
+export default function MovieLandscapeThumbnail({ movie, mediaType }: Props) {
   return (
     <motion.div
       className="cursor-pointer"
@@ -28,7 +28,7 @@ export default function MovieLandscapeThumbnail({ movie }: Props) {
         <div className="absolute inset-0 bg-black/60 text-white opacity-0 group-hover:opacity-100 transition duration-300 text-xs">
           <div className="p-5 flex flex-col justify-between h-full space-y-3">
             <div>
-              <h2 className="text-lg font-medium">{movie.title}</h2>
+              <h2 className="text-lg font-medium">{movie.title || movie.name}</h2>
               <div className="flex items-center space-x-1">
                 <Star className="fill-yellow-400 text-yellow-400" size={12} />
                 <p>{movie.vote_average.toFixed(1)}</p>
@@ -42,7 +42,7 @@ export default function MovieLandscapeThumbnail({ movie }: Props) {
                 <Play size={16} className="fill-white" />
                 <p>Play</p>
               </button>
-              <Link href={`/movies/${movie.id}`}>
+              <Link href={mediaType === "movie" ? `/movies/${movie.id}` : `/series/${movie.id}`}>
                 <button className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-2 px-4 tracking-wider font-medium rounded-full transition uppercase flex items-center space-x-2">
                   <Info size={16} />
                   <p>Details</p>

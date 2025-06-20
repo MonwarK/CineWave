@@ -19,7 +19,6 @@ export default async function SeriePage({ params }: { params: Params }) {
   const similarMovies = await getSimilar(id, "tv");
   const credits = await getCredits(id, "tv");
 
-  console.log(show);
 
   return (
     <div>
