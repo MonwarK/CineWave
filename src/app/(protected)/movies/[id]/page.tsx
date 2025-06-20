@@ -19,8 +19,6 @@ export default async function MoviePage({ params }: { params: Params }) {
   const similarMovies = await getSimilar(id, "movie");
   const credits = await getCredits(id, "movie");
 
-  console.log(credits);
-
   return (
     <div>
       <Header />

@@ -14,11 +14,7 @@ type Props = {
 export default function MovieModal({ movie, onClose }: Props) {
   const [trailerKey, setTrailerKey] = useState("");
   const [fullMovie, setFullMovie] = useState<Movie>();
-  
 
-  console.log(trailerKey);
-  console.log(fullMovie);
-  
 
   useEffect(() => {
     if (!movie) return;
@@ -42,7 +38,12 @@ export default function MovieModal({ movie, onClose }: Props) {
         );
         const videoData = await videoRes.json();
         const trailer = videoData.results?.find(
-          (v: any) => (v.type === "Trailer" || v.type === "Featurette") && ( v.site === "YouTube")
+          (v: any) =>
+            (v.type === "Trailer" ||
+              v.type === "Featurette" ||
+              v.type === "Clip" ||
+              v.type === "Opening Credits") &&
+            v.site === "YouTube"
         );
         setTrailerKey(trailer?.key || "");
       } catch (err) {
@@ -51,8 +52,6 @@ export default function MovieModal({ movie, onClose }: Props) {
     }
     fetchDetailsAndTrailer();
   }, [movie]);
-
-
 
   if (!fullMovie) return null;
 
@@ -90,7 +89,7 @@ export default function MovieModal({ movie, onClose }: Props) {
               </div>
             )}
 
-            <MainInfo fullMovie={fullMovie}  />
+            <MainInfo fullMovie={fullMovie} />
 
             <button
               onClick={onClose}

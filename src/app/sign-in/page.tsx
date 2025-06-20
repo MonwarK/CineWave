@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import HeightAnimationContainer from "@/components/animation/HeightAnimationContainer";
+import AuthFormButton from "@/components/auth/AuthFormButton";
+import BackgroundImage from "@/components/auth/BackgroundImage";
+import BottomLink from "@/components/auth/BottomLink";
+import ErrorText from "@/components/auth/ErrorText";
+import TextBox from "@/components/auth/TextBox";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import BackgroundImage from "@/components/auth/BackgroundImage";
-import HeightAnimationContainer from "@/components/animation/HeightAnimationContainer";
-import TextBox from "@/components/auth/TextBox";
-import ErrorText from "@/components/auth/ErrorText";
-import AuthFormButton from "@/components/auth/AuthFormButton";
-import BottomLink from "@/components/auth/BottomLink";
+import React, { useState } from "react";
 
 export default function SignInPage() {
   const { signIn, isLoaded, setActive } = useSignIn();
@@ -37,7 +37,6 @@ export default function SignInPage() {
           router.push("/discover");
         });
     } catch (err: any) {
-      console.log();
       setError(err.errors?.[0]?.longMessage || "Sign-in failed");
       setIsLoading(false);
     }
