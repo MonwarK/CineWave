@@ -75,7 +75,7 @@ export default async function SeriePage({ params }: { params: Params }) {
                             <h4>{season.name}</h4>
                             <p>
                               {season.episode_count} episodes •{" "}
-                              {season.air_date.slice(0, 4)}
+                              {season.air_date ? season.air_date.slice(0, 4) : ""}
                             </p>
                           </div>
                         </div>
