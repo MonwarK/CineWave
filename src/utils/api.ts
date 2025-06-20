@@ -93,6 +93,18 @@ export async function fetchMovieById(slug: string) {
   return data;
 }
 
+export async function getSimilar(id: string, mediaType: string) {
+  const res = await fetch(
+      `https://api.themoviedb.org/3/${mediaType}/${id}/similar?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+  )
+
+  if(!res.ok) return
+
+  const data = await res.json();
+
+  return data.results;
+}
+
 export async function searchTMDB(
   query: string,
   type: "movie" | "tv" | "multi" = "multi",
