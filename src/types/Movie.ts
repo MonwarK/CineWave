@@ -1,5 +1,3 @@
-import { LargeNumberLike } from "crypto";
-
 export type Movie = {
   id: number;
   title?: string;
@@ -30,4 +28,10 @@ export type Movie = {
   production_companies?: {
     name: string;
   }[];
+  number_of_episodes?: number;
+  last_air_date: Date;
+  episode_run_time?: number;
+  networks: string[];
+  number_of_seasons: number;
+  created_by: string;
 };

@@ -6,4 +6,5 @@ export type SavedMovie = {
   poster_path: string;
   hasWatched: boolean;
   created_at: Date;
+  isMovie: boolean;
 };

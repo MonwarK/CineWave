@@ -14,14 +14,25 @@ export default function MovieStatsGrid({ movie }: { movie: Movie }) {
     <div className="grid lg:grid-cols-3 gap-3">
       <InfoCard
         label="Release Date"
-        value={new Date(movie.release_date).toDateString()}
+        value={new Date(
+          movie.release_date || movie.first_air_date
+        ).toDateString()}
         icon={<Calendar className="h-5 w-5 text-muted-foreground" />}
       />
-      <InfoCard
-        label="Runtime"
-        value={`${movie.runtime} Min`}
-        icon={<Clock className="h-5 w-5 text-muted-foreground" />}
-      />
+      {movie.title ? (
+        <InfoCard
+          label="Runtime"
+          value={`${movie.runtime} Min`}
+          icon={<Clock className="h-5 w-5 text-muted-foreground" />}
+        />
+      ) : (
+        <InfoCard
+          label={`Episodes (avg. ${movie.episode_run_time} mins)`}
+          value={`${movie.number_of_episodes}`}
+          icon={<Clock className="h-5 w-5 text-muted-foreground" />}
+        />
+      )}
+
       <InfoCard label="Status" value={movie.status} />
       <InfoCard
         label="Budget"
@@ -31,7 +42,10 @@ export default function MovieStatsGrid({ movie }: { movie: Movie }) {
         label="Revenue"
         value={movie.revenue ? formatCurrency(movie.revenue) : "Unknown"}
       />
-      <InfoCard label="Language" value={movie.spoken_languages?.[0].name} />
+      <InfoCard
+        label="Language"
+        value={movie.spoken_languages?.[0].english_name}
+      />
     </div>
   );
 }

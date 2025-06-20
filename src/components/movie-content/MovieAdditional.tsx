@@ -22,7 +22,7 @@ export default function MovieAdditional({ movie }: { movie: Movie }) {
                     key={`language-${language.iso_639_1}`}
                     className="bg-gray-700/50 border border-gray-600 text-gray-400 text-xs px-3 py-1 rounded-full"
                   >
-                    {language.name}
+                    {language.english_name}
                   </div>
                 ))}
               </div>
@@ -36,7 +36,7 @@ export default function MovieAdditional({ movie }: { movie: Movie }) {
               <p className="uppercase mb-2 text-gray-300">Original Language</p>
             </div>
             <div>
-              <p>{movie.spoken_languages?.[0].name}</p>
+              <p>{movie.spoken_languages?.[0].english_name}</p>
             </div>
           </div>
 

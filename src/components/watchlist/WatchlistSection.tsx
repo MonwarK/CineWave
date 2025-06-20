@@ -1,7 +1,6 @@
 "use client";
 
 import { SavedMovie } from "@/types/SavedMovies";
-import { useState } from "react";
 import MovieRowItem from "../discover/MovieRowItem";
 
 interface Props {
@@ -9,9 +8,6 @@ interface Props {
 }
 
 export default function WatchlistSection({ savedMovies }: Props) {
-  const [selectSaved, setSelectedSave] = useState(null);
-
-  console.log(selectSaved);
   return (
     <>
       <div className="py-10 space-y-18">
