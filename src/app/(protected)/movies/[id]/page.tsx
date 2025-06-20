@@ -45,7 +45,7 @@ export default async function MoviePage({ params }: { params: Params }) {
         {/* Production */}
         <MovieProduction movie={movie} />
 
-        <SimilarMovies similarMovies={similarMovies} />
+        <SimilarMovies similarMovies={similarMovies} mediaType="Movies" />
 
         <MovieCredits credits={credits} />
       </div>

@@ -6,13 +6,13 @@ import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
-export default function SimilarMovies({ similarMovies}: { similarMovies: Movie[]}) {
+export default function SimilarMovies({ similarMovies, mediaType}: { similarMovies: Movie[], mediaType: string}) {
 
 
   return (
     <div className='bg-zinc-900 p-5 rounded-lg border border-zinc-700'>
     <div className='space-y-8'>
-    <h2 className="text-2xl font-semibold mb-4">Similar Movies</h2>
+    <h2 className="text-2xl font-semibold mb-4">Similar {mediaType}</h2>
     <div className='flex flex-wrap gap-4 justify-center'>
     {similarMovies.slice(0,8).map((similar: Movie) => (
                 <motion.div
