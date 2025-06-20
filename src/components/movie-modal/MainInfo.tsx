@@ -4,17 +4,15 @@ import { Movie } from "@/types/Movie";
 import classNames from "classnames";
 import Link from "next/link";
 import { useState } from "react";
-import MovieRowItem from "../discover/MovieRowItem";
 import Genres from "./Genres";
 import Meta from "./Meta";
-import MovieModal from "./MovieModal";
 
 interface Props {
   fullMovie: Movie;
-  similarMovies?: Movie[];
+
 }
 
-export default function MainInfo({ fullMovie, similarMovies }: Props) {
+export default function MainInfo({ fullMovie }: Props) {
   const { addMovie, isSaved } = useSavedMovies();
 
   const isMovieSaved = isSaved(fullMovie.id);
@@ -63,28 +61,6 @@ export default function MainInfo({ fullMovie, similarMovies }: Props) {
           </button>
         </Link>
       </div>
-
-      {similarMovies ? (
-        <div className="mt-6">
-          <h2 className="mb-2">Similar Movies</h2>
-          <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
-            {similarMovies.slice(0, 3).map((movie: Movie, id) => (
-              <MovieRowItem
-                movie={movie}
-                key={id}
-                selectMovie={() => setSelectedMovie(movie as any)}
-              />
-            ))}
-
-            <MovieModal
-              movie={selectedMovie}
-              onClose={() => setSelectedMovie(null)}
-            />
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
     </div>
   );
 }

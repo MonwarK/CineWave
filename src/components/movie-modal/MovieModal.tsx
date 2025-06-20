@@ -14,7 +14,7 @@ type Props = {
 export default function MovieModal({ movie, onClose }: Props) {
   const [trailerKey, setTrailerKey] = useState("");
   const [fullMovie, setFullMovie] = useState<Movie>();
-  const [similarMovies, setSimilarMovies] = useState<Movie[]>([])
+  
 
   
 
@@ -47,25 +47,7 @@ export default function MovieModal({ movie, onClose }: Props) {
         console.error("Failed to fetch movie details or trailer", err);
       }
     }
-
-    async function getSimilarMovies() {
-    if (!movie) return;
-      
-      try {
-        const similarMovies = await fetch(
-          `https://api.themoviedb.org/3/${mediaType}/${movie?.id}/similar?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-        )
-
-        const data = await similarMovies.json();
-        setSimilarMovies(data.results)
-  
-      } catch(err) {
-        console.error("Failed to fetch similar movies", err)
-      }
-    }
-
     fetchDetailsAndTrailer();
-    getSimilarMovies();
   }, [movie]);
 
 
@@ -106,7 +88,7 @@ export default function MovieModal({ movie, onClose }: Props) {
               </div>
             )}
 
-            <MainInfo fullMovie={fullMovie} similarMovies={similarMovies} />
+            <MainInfo fullMovie={fullMovie}  />
 
             <button
               onClick={onClose}

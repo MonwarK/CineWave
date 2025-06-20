@@ -5,14 +5,17 @@ import MovieGenres from "@/components/movie-content/MovieGenres";
 import MovieProduction from "@/components/movie-content/MovieProduction";
 import MovieRating from "@/components/movie-content/MovieRating";
 import MovieStatsGrid from "@/components/movie-content/MovieStatsGrid";
+import SimilarMovies from "@/components/movie-content/SimilarMovies";
 import { Movie } from "@/types/Movie";
-import { fetchMovieById } from "@/utils/api";
+import { fetchMovieById, getSimilar } from "@/utils/api";
 
 type Params = Promise<{ id: string }>;
 
 export default async function MoviePage({ params }: { params: Params }) {
   const { id } = await params;
   const movie: Movie = await fetchMovieById(id);
+
+  const similarMovies = await getSimilar(id, "movie");
 
   return (
     <div>
@@ -37,6 +40,8 @@ export default async function MoviePage({ params }: { params: Params }) {
 
         {/* Production */}
         <MovieProduction movie={movie} />
+
+        <SimilarMovies similarMovies={similarMovies} />
       </div>
     </div>
   );
