@@ -1,29 +1,23 @@
 import Header from "@/components/main/Header";
 import MovieAdditional from "@/components/movie-content/MovieAdditional";
 import MovieBanner from "@/components/movie-content/MovieBanner";
+import MovieCredits from "@/components/movie-content/MovieCredits";
 import MovieGenres from "@/components/movie-content/MovieGenres";
 import MovieRating from "@/components/movie-content/MovieRating";
 import MovieStatsGrid from "@/components/movie-content/MovieStatsGrid";
 import ShowInfo from "@/components/movie-content/ShowInfo";
-import SquaredButton from "@/components/ui/SquaredButton";
-import { fetchTVById } from "@/utils/api";
-import {
-  Calendar,
-  Clock,
-  Heart,
-  Play,
-  Plus,
-  Share2,
-  Star,
-  Tv,
-} from "lucide-react";
+import SimilarMovies from "@/components/movie-content/SimilarMovies";
+import { fetchTVById, getCredits, getSimilar } from "@/utils/api";
+import { Star } from "lucide-react";
 
 type Params = Promise<{ id: string }>;
 
 export default async function SeriePage({ params }: { params: Params }) {
   const { id } = await params;
-
   const show = await fetchTVById(id);
+
+  const similarMovies = await getSimilar(id, "tv");
+  const credits = await getCredits(id, "tv");
 
   console.log(show);
 
@@ -75,7 +69,9 @@ export default async function SeriePage({ params }: { params: Params }) {
                             <h4>{season.name}</h4>
                             <p>
                               {season.episode_count} episodes •{" "}
-                              {season.air_date ? season.air_date.slice(0, 4) : ""}
+                              {season.air_date
+                                ? season.air_date.slice(0, 4)
+                                : ""}
                             </p>
                           </div>
                         </div>
@@ -97,6 +93,10 @@ export default async function SeriePage({ params }: { params: Params }) {
             </div>
           </div>
         </div>
+
+        <SimilarMovies similarMovies={similarMovies} />
+
+        <MovieCredits credits={credits} />
       </div>
     </div>
   );
