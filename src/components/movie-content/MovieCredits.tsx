@@ -67,51 +67,6 @@ export default function MovieCredits({ credits }: { credits: CastMember[] }) {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="max-w-screen-xl w-full mx-auto px-10"
-        >
-          <motion.div ref={containerRef} className="overflow-hidden">
-            <motion.div
-              ref={innerRef}
-              drag="x"
-              dragConstraints={{ right: 0, left: dragWidth }}
-              className="flex space-x-4 cursor-grab py-5"
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              {credits.map((member) => (
-                <motion.div
-                  key={member?.id}
-                  className="flex-shrink-0 w-40"
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <img
-                    src={
-                      member.profile_path
-                        ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
-                        : "/"
-                    }
-                    alt={member.name}
-                    className="w-full h-full object-cover group-hover:blur-[2px]"
-                  />
-                  <div className="">
-                    <h2 className="text-2xl mt-2 leading-tight">
-                      {member.name}
-                    </h2>
-                    <p className="text-sm text-gray-500 italic">
-                      {member.character}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </motion.div> */}
       </div>
     </div>
   );
