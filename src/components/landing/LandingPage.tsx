@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import Footer from "../main/Footer";
+import Features from "./Features";
 import Hero from "./Hero";
 import Plan from "./Plan";
 import Trending from "./Trending";
-import Features from "./Features";
 
 export default function LandingPage() {
   return (
@@ -22,6 +22,8 @@ export default function LandingPage() {
         {/* Features */}
         <Features />
       </div>
+      <Footer/>
+
     </div>
   );
 }
