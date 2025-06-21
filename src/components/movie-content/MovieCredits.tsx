@@ -1,5 +1,5 @@
 "use client";
-import { containerVariants, itemVariants } from "@/motion/variants/motion";
+import { itemVariants } from "@/motion/variants/motion";
 import { CastMember } from "@/types/Credits";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -42,16 +42,16 @@ export default function MovieCredits({ credits }: { credits: CastMember[] }) {
                   className="flex-shrink-0 w-40 relative overflow-hidden flex flex-col"
                   variants={itemVariants}
                 >
-                  <div className="relative flex-1">
+                  <div className="relative">
                     <div className="absolute w-full h-full z-10" />
                     {member.profile_path ? (
                       <img
                         src={`https://image.tmdb.org/t/p/w500${member.profile_path}`}
                         alt={member.name}
-                        className="w-full h-full object-cover group-hover:blur-[2px] z-0 rounded-xl"
+                        className="w-full h-60 object-cover group-hover:blur-[2px] z-0 rounded-xl"
                       />
                     ) : (
-                      <div className="h-full w-full bg-gray-800 rounded-xl" />
+                      <div className="w-full h-60 bg-gray-800 rounded-xl" />
                     )}
                   </div>
                   <div>
