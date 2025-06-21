@@ -7,9 +7,7 @@ import { getEpisodeServer, getMovieServer, servers } from "@/utils/servers";
 import Link from "next/link";
 import classNames from "classnames";
 
-export default function WatchMoviePage({ movie, isMovie }: { movie: Movie, isMovie: boolean }) {
-  const [isLoading, setisLoading] = useState(second);
-  
+export default function WatchMoviePage({ movie, isMovie }: { movie: Movie, isMovie: boolean }) {  
   // Server 
   const [currentServerIndex, setCurrentServerIndex] = useState(0);
   const currentServer = servers[currentServerIndex];
