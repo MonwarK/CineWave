@@ -1,5 +1,6 @@
 import Main from "@/components/discover/Main";
 import Sections from "@/components/discover/Sections";
+import Footer from "@/components/main/Footer";
 import Header from "@/components/main/Header";
 import {
   fetchActionMovies,
@@ -27,7 +28,7 @@ export default async function page() {
   const nowPlaying = await fetchNowPlaying();
 
   return (
-    <div className="bg-zinc-900/50 pb-10 relative">
+    <div className="bg-zinc-900/50 relative">
       <Header />
 
       <Main
@@ -48,6 +49,7 @@ export default async function page() {
         airingToday={airingToday}
         nowPlaying={nowPlaying}
       />
+      <Footer />
     </div>
   );
 }

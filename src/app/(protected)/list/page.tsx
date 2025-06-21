@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/main/Footer";
 import Header from "@/components/main/Header";
 import WatchlistSection from "@/components/watchlist/WatchlistSection";
 import { useSavedMovies } from "@/context/SavedMoviesProvider";
@@ -14,6 +15,7 @@ export default function ListPage() {
           Your Watchlist
         </h1>
         <WatchlistSection savedMovies={savedMovies} />
+        <Footer />
       </div>
     </div>
   );

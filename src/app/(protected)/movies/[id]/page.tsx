@@ -1,3 +1,4 @@
+import Footer from "@/components/main/Footer";
 import Header from "@/components/main/Header";
 import MovieAdditional from "@/components/movie-content/MovieAdditional";
 import MovieBanner from "@/components/movie-content/MovieBanner";
@@ -47,6 +48,7 @@ export default async function MoviePage({ params }: { params: Params }) {
 
         <MovieCredits credits={credits} />
       </div>
+      <Footer />
     </div>
   );
 }

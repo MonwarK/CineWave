@@ -1,3 +1,4 @@
+import Footer from "@/components/main/Footer";
 import Header from "@/components/main/Header";
 import MovieLandscapeThumbnail from "@/components/movie-card/MovieLandscapeThumbnail";
 import { Movie } from "@/types/Movie";
@@ -30,6 +31,7 @@ export default async function SeriesPage() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
  

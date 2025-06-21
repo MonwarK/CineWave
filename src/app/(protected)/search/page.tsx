@@ -1,13 +1,14 @@
 "use client";
 
+import FullPageLoader from "@/components/loading/FullPageLoader";
+import Footer from "@/components/main/Footer";
 import Genres from "@/components/main/Genres";
 import Header from "@/components/main/Header";
-import { searchTMDB } from "@/utils/api";
-import React, { useState } from "react";
-import FullPageLoader from "@/components/loading/FullPageLoader";
 import SearchBarSection from "@/components/search/SearchBarSection";
-import SearchResults from "@/components/search/SearchResults";
 import SearchNoResults from "@/components/search/SearchNoResults";
+import SearchResults from "@/components/search/SearchResults";
+import { searchTMDB } from "@/utils/api";
+import { useState } from "react";
 
 export default function page() {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +63,7 @@ export default function page() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

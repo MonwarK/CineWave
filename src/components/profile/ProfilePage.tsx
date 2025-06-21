@@ -1,7 +1,7 @@
 "use client";
 
+import Footer from "@/components/main/Footer";
 import { PricingTable, useUser } from "@clerk/nextjs";
-import React from "react";
 import Header from "../main/Header";
 import UserCard from "./UserCard";
 
@@ -43,6 +43,7 @@ export default function ProfilePage({ currentPlan }: Props) {
           />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
