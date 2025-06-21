@@ -17,11 +17,8 @@ export default async function ProtectedLayout({
     .eq("user_id", userId);
 
   return (
-    <>
-    <Header/>
-        <SavedMoviesProvider initialMovies={savedMovies as SavedMovie[]}>
+    <SavedMoviesProvider initialMovies={savedMovies as SavedMovie[]}>
       {children}
     </SavedMoviesProvider>
-    </>
   );
 }
