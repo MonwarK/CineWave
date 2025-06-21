@@ -76,10 +76,16 @@ export default function SeriesEpisodes({
                           className=" bg-zinc-700 rounded-md border border-transparent overflow-hidden"
                         >
                           <div>
-                            <img
+                          {ep.still_path ? (
+                              <img
                               src={`https://image.tmdb.org/t/p/w1920${ep.still_path}`}
                               className="aspect-video overflow-hidden relative"
+                              loading="lazy"
                             />
+                          ) : (
+                      <div className="w-full h-[200px] bg-gray-800 rounded-md" />
+
+                          )}
 
                             <div className="p-4 flex flex-col gap-2">
                               <h2 className="text-xl font-bold leading-tight">
