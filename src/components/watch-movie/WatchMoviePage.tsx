@@ -1,13 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ChevronLeft, Menu } from "lucide-react";
 import { Movie } from "@/types/Movie";
-import { servers } from "@/utils/servers";
+import { getMovieServer, servers } from "@/utils/servers";
 import Link from "next/link";
+import classNames from "classnames";
 
 export default function WatchMoviePage({ movie }: { movie: Movie }) {
-  console.log(movie);
+  const [currentServerIndex, setCurrentServerIndex] = useState(0);
+
+  const currentServer = servers[currentServerIndex];
+  const videoSrc = getMovieServer(currentServerIndex, movie.id);
+
+  console.log(videoSrc);
 
   return (
     <div className="bg-black min-h-screen flex flex-col">
@@ -36,7 +42,7 @@ export default function WatchMoviePage({ movie }: { movie: Movie }) {
         <div className="flex-1">
           <div className="aspect-video bg-black">
             <iframe
-              src="https://vidsrc.cc/v3/embed/movie/552524?autoPlay=false"
+              src={videoSrc}
               allowFullScreen
               width="100%"
               height="100%"
@@ -54,7 +60,7 @@ export default function WatchMoviePage({ movie }: { movie: Movie }) {
                 {movie.title}
               </h1>
               <div className="text-xs text-whtie uppercase bg-orange-600 px-3 py-1 rounded-md font-semibold">
-                Server 1
+                Server {currentServer.id}: {currentServer.name}
               </div>
             </div>
 
@@ -65,7 +71,7 @@ export default function WatchMoviePage({ movie }: { movie: Movie }) {
               </p>
             </div>
 
-            {/* Channel Info and Actions */}
+            {/* Channel Info */}
             <div>
               <div className="text-gray-400 text-xs">
                 {movie?.production_companies?.[0].name}
@@ -82,12 +88,23 @@ export default function WatchMoviePage({ movie }: { movie: Movie }) {
 
           {/* Recommended Videos */}
           <div className="space-y-4">
-            {servers.map((item) => (
+            {servers.map((item, i) => (
               <div
+                onClick={() => setCurrentServerIndex(i)}
                 key={item.id}
-                className="bg-zinc-900 p-5 rounded-lg border border-zinc-700"
+                className={classNames(
+                  "p-5 rounded-lg border space-y-1 cursor-pointer",
+                  {
+                    "bg-zinc-800 border-zinc-500": currentServer.id === item.id,
+                    "bg-zinc-900 border-zinc-700 hover:opacity-80":
+                      currentServer.id !== item.id,
+                  }
+                )}
               >
-                {item.name}
+                <h2 className="text-sm">
+                  Server {item.id}: {item.name}
+                </h2>
+                <p className="text-xs text-gray-400">{item.description}</p>
               </div>
             ))}
           </div>
