@@ -6,31 +6,49 @@ import { Movie } from "@/types/Movie";
 import { getEpisodeServer, getMovieServer, servers } from "@/utils/servers";
 import Link from "next/link";
 import classNames from "classnames";
+import { getEpisodesGroupedBySeason } from "@/utils/api";
 
-export default function WatchMoviePage({ movie, isMovie }: { movie: Movie, isMovie: boolean }) {  
-  // Server 
+export default function WatchMoviePage({
+  movie,
+  isMovie,
+}: {
+  movie: Movie;
+  isMovie: boolean;
+}) {
+  // Server
   const [currentServerIndex, setCurrentServerIndex] = useState(0);
   const currentServer = servers[currentServerIndex];
 
   // Seasons + Episodes
-  const [season, setSeason] = useState(1)
+  const [episodesBySeason, setEpisodesBySeason] = useState({});
+  const [season, setSeason] = useState(1);
   const [episode, setEpisode] = useState(1);
 
   // Video src
   const [videoSrc, setVideoSrc] = useState("");
 
-  useEffect(()=> {
-    setVideoSrc("");
-    if(isMovie) {
-      const getMovieLink = getMovieServer(currentServerIndex, movie.id) || "";
-      setVideoSrc(getMovieLink)
-    } else {
-      const getEpisodeLink = getEpisodeServer(currentServerIndex, movie.id, season, episode) || "";
-      setVideoSrc(getEpisodeLink)
-    }
-  }, [season, episode, currentServerIndex])
+  console.log(movie);
 
-  console.log(movie)
+  useEffect(() => {
+    setVideoSrc("");
+    if (isMovie) {
+      const getMovieLink = getMovieServer(currentServerIndex, movie.id) || "";
+      setVideoSrc(getMovieLink);
+    } else {
+      const getEpisodeLink =
+        getEpisodeServer(currentServerIndex, movie.id, season, episode) || "";
+      setVideoSrc(getEpisodeLink);
+    }
+  }, [season, episode, currentServerIndex]);
+
+  useEffect(() => {
+    // Call and store in state
+    getEpisodesGroupedBySeason(movie.id, movie.seasons).then((res) =>
+      setEpisodesBySeason(res)
+    );
+  }, [movie.id]);
+
+  console.log(episodesBySeason);
 
   return (
     <div className="bg-black min-h-screen flex flex-col">
@@ -38,7 +56,7 @@ export default function WatchMoviePage({ movie, isMovie }: { movie: Movie, isMov
       <div className="bg-black border-b border-gray-800 px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href={`/${isMovie ? "movies": "series"}/${movie.id}`}>
+            <Link href={`/${isMovie ? "movies" : "series"}/${movie.id}`}>
               <div className="text-white hover:text-gray-300 transition-colors">
                 <ChevronLeft className="w-6 h-6" />
               </div>
@@ -84,32 +102,61 @@ export default function WatchMoviePage({ movie, isMovie }: { movie: Movie, isMov
             {!isMovie && (
               <div>
                 <div className="flex justify-between items-center">
-                  <select onChange={(e) => setSeason(e.target.value)} className="bg-zinc-900 p-3 rounded-md">
-                    {movie.seasons.map((season, i) => (
-                      i !== 0 && (
-                        <option key={season.name} value={i}>
-                          {season.name}
-                        </option>
-                      )
-                    ))}
+                  <select
+                    onChange={(e) => {
+                      setSeason(e.target.value);
+                      setEpisode(episodesBySeason[season][0].episode_number);
+                    }}
+                    className="bg-zinc-900 p-3 rounded-md"
+                  >
+                    {movie.seasons.map(
+                      (season, i) =>
+                        i !== 0 && (
+                          <option key={season.name} value={i}>
+                            {season.name}
+                          </option>
+                        )
+                    )}
                   </select>
 
-                  <select onChange={(e) => setEpisode(e.target.value)} className="bg-zinc-900 p-3 rounded-md">
-                    {Array(movie.seasons[season].episode_count).fill().map((_, i) => (
-                      <option key={`season-${season}-episode-${i}`} value={i+1}>
-                        Episode {i+1}
-                      </option>
-                    ))}
+                  <select
+                    onChange={(e) => setEpisode(e.target.value)}
+                    className="bg-zinc-900 p-3 rounded-md"
+                  >
+                    {episodesBySeason &&
+                      episodesBySeason?.[season]?.map((ep, i) => (
+                        <option
+                          key={`season-${season}-episode-${i}`}
+                          value={ep.episode_number}
+                        >
+                          Episode {ep.episode_number}
+                        </option>
+                      ))}
                   </select>
                 </div>
               </div>
             )}
 
-            <div>
+            <div className="space-y-2">
+              <div className="font-medium text-lg">Overview</div>
               <p className="text-gray-300 leading-relaxed whitespace-pre-line">
                 {movie.overview}
               </p>
             </div>
+
+            {!isMovie && (
+              <div className="space-y-2">
+                <div className="font-medium text-lg">
+                  S{season} E{episode} -{" "}
+                  {episodesBySeason?.[season]?.[episode - 1]?.name}
+                </div>
+                <div>
+                  <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+                    {episodesBySeason?.[season]?.[episode - 1]?.overview}
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div>
               <div className="text-gray-400 text-xs">

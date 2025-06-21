@@ -1,5 +1,9 @@
 import React from "react";
-import { fetchMovieById, fetchTVById } from "@/utils/api";
+import {
+  fetchMovieById,
+  fetchTVById,
+  getEpisodesGroupedBySeason,
+} from "@/utils/api";
 import { Movie } from "@/types/Movie";
 import WatchMoviePage from "@/components/watch-movie/WatchMoviePage";
 
