@@ -5,7 +5,9 @@ import { Movie } from "@/types/Movie";
 import { Heart, Play, Plus, Share2 } from "lucide-react";
 import Link from "next/link";
 
-export default function MovieBanner({ movie }: { movie: Movie }) {
+export default function MovieBanner({ movie, link }: { movie: Movie, link: string }) {
+  const isMovie = movie.title ? true : false;
+
   return (
     <div className="flex flex-col justify-center items-center p-0">
       <div className="relative w-full overflow-hidden min-h-[50vh] text-white flex flex-col justify-end">
@@ -28,10 +30,10 @@ export default function MovieBanner({ movie }: { movie: Movie }) {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Link href={`/movies/watch/${movie.id}`}>
+            <Link href={link}>
               <SquaredButton>
                 <Play className="w-5 h-5" />
-                <p>Watch Now</p>
+                <p>Watch Now {!isMovie && "S1 E1"}</p>
               </SquaredButton>
             </Link>
             <SquaredButton variant="secondary">

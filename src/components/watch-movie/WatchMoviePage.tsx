@@ -1,19 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeft, Menu } from "lucide-react";
 import { Movie } from "@/types/Movie";
-import { getMovieServer, servers } from "@/utils/servers";
+import { getEpisodeServer, getMovieServer, servers } from "@/utils/servers";
 import Link from "next/link";
 import classNames from "classnames";
 
-export default function WatchMoviePage({ movie }: { movie: Movie }) {
+export default function WatchMoviePage({ movie, isMovie }: { movie: Movie, isMovie: boolean }) {
+  const [isLoading, setisLoading] = useState(second);
+  
+  // Server 
   const [currentServerIndex, setCurrentServerIndex] = useState(0);
-
   const currentServer = servers[currentServerIndex];
-  const videoSrc = getMovieServer(currentServerIndex, movie.id);
 
-  console.log(videoSrc);
+  // Seasons + Episodes
+  const [season, setSeason] = useState(1)
+  const [episode, setEpisode] = useState(1);
+
+  // Video src
+  const [videoSrc, setVideoSrc] = useState("");
+
+  useEffect(()=> {
+    setVideoSrc("");
+    if(isMovie) {
+      const getMovieLink = getMovieServer(currentServerIndex, movie.id) || "";
+      setVideoSrc(getMovieLink)
+    } else {
+      const getEpisodeLink = getEpisodeServer(currentServerIndex, movie.id, season, episode) || "";
+      setVideoSrc(getEpisodeLink)
+    }
+  }, [season, episode, currentServerIndex])
+
+  console.log(movie)
 
   return (
     <div className="bg-black min-h-screen flex flex-col">
@@ -21,7 +40,7 @@ export default function WatchMoviePage({ movie }: { movie: Movie }) {
       <div className="bg-black border-b border-gray-800 px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href={`/movies/${movie.id}`}>
+            <Link href={`/${isMovie ? "movies": "series"}/${movie.id}`}>
               <div className="text-white hover:text-gray-300 transition-colors">
                 <ChevronLeft className="w-6 h-6" />
               </div>
@@ -41,37 +60,59 @@ export default function WatchMoviePage({ movie }: { movie: Movie }) {
         {/* Video Player Section */}
         <div className="flex-1">
           <div className="aspect-video bg-black">
-            <iframe
-              src={videoSrc}
-              allowFullScreen
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              className="w-full h-full"
-              title="Video Player"
-            />
+            {videoSrc && (
+              <iframe
+                src={videoSrc}
+                allowFullScreen
+                width="100%"
+                height="100%"
+                className="w-full h-full"
+                title="Video Player"
+              />
+            )}
           </div>
 
           {/* Video Info Section */}
           <div className="p-6 bg-black space-y-4">
-            {/* Video Title */}
             <div className="md:flex justify-between items-center">
               <h1 className="text-white text-xl md:text-2xl font-semibold leading-tight mb-4">
-                {movie.title}
+                {isMovie ? movie.title : movie.name}
               </h1>
               <div className="text-xs text-whtie uppercase bg-orange-600 px-3 py-1 rounded-md font-semibold">
                 Server {currentServer.id}: {currentServer.name}
               </div>
             </div>
 
-            {/* Description */}
+            {!isMovie && (
+              <div>
+                <div className="flex justify-between items-center">
+                  <select onChange={(e) => setSeason(e.target.value)} className="bg-zinc-900 p-3 rounded-md">
+                    {movie.seasons.map((season, i) => (
+                      i !== 0 && (
+                        <option key={season.name} value={i}>
+                          {season.name}
+                        </option>
+                      )
+                    ))}
+                  </select>
+
+                  <select onChange={(e) => setEpisode(e.target.value)} className="bg-zinc-900 p-3 rounded-md">
+                    {Array(movie.seasons[season].episode_count).fill().map((_, i) => (
+                      <option key={`season-${season}-episode-${i}`} value={i+1}>
+                        Episode {i+1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+
             <div>
               <p className="text-gray-300 leading-relaxed whitespace-pre-line">
                 {movie.overview}
               </p>
             </div>
 
-            {/* Channel Info */}
             <div>
               <div className="text-gray-400 text-xs">
                 {movie?.production_companies?.[0].name}
@@ -80,13 +121,12 @@ export default function WatchMoviePage({ movie }: { movie: Movie }) {
           </div>
         </div>
 
-        {/* Sidebar - Netflix Style Recommendations */}
+        {/* Available Servers */}
         <div className="lg:w-96 bg-black border-l border-gray-800 p-6">
           <h3 className="text-white font-semibold mb-4 uppercase">
             Available Servers
           </h3>
 
-          {/* Recommended Videos */}
           <div className="space-y-4">
             {servers.map((item, i) => (
               <div

@@ -19,11 +19,11 @@ export default async function SeriePage({ params }: { params: Params }) {
   const similarMovies = await getSimilar(id, "tv");
   const credits = await getCredits(id, "tv");
 
-
   return (
     <div>
       <Header />
-      <MovieBanner movie={show} />
+      <MovieBanner movie={show} link={`/series/watch/${id}`} />
+
       <div className="pt-10 px-5 pb-[1rem] container mx-auto space-y-10">
         {/* Stats */}
         <MovieStatsGrid movie={show} />

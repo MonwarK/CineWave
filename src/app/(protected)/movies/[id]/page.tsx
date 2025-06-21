@@ -22,7 +22,7 @@ export default async function MoviePage({ params }: { params: Params }) {
   return (
     <div>
       <Header />
-      <MovieBanner movie={movie} />
+      <MovieBanner movie={movie} link={`/movies/watch/${movie.id}`} />
 
       <div className="pt-10 px-5 pb-[1rem] container mx-auto space-y-10">
         {/* Stats */}
