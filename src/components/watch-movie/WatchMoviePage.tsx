@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { ChevronLeft, Menu } from "lucide-react";
-import { Movie } from "@/types/Movie";
-import { getEpisodeServer, getMovieServer, servers } from "@/utils/servers";
-import Link from "next/link";
-import classNames from "classnames";
+import { Episode, Movie } from "@/types/Movie";
 import { getEpisodesGroupedBySeason } from "@/utils/api";
+import { getEpisodeServer, getMovieServer, servers } from "@/utils/servers";
+import classNames from "classnames";
+import { ChevronLeft, Menu } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function WatchMoviePage({
   movie,
@@ -20,14 +20,17 @@ export default function WatchMoviePage({
   const currentServer = servers[currentServerIndex];
 
   // Seasons + Episodes
-  const [episodesBySeason, setEpisodesBySeason] = useState({});
+  const [episodesBySeason, setEpisodesBySeason] = useState<
+    Record<number, Episode[]>
+  >({});
   const [season, setSeason] = useState(1);
   const [episode, setEpisode] = useState(1);
+
 
   // Video src
   const [videoSrc, setVideoSrc] = useState("");
 
-  console.log(movie);
+  console.log("Movie", movie);
 
   useEffect(() => {
     setVideoSrc("");
@@ -48,7 +51,7 @@ export default function WatchMoviePage({
     );
   }, [movie.id]);
 
-  console.log(episodesBySeason);
+  console.log("Seasons",episodesBySeason);
 
   return (
     <div className="bg-black min-h-screen flex flex-col">
@@ -104,7 +107,7 @@ export default function WatchMoviePage({
                 <div className="flex justify-between items-center">
                   <select
                     onChange={(e) => {
-                      setSeason(e.target.value);
+                      setSeason(Number(e.target.value));
                       setEpisode(episodesBySeason[season][0].episode_number);
                     }}
                     className="bg-zinc-900 p-3 rounded-md"
@@ -120,11 +123,11 @@ export default function WatchMoviePage({
                   </select>
 
                   <select
-                    onChange={(e) => setEpisode(e.target.value)}
+                    onChange={(e) => setEpisode(Number(e.target.value))}
                     className="bg-zinc-900 p-3 rounded-md"
                   >
                     {episodesBySeason &&
-                      episodesBySeason?.[season]?.map((ep, i) => (
+                      episodesBySeason?.[season]?.map((ep: Episode, i: number) => (
                         <option
                           key={`season-${season}-episode-${i}`}
                           value={ep.episode_number}

@@ -34,4 +34,28 @@ export type Movie = {
   networks: string[];
   number_of_seasons: number;
   created_by: { name: string }[];
+  seasons: Season[];
 };
+
+export type Season = {
+  id: number;
+  air_date: Date | null;
+  episode_count: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
+}
+
+export type Episode = {
+  air_date: Date;
+  episode_number: number;
+  id: number;
+  name: string;
+  overview:string;
+  runtime: number;
+  still_path: string;
+  vote_average: number;
+  vote_count: number
+}

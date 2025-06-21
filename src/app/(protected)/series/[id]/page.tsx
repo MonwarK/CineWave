@@ -6,10 +6,10 @@ import MovieCredits from "@/components/movie-content/MovieCredits";
 import MovieGenres from "@/components/movie-content/MovieGenres";
 import MovieRating from "@/components/movie-content/MovieRating";
 import MovieStatsGrid from "@/components/movie-content/MovieStatsGrid";
+import SeriesEpisodes from "@/components/movie-content/SeriesEpisodes";
 import ShowInfo from "@/components/movie-content/ShowInfo";
 import SimilarMovies from "@/components/movie-content/SimilarMovies";
 import { fetchTVById, getCredits, getSimilar } from "@/utils/api";
-import { Star } from "lucide-react";
 
 type Params = Promise<{ id: string }>;
 
@@ -19,6 +19,8 @@ export default async function SeriePage({ params }: { params: Params }) {
 
   const similarMovies = await getSimilar(id, "tv");
   const credits = await getCredits(id, "tv");
+
+  console.log(show);
 
   return (
     <div>
@@ -49,7 +51,7 @@ export default async function SeriePage({ params }: { params: Params }) {
             </div>
 
             {/* Seasons */}
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <h2 className="text-2xl font-semibold">{`Seasons (${show.seasons.length})`}</h2>
               <div className="grid gap-4">
                 {show.seasons.map((season: any) => (
@@ -90,7 +92,8 @@ export default async function SeriePage({ params }: { params: Params }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
+            <SeriesEpisodes seasons={show.seasons} id={show.id} />
           </div>
         </div>
 
