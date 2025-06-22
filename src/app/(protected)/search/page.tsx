@@ -1,25 +1,22 @@
-"use client";
+'use client';
 
-import FullPageLoader from "@/components/loading/FullPageLoader";
-import Footer from "@/components/main/Footer";
-import Genres from "@/components/main/Genres";
-import Header from "@/components/main/Header";
-import SearchBarSection from "@/components/search/SearchBarSection";
-import SearchNoResults from "@/components/search/SearchNoResults";
-import SearchResults from "@/components/search/SearchResults";
-import { searchTMDB } from "@/utils/api";
-import { useState } from "react";
+import FullPageLoader from '@/components/loading/FullPageLoader';
+import Header from '@/components/main/Header';
+import SearchBarSection from '@/components/search/SearchBarSection';
+import SearchNoResults from '@/components/search/SearchNoResults';
+import SearchResults from '@/components/search/SearchResults';
+import { searchTMDB } from '@/utils/api';
+import { useState } from 'react';
 
 export default function page() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState([]);
-  const [search, setSearch] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("All");
+  const [search, setSearch] = useState('');
 
   const handleSearch = () => {
     setIsLoading(true);
 
-    searchTMDB(search, "multi").then((results) => {
+    searchTMDB(search, 'multi').then(results => {
       setResults(results);
       setTimeout(() => setIsLoading(false), 500);
     });
@@ -37,13 +34,6 @@ export default function page() {
             setSearch={setSearch}
             handleSearch={handleSearch}
           />
-
-          <div>
-            <Genres
-              selectedGenre={selectedGenre}
-              setSelectedGenre={setSelectedGenre}
-            />
-          </div>
 
           {isLoading ? (
             <FullPageLoader />
