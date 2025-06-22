@@ -8,7 +8,7 @@ import MovieRating from '@/components/movie-content/MovieRating';
 import MovieStatsGrid from '@/components/movie-content/MovieStatsGrid';
 import SimilarMovies from '@/components/movie-content/SimilarMovies';
 import { Movie } from '@/types/Movie';
-import { fetchMovieById, getCredits, getSimilar } from '@/utils/api';
+import { fetchCredits, fetchMovieById, fetchSimilar } from '@/utils/api';
 
 type Params = Promise<{ id: string }>;
 
@@ -16,8 +16,8 @@ export default async function MoviePage({ params }: { params: Params }) {
   const { id } = await params;
   const movie: Movie = await fetchMovieById(id);
 
-  const similarMovies = await getSimilar(id, 'movie');
-  const credits = await getCredits(id, 'movie');
+  const similarMovies = await fetchSimilar(id, 'movie');
+  const credits = await fetchCredits(id, 'movie');
 
   return (
     <div>

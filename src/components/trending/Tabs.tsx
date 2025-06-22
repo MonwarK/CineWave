@@ -1,5 +1,6 @@
 'use client'
 import { Movie } from '@/types/Movie';
+import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import MovieLandscapeThumbnail from '../movie-card/MovieLandscapeThumbnail';
@@ -16,8 +17,8 @@ export default function Tabs({shows, movies}: Props) {
   return (
     <div>
         <div className='flex flex-row justify-center space-x-4  rounded-md w-fit p-2 mx-auto items-center mb-4'>
-            <button className={ "px-4 py-2 rounded-md transition duration-300 " + (isActive === 0 ? "bg-orange-900" : "bg-black/50")} onClick={() => setIsActive(0)} >Movies</button>
-            <button className={"px-4 py-2 rounded-md transition duration-300 " + (isActive === 1 ? "bg-orange-900" : "bg-black/50")} onClick={() => setIsActive(1)}>Shows</button>
+            <button className={clsx(isActive === 0 ? "bg-orange-900" : "bg-black/50", "px-4 py-2 rounded-md transition duration-300 cursor-pointer")} onClick={() => setIsActive(0)} >Movies</button>
+            <button className={clsx(isActive === 1 ? "bg-orange-900" : "bg-black/50", "px-4 py-2 rounded-md transition duration-300 cursor-pointer")} onClick={() => setIsActive(1)}>Shows</button>
         </div>
         <div>
         {isActive === 0 ? (
