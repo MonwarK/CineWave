@@ -122,23 +122,25 @@ export default function WatchMoviePage({
             {!isMovie && (
               <div>
                 <div className="flex justify-between items-center">
-                  <select
-                    onChange={(e) => {
-                      setSeason(Number(e.target.value));
-                      setEpisode(episodesBySeason[season][0].episode_number);
-                    }}
-                    className="bg-zinc-900 p-3 rounded-md"
-                    value={season}
-                  >
-                    {movie.seasons.map(
-                      (season, i) =>
-                        i !== 0 && (
-                          <option key={season.name} value={i}>
-                            {season.name}
-                          </option>
-                        )
-                    )}
-                  </select>
+                  {movie.seasons && (
+                    <select
+                      onChange={(e) => {
+                        setSeason(Number(e.target.value));
+                        setEpisode(episodesBySeason[season][0].episode_number);
+                      }}
+                      className="bg-zinc-900 p-3 rounded-md"
+                      value={season}
+                    >
+                      {movie.seasons.map(
+                        (season, i) =>
+                          season.season_number !== 0 && (
+                            <option key={season.name} value={i}>
+                              {season.name}
+                            </option>
+                          )
+                      )}
+                    </select>
+                  )}
 
                   <select
                     onChange={(e) => setEpisode(Number(e.target.value))}
