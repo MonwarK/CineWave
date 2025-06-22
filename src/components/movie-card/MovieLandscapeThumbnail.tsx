@@ -49,10 +49,19 @@ export default function MovieLandscapeThumbnail({ movie, mediaType }: Props) {
                 <p className="line-clamp-3">{movie.overview}</p>
               </div>
               <div className="flex items-center space-x-2">
-                <button className="bg-orange-500 hover:opacity-80 transition text-white cursor-pointer px-4 py-2 rounded-full uppercase font-bold flex items-center space-x-1">
-                  <Play size={16} className="fill-white" />
-                  <p>Play</p>
-                </button>
+                <Link
+                  href={
+                    mediaType === 'movie'
+                      ? `/movies/watch/${movie.id}`
+                      : `/series/watch/${movie.id}`
+                  }
+                  target="_blank"
+                >
+                  <button className="bg-orange-500 hover:opacity-80 transition text-white cursor-pointer px-4 py-2 rounded-full uppercase font-bold flex items-center space-x-1">
+                    <Play size={16} className="fill-white" />
+                    <p>Play</p>
+                  </button>
+                </Link>
                 <Link
                   href={
                     mediaType === 'movie'

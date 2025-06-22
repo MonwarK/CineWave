@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Movie } from "@/types/Movie";
-import { Check, Info, Play, Plus, Star } from "lucide-react";
-import React from "react";
-import Genres from "../movie-modal/Genres";
-import { getGenreNameFromId } from "@/utils/genreMap";
-import { motion } from "framer-motion";
-import { itemVariants } from "@/motion/variants/motion";
-import Link from "next/link";
-import { useSavedMovies } from "@/context/SavedMoviesProvider";
-import SquaredButton from "../ui/SquaredButton";
+import { Movie } from '@/types/Movie';
+import { Check, Info, Play, Plus, Star } from 'lucide-react';
+import React from 'react';
+import Genres from '../movie-modal/Genres';
+import { getGenreNameFromId } from '@/utils/genreMap';
+import { motion } from 'framer-motion';
+import { itemVariants } from '@/motion/variants/motion';
+import Link from 'next/link';
+import { useSavedMovies } from '@/context/SavedMoviesProvider';
+import SquaredButton from '../ui/SquaredButton';
 
 interface Props {
   result: Movie;
@@ -41,8 +41,8 @@ export default function SearchResult({ result }: Props) {
   };
 
   const resultType = result?.name
-    ? { name: "Series", url: "series" }
-    : { name: "Movies", url: "movies" };
+    ? { name: 'Series', url: 'series' }
+    : { name: 'Movies', url: 'movies' };
 
   return (
     <motion.div
@@ -51,7 +51,7 @@ export default function SearchResult({ result }: Props) {
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={itemVariants}
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.02 }}
       className="bg-zinc-800/50 rounded-2xl backdrop:blur-2xl overflow-hidden cursor-pointer flex items-center"
     >
       {/* Thumbnail */}
@@ -113,10 +113,12 @@ export default function SearchResult({ result }: Props) {
 
         {/* Buttons */}
         <div className="flex items-center space-x-3 mt-4">
-          <SquaredButton variant="primary">
-            <Play className="w-4 h-4 fill-current" />
-            <span className="font-semibold">Play</span>
-          </SquaredButton>
+          <Link href={`/${resultType.url}/watch/${result.id}`} target="_blank">
+            <SquaredButton variant="primary">
+              <Play className="w-4 h-4 fill-current" />
+              <span className="font-semibold">Play</span>
+            </SquaredButton>
+          </Link>
           <Link href={`/${resultType.url}/${result.id}`} target="_blank">
             <SquaredButton
               variant="secondary"

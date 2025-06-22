@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Episode, Movie } from "@/types/Movie";
-import { getEpisodesGroupedBySeason } from "@/utils/api";
-import { getEpisodeServer, getMovieServer, servers } from "@/utils/servers";
-import classNames from "classnames";
-import { ChevronLeft, Menu } from "lucide-react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Episode, Movie } from '@/types/Movie';
+import { getEpisodesGroupedBySeason } from '@/utils/api';
+import { getEpisodeServer, getMovieServer, servers } from '@/utils/servers';
+import classNames from 'classnames';
+import { ChevronLeft, Menu } from 'lucide-react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function WatchMoviePage({
   movie,
@@ -26,16 +26,16 @@ export default function WatchMoviePage({
     Record<number, Episode[]>
   >({});
 
-  const searchSeasonParam = parseInt(searchParams.get("season") || "1");
-  const initialSeasonValue = movie.seasons.find(
-    (x) => x.season_number === searchSeasonParam
+  const searchSeasonParam = parseInt(searchParams.get('season') || '1');
+  const initialSeasonValue = movie.seasons?.find(
+    x => x.season_number === searchSeasonParam
   )
     ? searchSeasonParam
     : 1;
 
-  const searchEpisodeParam = parseInt(searchParams.get("episode") || "1");
+  const searchEpisodeParam = parseInt(searchParams.get('episode') || '1');
   const initialEpisodeValue =
-    movie.seasons.find((x) => x.season_number === initialSeasonValue)
+    movie.seasons?.find(x => x.season_number === initialSeasonValue)
       ?.episode_count ||
     (0 <= searchEpisodeParam && searchEpisodeParam > 0)
       ? searchEpisodeParam
@@ -45,30 +45,28 @@ export default function WatchMoviePage({
   const [episode, setEpisode] = useState(initialEpisodeValue);
 
   // Video src
-  const [videoSrc, setVideoSrc] = useState("");
-
-  console.log("Movie", movie);
+  const [videoSrc, setVideoSrc] = useState('');
 
   useEffect(() => {
-    setVideoSrc("");
+    setVideoSrc('');
     if (isMovie) {
-      const getMovieLink = getMovieServer(currentServerIndex, movie.id) || "";
+      const getMovieLink = getMovieServer(currentServerIndex, movie.id) || '';
       setVideoSrc(getMovieLink);
     } else {
       const getEpisodeLink =
-        getEpisodeServer(currentServerIndex, movie.id, season, episode) || "";
+        getEpisodeServer(currentServerIndex, movie.id, season, episode) || '';
       setVideoSrc(getEpisodeLink);
     }
   }, [season, episode, currentServerIndex]);
 
   useEffect(() => {
     // Call and store in state
-    getEpisodesGroupedBySeason(movie.id, movie.seasons).then((res) =>
+    getEpisodesGroupedBySeason(movie.id, movie.seasons).then(res =>
       setEpisodesBySeason(res)
     );
   }, [movie.id]);
 
-  console.log("Seasons", episodesBySeason);
+  console.log('Seasons', episodesBySeason);
 
   return (
     <div className="flex flex-col">
@@ -76,7 +74,7 @@ export default function WatchMoviePage({
       <div className="bg-black border-b border-gray-800 px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href={`/${isMovie ? "movies" : "series"}/${movie.id}`}>
+            <Link href={`/${isMovie ? 'movies' : 'series'}/${movie.id}`}>
               <div className="text-white hover:text-gray-300 transition-colors">
                 <ChevronLeft className="w-6 h-6" />
               </div>
@@ -114,8 +112,10 @@ export default function WatchMoviePage({
               <h1 className="text-white text-xl md:text-2xl font-semibold leading-tight mb-4">
                 {isMovie ? movie.title : movie.name}
               </h1>
-              <div className="text-xs text-whtie uppercase bg-orange-600 px-3 py-1 rounded-md font-semibold">
-                Server {currentServer.id}: {currentServer.name}
+              <div>
+                <div className="text-xs text-whtie uppercase bg-orange-600 px-3 py-1 rounded-md font-semibold">
+                  Server {currentServer.id}: {currentServer.name}
+                </div>
               </div>
             </div>
 
@@ -124,7 +124,7 @@ export default function WatchMoviePage({
                 <div className="flex justify-between items-center">
                   {movie.seasons && (
                     <select
-                      onChange={(e) => {
+                      onChange={e => {
                         setSeason(Number(e.target.value));
                         setEpisode(episodesBySeason[season][0].episode_number);
                       }}
@@ -143,7 +143,7 @@ export default function WatchMoviePage({
                   )}
 
                   <select
-                    onChange={(e) => setEpisode(Number(e.target.value))}
+                    onChange={e => setEpisode(Number(e.target.value))}
                     className="bg-zinc-900 p-3 rounded-md"
                     value={episode}
                   >
@@ -173,7 +173,7 @@ export default function WatchMoviePage({
             {!isMovie && (
               <div className="space-y-2">
                 <div className="font-medium text-lg">
-                  S{season} E{episode} -{" "}
+                  S{season} E{episode} -{' '}
                   {episodesBySeason?.[season]?.[episode - 1]?.name}
                 </div>
                 <div>
@@ -204,10 +204,10 @@ export default function WatchMoviePage({
                 onClick={() => setCurrentServerIndex(i)}
                 key={item.id}
                 className={classNames(
-                  "p-5 rounded-lg border space-y-1 cursor-pointer",
+                  'p-5 rounded-lg border space-y-1 cursor-pointer',
                   {
-                    "bg-zinc-800 border-zinc-500": currentServer.id === item.id,
-                    "bg-zinc-900 border-zinc-700 hover:opacity-80":
+                    'bg-zinc-800 border-zinc-500': currentServer.id === item.id,
+                    'bg-zinc-900 border-zinc-700 hover:opacity-80':
                       currentServer.id !== item.id,
                   }
                 )}
