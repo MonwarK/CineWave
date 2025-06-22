@@ -43,8 +43,8 @@ export default function MovieRowItem({
             {isTapped && (
               <div className="absolute inset-0 bg-black/60 text-white flex items-center justify-center transition duration-300 text-xs text-center">
                 <button
-                  className="cursor-pointer flex items-center space-x-1 transition-all text-blue-400 hover:text-purple-500 uppercase"
                   onClick={selectMovie}
+                  className="cursor-pointer flex items-center px-8 py-4 font-semibold space-x-1 transition-all text-blue-400 hover:text-purple-500 uppercase"
                 >
                   <ExternalLink />
                   <p>View</p>

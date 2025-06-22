@@ -19,8 +19,8 @@ export async function fetchPopularMovies() {
   return handleFetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
 }
 
-export async function fetchTopRated() {
-  return handleFetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}`);
+export async function fetchTopRated(mediaType: 'movie' | 'tv') {
+  return handleFetch(`${BASE_URL}/${mediaType}/top_rated?api_key=${API_KEY}`);
 }
 
 export async function fetchUpcoming() {
@@ -93,9 +93,9 @@ export async function fetchMovieById(slug: string) {
   return data;
 }
 
-export async function fetchSimilar(id: string, mediaType: string) {
+export async function fetchRecommendations(id: string, mediaType: string) {
   const res = await fetch(
-    `https://api.themoviedb.org/3/${mediaType}/${id}/similar?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+    `https://api.themoviedb.org/3/${mediaType}/${id}/recommendations?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
   );
 
   if (!res.ok) return;

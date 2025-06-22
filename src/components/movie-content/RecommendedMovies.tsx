@@ -8,10 +8,10 @@ import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
-export default function SimilarMovies({
-  similarMovies,
+export default function RecommendedMovies({
+  recommendedMovies,
 }: {
-  similarMovies: Movie[];
+  recommendedMovies: Movie[];
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ export default function SimilarMovies({
     updateWidth();
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
-  }, [similarMovies]);
+  }, [recommendedMovies]);
 
   return (
     <div className="bg-zinc-900 p-5 rounded-lg border border-zinc-700 overflow-hidden">
@@ -44,7 +44,7 @@ export default function SimilarMovies({
               className="flex space-x-4 cursor-grab py-5 active:cursor-grabbing"
               viewport={{ once: true, amount: 0.3 }}
             >
-              {similarMovies.map((movie: Movie) => {
+              {recommendedMovies.map((movie: Movie) => {
                 const [isTapped, setIsTapped] = useState(false);
 
                 return (

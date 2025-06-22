@@ -1,7 +1,7 @@
-import Main from "@/components/discover/Main";
-import Sections from "@/components/discover/Sections";
-import Footer from "@/components/main/Footer";
-import Header from "@/components/main/Header";
+import Main from '@/components/discover/Main';
+import Sections from '@/components/discover/Sections';
+import Footer from '@/components/main/Footer';
+import Header from '@/components/main/Header';
 import {
   fetchActionMovies,
   fetchAiringToday,
@@ -13,12 +13,12 @@ import {
   fetchTopRated,
   fetchTrending,
   fetchUpcoming,
-} from "@/utils/api";
+} from '@/utils/api';
 
 export default async function page() {
   const trending = await fetchTrending();
   const popularMovie = await fetchPopularMovies();
-  const topRated = await fetchTopRated();
+  const topRated = await fetchTopRated('movie');
   const upcomingMovies = await fetchUpcoming();
   const popularTv = await fetchPopularTV();
   const actionMovies = await fetchActionMovies();

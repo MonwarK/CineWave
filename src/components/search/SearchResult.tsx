@@ -28,21 +28,11 @@ export default function SearchResult({ result }: Props) {
         }
     ) || [];
 
-  const getLength = () => {
-    if (result.name) {
-      const seasonCount = Math.floor(Math.random() * 6) + 1;
-      return `${seasonCount} seasons`;
-    }
-
-    const randomHour = Math.round(Math.random() * 2) + 1;
-    const randomMinutes = Math.floor(Math.random() * 60) + 1;
-
-    return `${randomHour}h ${randomMinutes}min`;
-  };
-
   const resultType = result?.name
     ? { name: 'Series', url: 'series' }
     : { name: 'Movies', url: 'movies' };
+
+  console.log(result);
 
   return (
     <motion.div
@@ -51,8 +41,7 @@ export default function SearchResult({ result }: Props) {
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={itemVariants}
-      whileHover={{ scale: 1.02 }}
-      className="bg-zinc-800/50 rounded-2xl backdrop:blur-2xl overflow-hidden cursor-pointer flex items-center"
+      className="bg-zinc-800/50 rounded-md backdrop:blur-2xl overflow-hidden flex items-center"
     >
       {/* Thumbnail */}
       <div className="flex items-center h-60">
@@ -60,20 +49,20 @@ export default function SearchResult({ result }: Props) {
           <img
             src={`https://image.tmdb.org/t/p/w500${result?.poster_path}`}
             alt=""
-            className="h-full object-cover rounded-l-xl"
+            className="h-full object-cover rounded-l-xl hidden sm:block"
           />
         ) : (
           <img
             src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNNLEL-qmmLeFR1nxJuepFOgPYfnwHR56vcw&s`}
             alt=""
-            className="h-full w-40 object-cover rounded-l-xl brightness-50"
+            className="h-full w-40 object-cover rounded-l-xl brightness-50 hidden sm:block"
           />
         )}
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-6 flex flex-col justify-between">
-        <div>
+      <div className="flex-1 flex flex-col min-h-60 p-6">
+        <div className="flex-1">
           {/* Title + Type + Rating */}
           <div className="flex items-start justify-between mb-2">
             <h3 className="font-bold md:text-xl text-white transition-colors">
@@ -102,13 +91,13 @@ export default function SearchResult({ result }: Props) {
                 <span>•</span>
               </>
             )}
-            <span>{getLength()}</span>
-            <span>•</span>
             <Genres genres={genres as Genre[]} />
           </div>
 
           {/* Description */}
-          <p className="text-gray-300 line-clamp-2">{result.overview}</p>
+          <p className="text-gray-300 line-clamp-4 md:line-clamp-3 flex-1">
+            {result.overview}
+          </p>
         </div>
 
         {/* Buttons */}

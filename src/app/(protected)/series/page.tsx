@@ -1,10 +1,10 @@
-import Header from "@/components/main/Header";
-import MovieLandscapeThumbnail from "@/components/movie-card/MovieLandscapeThumbnail";
-import { Movie } from "@/types/Movie";
-import { fetchSeries } from "@/utils/api";
+import Header from '@/components/main/Header';
+import MovieLandscapeThumbnail from '@/components/movie-card/MovieLandscapeThumbnail';
+import { Movie } from '@/types/Movie';
+import { fetchTopRated } from '@/utils/api';
 
 export default async function SeriesPage() {
-  const series = await fetchSeries();
+  const series = await fetchTopRated('tv');
 
   return (
     <div className="py-10">
