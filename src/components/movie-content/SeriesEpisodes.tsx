@@ -1,10 +1,10 @@
 'use client';
 import { Episode, Season } from '@/types/Movie';
 import { getEpisodesGroupedBySeason } from '@/utils/api';
-import { Play, ChevronDown, ChevronUp, Star } from 'lucide-react';
+import { ChevronDown, ChevronUp, Play, Star } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import SquaredButton from '../ui/SquaredButton';
-import Link from 'next/link';
 
 export default function SeriesEpisodes({
   seasons,
@@ -25,8 +25,6 @@ export default function SeriesEpisodes({
     );
   }, [id]);
 
-  // console.log(seasons);
-  console.log('Seasons Eps', episodesBySeason);
 
   return (
     <div className="space-y-4">
