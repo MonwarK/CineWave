@@ -20,13 +20,14 @@ export default function SearchResult({ result }: Props) {
 
   const isResultSaved = isSaved(result.id);
 
-  const genres = result.genre_ids.map(
-    (id, i) =>
-      i < 3 && {
-        id,
-        name: getGenreNameFromId(id),
-      }
-  );
+  const genres =
+    result?.genre_ids?.map(
+      (id, i) =>
+        i < 3 && {
+          id,
+          name: getGenreNameFromId(id),
+        }
+    ) || [];
 
   const getLength = () => {
     if (result.name) {

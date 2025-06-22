@@ -2,7 +2,7 @@
 import { Episode, Season } from '@/types/Movie';
 import { getEpisodesGroupedBySeason } from '@/utils/api';
 import { Play, ChevronDown, ChevronUp, Star } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SquaredButton from '../ui/SquaredButton';
 import Link from 'next/link';
 
@@ -17,6 +17,9 @@ export default function SeriesEpisodes({
   const [episodesBySeason, setEpisodesBySeason] = useState<
     Record<number, Episode[]>
   >({});
+  const [visibleEpisodes, setVisibleEpisodes] = useState<
+    Record<number, number>
+  >({});
 
   useEffect(() => {
     // Call and store in state
@@ -26,7 +29,7 @@ export default function SeriesEpisodes({
   }, [id]);
 
   // console.log(seasons);
-  console.log('Seasons Eps', episodesBySeason);
+  console.log('1', visibleEpisodes);
 
   return (
     <div className="space-y-4">
@@ -69,97 +72,127 @@ export default function SeriesEpisodes({
                   )}
                   <div
                     className="cursor-pointer"
-                    onClick={() =>
-                      setActiveSeason(isActive ? null : season.season_number)
-                    }
+                    onClick={() => {
+                      const seasonNum = season.season_number;
+                      setActiveSeason(isActive ? null : seasonNum);
+
+                      // If this season isn't in visibleEpisodes yet, set default visible count
+                      if (!visibleEpisodes[seasonNum]) {
+                        setVisibleEpisodes(prev => ({
+                          ...prev,
+                          [seasonNum]: 20,
+                        }));
+                      }
+                    }}
                   >
                     {isActive ? <ChevronUp /> : <ChevronDown />}
                   </div>
                 </div>
 
                 {isActive && (
-                  <div className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-4 pt-8">
-                    {episodesBySeason[season.season_number].map(
-                      (ep: Episode, i: any) => (
-                        <div
-                          key={ep.id || i}
-                          className=" bg-black/60 rounded-md border border-zinc-700 overflow-hidden"
-                        >
-                          <div className="h-full">
-                            <div className="flex flex-col h-full">
-                              <div>
-                                {/* Thumbnail */}
-                                {ep.still_path ? (
-                                  <img
-                                    src={`https://image.tmdb.org/t/p/w1920${ep.still_path}`}
-                                    className="aspect-video overflow-hidden relative"
-                                    loading="lazy"
-                                  />
-                                ) : (
-                                  <div className="w-full h-[200px] bg-gray-800 rounded-md" />
-                                )}
-                              </div>
-
-                              <div className="p-4 flex flex-col gap-2 flex-1">
-                                {/* Episode Name */}
+                  <React.Fragment>
+                    <div className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-4 pt-8">
+                      {episodesBySeason[season.season_number]
+                        .slice(0, visibleEpisodes[season.season_number] || 0)
+                        .map((ep: Episode, i: any) => (
+                          <div
+                            key={ep.id || i}
+                            className=" bg-black/60 rounded-md border border-zinc-700 overflow-hidden"
+                          >
+                            <div className="h-full">
+                              <div className="flex flex-col h-full">
                                 <div>
-                                  <h2 className="text-lg font-bold leading-tight">
-                                    Episode {ep.episode_number} - {ep.name}
-                                  </h2>
+                                  {/* Thumbnail */}
+                                  {ep.still_path ? (
+                                    <img
+                                      src={`https://image.tmdb.org/t/p/w1920${ep.still_path}`}
+                                      className="aspect-video overflow-hidden relative"
+                                      loading="lazy"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-[200px] bg-gray-800 rounded-md" />
+                                  )}
                                 </div>
 
-                                {/* Ratings */}
-                                <div>
+                                <div className="p-4 flex flex-col gap-2 flex-1">
+                                  {/* Episode Name */}
                                   <div>
-                                    <div className="flex items-center space-x-2">
+                                    <h2 className="text-lg font-bold leading-tight">
+                                      Episode {ep.episode_number} - {ep.name}
+                                    </h2>
+                                  </div>
+
+                                  {/* Ratings */}
+                                  <div>
+                                    <div>
                                       <div className="flex items-center space-x-2">
-                                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                        <span className="font-medium text-yellow-400">
-                                          {ep.vote_average
-                                            ? ep.vote_average
-                                            : 'No Rating'}
-                                        </span>
-                                      </div>
-                                      <div className="flex items-center space-x-2">
-                                        <span className="font-medium text-xs text-gray-400">
-                                          {new Date(ep.air_date).toDateString()}
-                                        </span>
+                                        <div className="flex items-center space-x-2">
+                                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                          <span className="font-medium text-yellow-400">
+                                            {ep.vote_average
+                                              ? ep.vote_average
+                                              : 'No Rating'}
+                                          </span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                          <span className="font-medium text-xs text-gray-400">
+                                            {new Date(
+                                              ep.air_date
+                                            ).toDateString()}
+                                          </span>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
 
-                                {/* Overview */}
-                                <div className="flex-1 pb-5">
-                                  <p className="text-sm line-clamp-4">
-                                    {ep.overview}
-                                  </p>
-                                </div>
+                                  {/* Overview */}
+                                  <div className="flex-1 pb-5">
+                                    <p className="text-sm line-clamp-4">
+                                      {ep.overview}
+                                    </p>
+                                  </div>
 
-                                {/* Watch */}
-                                <div>
-                                  <Link
-                                    href={{
-                                      pathname: `/series/watch/${id}`,
-                                      query: {
-                                        season: season.season_number,
-                                        episode: ep.episode_number,
-                                      },
-                                    }}
-                                  >
-                                    <SquaredButton className="w-full justify-center">
-                                      <Play className="w-5 h-5" />
-                                      <p>Watch Now</p>
-                                    </SquaredButton>
-                                  </Link>
+                                  {/* Watch */}
+                                  <div>
+                                    <Link
+                                      href={{
+                                        pathname: `/series/watch/${id}`,
+                                        query: {
+                                          season: season.season_number,
+                                          episode: ep.episode_number,
+                                        },
+                                      }}
+                                    >
+                                      <SquaredButton className="w-full justify-center">
+                                        <Play className="w-5 h-5" />
+                                        <p>Watch Now</p>
+                                      </SquaredButton>
+                                    </Link>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      )
+                        ))}
+                    </div>
+                    {season.episode_count >=
+                      visibleEpisodes[season.season_number] && (
+                      <div className="flex justify-center">
+                        <button
+                          className="text-sm text-blue-400 hover:underline py-5 cursor-pointer"
+                          onClick={() =>
+                            setVisibleEpisodes(prev => ({
+                              ...prev,
+                              [season.season_number]:
+                                prev[season.season_number] + 20,
+                            }))
+                          }
+                        >
+                          Load More Episodes
+                        </button>
+                      </div>
                     )}
-                  </div>
+                  </React.Fragment>
                 )}
               </div>
             </div>
