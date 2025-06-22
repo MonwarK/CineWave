@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import SideNav from "./SideNav";
-import TopNav from "./TopNav";
+import { useState } from 'react';
+import SideNav from './SideNav';
+import TopNav from './TopNav';
 
 const navigation = [
   {
-    name: "Home",
-    link: "/discover",
+    name: 'Home',
+    link: '/discover',
   },
   {
-    name: "TV Shows",
-    link: "/series",
+    name: 'Trending',
+    link: '/trending',
   },
   {
-    name: "Movies",
-    link: "/movies",
+    name: 'TV Shows',
+    link: '/series',
   },
   {
-    name: "Recently Added",
-    link: "/recently-added",
+    name: 'Movies',
+    link: '/movies',
   },
   {
-    name: "My List",
-    link: "/list",
+    name: 'My List',
+    link: '/list',
   },
 ];
 
