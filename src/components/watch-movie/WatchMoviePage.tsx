@@ -6,6 +6,7 @@ import { getEpisodeServer, getMovieServer, servers } from "@/utils/servers";
 import classNames from "classnames";
 import { ChevronLeft, Menu } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function WatchMoviePage({
@@ -18,13 +19,30 @@ export default function WatchMoviePage({
   // Server
   const [currentServerIndex, setCurrentServerIndex] = useState(0);
   const currentServer = servers[currentServerIndex];
+  const searchParams = useSearchParams();
 
   // Seasons + Episodes
   const [episodesBySeason, setEpisodesBySeason] = useState<
     Record<number, Episode[]>
   >({});
-  const [season, setSeason] = useState(1);
-  const [episode, setEpisode] = useState(1);
+
+  const searchSeasonParam = parseInt(searchParams.get("season") || "1");
+  const initialSeasonValue = movie.seasons.find(
+    (x) => x.season_number === searchSeasonParam
+  )
+    ? searchSeasonParam
+    : 1;
+
+  const searchEpisodeParam = parseInt(searchParams.get("episode") || "1");
+  const initialEpisodeValue =
+    movie.seasons.find((x) => x.season_number === initialSeasonValue)
+      ?.episode_count ||
+    (0 <= searchEpisodeParam && searchEpisodeParam > 0)
+      ? searchEpisodeParam
+      : 1;
+
+  const [season, setSeason] = useState(initialSeasonValue);
+  const [episode, setEpisode] = useState(initialEpisodeValue);
 
   // Video src
   const [videoSrc, setVideoSrc] = useState("");
@@ -110,6 +128,7 @@ export default function WatchMoviePage({
                       setEpisode(episodesBySeason[season][0].episode_number);
                     }}
                     className="bg-zinc-900 p-3 rounded-md"
+                    value={season}
                   >
                     {movie.seasons.map(
                       (season, i) =>
@@ -124,6 +143,7 @@ export default function WatchMoviePage({
                   <select
                     onChange={(e) => setEpisode(Number(e.target.value))}
                     className="bg-zinc-900 p-3 rounded-md"
+                    value={episode}
                   >
                     {episodesBySeason &&
                       episodesBySeason?.[season]?.map(

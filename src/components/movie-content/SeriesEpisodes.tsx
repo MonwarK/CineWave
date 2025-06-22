@@ -1,8 +1,10 @@
 "use client";
 import { Episode, Season } from "@/types/Movie";
 import { getEpisodesGroupedBySeason } from "@/utils/api";
-import { Calendar, Star } from "lucide-react";
+import { Play, ChevronDown, ChevronUp, Star } from "lucide-react";
 import { useEffect, useState } from "react";
+import SquaredButton from "../ui/SquaredButton";
+import Link from "next/link";
 
 export default function SeriesEpisodes({
   seasons,
@@ -36,28 +38,26 @@ export default function SeriesEpisodes({
           return (
             <div
               key={season.season_number}
-              className="bg-zinc-900 p-5 rounded-lg border border-zinc-700 cursor-pointer"
-              onClick={() =>
-                setActiveSeason(isActive ? null : season.season_number)
-              }
+              className="bg-zinc-900 p-5 rounded-lg border border-zinc-700"
             >
               <div className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="h-16 w-16 bg-gray-700/50 rounded-lg flex items-center justify-center">
-                      <span className="font-bold text-lg">
-                        {season.season_number}
-                      </span>
-                    </div>
-                    <div>
-                      <h4>{season.name}</h4>
-                      <p>
-                        {season.episode_count} episodes •{" "}
-                        {season.air_date
-                          ? new Date(season.air_date).getFullYear()
-                          : null}
-                      </p>
-                    </div>
+                <div className="flex items-center justify-between gap-4">
+                  {/* Season Number */}
+                  <div className="h-16 w-16 bg-gray-700/50 rounded-lg flex items-center justify-center">
+                    <span className="font-bold text-lg">
+                      {season.season_number}
+                    </span>
+                  </div>
+
+                  {/* Season Information */}
+                  <div className="flex-1">
+                    <h4>{season.name}</h4>
+                    <p>
+                      {season.episode_count} episodes •{" "}
+                      {season.air_date
+                        ? new Date(season.air_date).getFullYear()
+                        : null}
+                    </p>
                   </div>
                   {season.vote_average > 0 && (
                     <div className="flex items-center gap-2">
@@ -65,47 +65,90 @@ export default function SeriesEpisodes({
                       <span className="font-medium">{season.vote_average}</span>
                     </div>
                   )}
+                  <div
+                    className="cursor-pointer"
+                    onClick={() =>
+                      setActiveSeason(isActive ? null : season.season_number)
+                    }
+                  >
+                    {isActive ? <ChevronUp /> : <ChevronDown />}
+                  </div>
                 </div>
 
                 {isActive && (
-                  <div className="grid md:grid-cols-4 grid-cols-2 gap-4 pt-8">
+                  <div className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-4 pt-8">
                     {episodesBySeason[season.season_number].map(
                       (ep: Episode, i: any) => (
                         <div
                           key={ep.id || i}
-                          className=" bg-zinc-700 rounded-md border border-transparent overflow-hidden"
+                          className=" bg-black/60 rounded-md border border-zinc-700 overflow-hidden flex flex-col"
                         >
+                          {/* Thumbnail */}
                           <div>
-                          {ep.still_path ? (
+                            {ep.still_path ? (
                               <img
-                              src={`https://image.tmdb.org/t/p/w1920${ep.still_path}`}
-                              className="aspect-video overflow-hidden relative"
-                              loading="lazy"
-                            />
-                          ) : (
-                      <div className="w-full h-[200px] bg-gray-800 rounded-md" />
+                                src={`https://image.tmdb.org/t/p/w1920${ep.still_path}`}
+                                className="aspect-video overflow-hidden relative"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="w-full h-[200px] bg-gray-800 rounded-md" />
+                            )}
 
-                          )}
-
-                            <div className="p-4 flex flex-col gap-2">
-                              <h2 className="text-xl font-bold leading-tight">
-                                Episode {ep.episode_number}: {ep.name}
-                              </h2>
+                            <div className="p-4 flex flex-col gap-2 border">
+                              {/* Episode Name */}
                               <div>
-                              <p className="text-xs">{ep.overview}</p>
-                            </div>
-                            <div className="flex-1">
-                                <div className="flex flex-row justify-between">
-                                <div className="flex items-center space-x-2">
-                                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                <span className="font-medium">{ep.vote_average ? ep.vote_average : "No Rating"}</span>    
+                                <h2 className="text-lg font-bold leading-tight">
+                                  Episode {ep.episode_number} - {ep.name}
+                                </h2>
+                              </div>
+
+                              {/* Ratings */}
+                              <div>
+                                <div>
+                                  <div className="flex items-center space-x-2">
+                                    <div className="flex items-center space-x-2">
+                                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                      <span className="font-medium text-yellow-400">
+                                        {ep.vote_average
+                                          ? ep.vote_average
+                                          : "No Rating"}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                      <span className="font-medium text-xs text-gray-400">
+                                        {new Date(ep.air_date).toDateString()}
+                                      </span>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="flex items-center space-x-2">
-                                <Calendar className="h-4 w-4 " />
-                                <span className="font-medium">{new Date(ep.air_date).toLocaleDateString()}</span>    
-                                </div>
-                                </div>
-                            </div>
+                              </div>
+
+                              {/* Overview */}
+                              <div className="flex-1">
+                                <p className="text-sm">{ep.overview}</p>
+                              </div>
+
+                              {/* Watch */}
+                              <div>
+                                <Link
+                                  href={{
+                                    pathname: `/series/watch/${id}`,
+                                    query: {
+                                      season: season.season_number,
+                                      episode: ep.episode_number,
+                                    },
+                                  }}
+                                >
+                                  <SquaredButton className="w-full justify-center">
+                                    <Play className="w-5 h-5" />
+                                    <p>
+                                      Watch Now S{season.season_number} E
+                                      {ep.episode_number}
+                                    </p>
+                                  </SquaredButton>
+                                </Link>
+                              </div>
                             </div>
                           </div>
                         </div>
