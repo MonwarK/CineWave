@@ -103,8 +103,8 @@ export default function WatchMoviePage({
       <div className="flex flex-col lg:flex-row max-w-screen-2xl w-full mx-auto flex-1 lg:pt-10">
         {/* Video Player Section */}
         <div className="flex-1">
-          <div className="bg-black/40">
-            <div className="aspect-video lg:px-5 max-h-[75vh] mx-auto">
+          <div className="lg:px-6">
+            <div className="aspect-video bg-black/40 max-h-[75vh] mx-auto">
               {videoSrc && (
                 <iframe
                   src={videoSrc}
@@ -119,9 +119,9 @@ export default function WatchMoviePage({
           </div>
 
           {/* Video Info Section */}
-          <div className="p-6 space-y-4">
-            <div className="md:flex justify-between items-center">
-              <h1 className="text-white text-xl md:text-2xl font-semibold leading-tight mb-4">
+          <div className="p-6 space-y-5">
+            <div className="flex justify-between items-center">
+              <h1 className="text-white text-xl lg:text-2xl font-semibold leading-none">
                 {isMovie ? movie.title : movie?.name}
               </h1>
               <div>
@@ -133,7 +133,7 @@ export default function WatchMoviePage({
 
             {!isMovie && (
               <div>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-5">
                   {movie.seasons && (
                     <select
                       onChange={e => {
@@ -156,7 +156,7 @@ export default function WatchMoviePage({
 
                   <select
                     onChange={e => setEpisode(Number(e.target.value))}
-                    className="bg-zinc-900 p-3 rounded-md tracking-wide outline-0"
+                    className="bg-zinc-900 p-3 rounded-md tracking-wide outline-0 lg:max-w-xs"
                     value={episode}
                   >
                     {episodesBySeason &&
@@ -175,14 +175,14 @@ export default function WatchMoviePage({
               </div>
             )}
 
-            <div className="space-y-2">
-              <div className="font-medium text-lg">Overview</div>
-              <p className="text-gray-300 leading-relaxed whitespace-pre-line">
-                {movie.overview}
-              </p>
-            </div>
-
-            {!isMovie && (
+            {isMovie ? (
+              <div className="space-y-2">
+                <div className="font-medium text-lg">Overview</div>
+                <p className="text-gray-300 leading-relaxed whitespace-pre-line">
+                  {movie.overview}
+                </p>
+              </div>
+            ) : (
               <div className="space-y-2">
                 <div className="font-medium text-lg">
                   S{season} E{episode} -{' '}
