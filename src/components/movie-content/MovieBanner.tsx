@@ -1,11 +1,20 @@
-// components/movie/MovieBanner.tsx
-"use client";
-import SquaredButton from "@/components/ui/SquaredButton";
-import { Movie } from "@/types/Movie";
-import { Heart, Play, Plus, Share2 } from "lucide-react";
-import Link from "next/link";
+'use client';
 
-export default function MovieBanner({ movie, link }: { movie: Movie, link: string }) {
+import SquaredButton from '@/components/ui/SquaredButton';
+import { useSavedMovies } from '@/context/SavedMoviesProvider';
+import { Movie } from '@/types/Movie';
+import { Check, Heart, Play, Plus, Share2 } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
+
+export default function MovieBanner({
+  movie,
+  link,
+}: {
+  movie: Movie;
+  link: string;
+}) {
+  const { addMovie, isSaved } = useSavedMovies();
   const isMovie = movie.title ? true : false;
 
   return (
@@ -33,13 +42,29 @@ export default function MovieBanner({ movie, link }: { movie: Movie, link: strin
             <Link href={link}>
               <SquaredButton>
                 <Play className="w-5 h-5" />
-                <p>Watch Now {!isMovie && "S1 E1"}</p>
+                <p>Watch Now {!isMovie && 'S1 E1'}</p>
               </SquaredButton>
             </Link>
-            <SquaredButton variant="secondary">
-              <Plus className="w-5 h-5" />
-              <p>Watchlist</p>
-            </SquaredButton>
+
+            {isSaved(movie.id) ? (
+              <React.Fragment>
+                <SquaredButton variant="secondary">
+                  <Check className="w-5 h-5" />
+                  <p>Added</p>
+                </SquaredButton>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <SquaredButton
+                  onClick={() => addMovie(movie)}
+                  variant="secondary"
+                >
+                  <Plus className="w-5 h-5" />
+                  <p>Watchlist</p>
+                </SquaredButton>
+              </React.Fragment>
+            )}
+
             <SquaredButton variant="secondary">
               <Heart className="w-5 h-5" />
               <p>Favorite</p>
