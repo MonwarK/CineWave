@@ -61,12 +61,11 @@ export default function WatchMoviePage({
 
   useEffect(() => {
     // Call and store in state
+    if (isMovie) return;
     getEpisodesGroupedBySeason(movie.id, movie.seasons).then(res =>
       setEpisodesBySeason(res)
     );
   }, [movie.id]);
-
-  console.log('Seasons', episodesBySeason);
 
   return (
     <div className="flex flex-col">

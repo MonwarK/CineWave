@@ -33,7 +33,7 @@ export default function SeriesEpisodes({
     <div className="space-y-4">
       <h2 className="text-2xl font-semibold">{`Seasons (${seasons.length})`}</h2>
       <div className="grid gap-4">
-        {seasons.map((season: Season) => {
+        {seasons?.map((season: Season) => {
           const isActive = activeSeason === season.season_number;
 
           if (season.season_number === 0) return;
@@ -87,102 +87,107 @@ export default function SeriesEpisodes({
                   </div>
                 </div>
 
-             
-                  <React.Fragment>
-                    <motion.div
-                    animate={ isActive ? { height: "auto", opacity: 1 } :  { height: 0, opacity: 0}}
-                   >
-                      <div  className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-4 pt-8">
-                      {isActive && episodesBySeason[season.season_number]
-                        .slice(0, visibleEpisodes[season.season_number] || 0)
-                        .map((ep: Episode, i: any) => (
-                          <div
-                            key={ep.id || i}
-                            className=" bg-black/60 rounded-md border border-zinc-700 overflow-hidden"
-                          >
-                            <div className="h-full">
-                              <div className="flex flex-col h-full">
-                                <div>
-                                  {/* Thumbnail */}
-                                  {ep.still_path ? (
-                                    <img
-                                      src={`https://image.tmdb.org/t/p/w1920${ep.still_path}`}
-                                      className="aspect-video overflow-hidden relative"
-                                      loading="lazy"
-                                    />
-                                  ) : (
-                                    <div className="w-full h-[200px] bg-gray-800 rounded-md" />
-                                  )}
-                                </div>
-
-                                <div className="p-4 flex flex-col gap-2 flex-1">
-                                  {/* Episode Name */}
+                <React.Fragment>
+                  <motion.div
+                    animate={
+                      isActive
+                        ? { height: 'auto', opacity: 1 }
+                        : { height: 0, opacity: 0 }
+                    }
+                  >
+                    <div className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-4 pt-8">
+                      {isActive &&
+                        episodesBySeason[season.season_number]
+                          .slice(0, visibleEpisodes[season.season_number] || 0)
+                          .map((ep: Episode, i: any) => (
+                            <div
+                              key={ep.id || i}
+                              className=" bg-black/60 rounded-md border border-zinc-700 overflow-hidden"
+                            >
+                              <div className="h-full">
+                                <div className="flex flex-col h-full">
                                   <div>
-                                    <h2 className="text-lg font-bold leading-tight">
-                                      Episode {ep.episode_number} - {ep.name}
-                                    </h2>
+                                    {/* Thumbnail */}
+                                    {ep.still_path ? (
+                                      <img
+                                        src={`https://image.tmdb.org/t/p/w1920${ep.still_path}`}
+                                        className="aspect-video overflow-hidden relative"
+                                        loading="lazy"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-[200px] bg-gray-800 rounded-md" />
+                                    )}
                                   </div>
 
-                                  {/* Ratings */}
-                                  <div>
+                                  <div className="p-4 flex flex-col gap-2 flex-1">
+                                    {/* Episode Name */}
                                     <div>
-                                      <div className="flex items-center space-x-2">
+                                      <h2 className="text-lg font-bold leading-tight">
+                                        Episode {ep.episode_number} - {ep.name}
+                                      </h2>
+                                    </div>
+
+                                    {/* Ratings */}
+                                    <div>
+                                      <div>
                                         <div className="flex items-center space-x-2">
-                                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                          <span className="font-medium text-yellow-400">
-                                            {ep.vote_average
-                                              ? ep.vote_average
-                                              : 'No Rating'}
-                                          </span>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                          <span className="font-medium text-xs text-gray-400">
-                                            {new Date(
-                                              ep.air_date
-                                            ).toDateString()}
-                                          </span>
+                                          <div className="flex items-center space-x-2">
+                                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                            <span className="font-medium text-yellow-400">
+                                              {ep.vote_average
+                                                ? ep.vote_average
+                                                : 'No Rating'}
+                                            </span>
+                                          </div>
+                                          <div className="flex items-center space-x-2">
+                                            <span className="font-medium text-xs text-gray-400">
+                                              {new Date(
+                                                ep.air_date
+                                              ).toDateString()}
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
 
-                                  {/* Overview */}
-                                  <div className="flex-1 pb-5">
-                                    <p className="text-sm line-clamp-4">
-                                      {ep.overview}
-                                    </p>
-                                  </div>
+                                    {/* Overview */}
+                                    <div className="flex-1 pb-5">
+                                      <p className="text-sm line-clamp-4">
+                                        {ep.overview}
+                                      </p>
+                                    </div>
 
-                                  {/* Watch */}
-                                  <div>
-                                    <Link
-                                      href={{
-                                        pathname: `/series/watch/${id}`,
-                                        query: {
-                                          season: season.season_number,
-                                          episode: ep.episode_number,
-                                        },
-                                      }}
-                                    >
-                                      <SquaredButton className="w-full justify-center">
-                                        <Play className="w-5 h-5" />
-                                        <p>Watch Now</p>
-                                      </SquaredButton>
-                                    </Link>
+                                    {/* Watch */}
+                                    <div>
+                                      <Link
+                                        href={{
+                                          pathname: `/series/watch/${id}`,
+                                          query: {
+                                            season: season.season_number,
+                                            episode: ep.episode_number,
+                                          },
+                                        }}
+                                      >
+                                        <SquaredButton className="w-full justify-center">
+                                          <Play className="w-5 h-5" />
+                                          <p>Watch Now</p>
+                                        </SquaredButton>
+                                      </Link>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                    {isActive && season.episode_count >=
+                          ))}
+                    </div>
+                  </motion.div>
+                  {isActive &&
+                    season.episode_count >=
                       visibleEpisodes[season.season_number] && (
                       <div className="flex justify-center">
                         <SquaredButton
-                        className='mt-6'
-                        variant='secondary'
+                          className="mt-6"
+                          variant="secondary"
                           onClick={() =>
                             setVisibleEpisodes(prev => ({
                               ...prev,
@@ -195,7 +200,7 @@ export default function SeriesEpisodes({
                         </SquaredButton>
                       </div>
                     )}
-                  </React.Fragment>
+                </React.Fragment>
               </div>
             </div>
           );
