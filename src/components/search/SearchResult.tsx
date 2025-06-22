@@ -2,7 +2,7 @@
 
 import { useSavedMovies } from '@/context/SavedMoviesProvider';
 import { itemVariants } from '@/motion/variants/motion';
-import { Movie } from '@/types/Movie';
+import { Genre, Movie } from '@/types/Movie';
 import { getGenreNameFromId } from '@/utils/genreMap';
 import { motion } from 'framer-motion';
 import { Check, Play, Plus, Star } from 'lucide-react';
@@ -104,7 +104,7 @@ export default function SearchResult({ result }: Props) {
             )}
             <span>{getLength()}</span>
             <span>•</span>
-            <Genres genres={genres as any} />
+            <Genres genres={genres as Genre[]} />
           </div>
 
           {/* Description */}

@@ -11,6 +11,7 @@ interface Props {
 
 export default function SeriesSection({ series }: Props) {
   const [selectSeries, setSelectedSeries] = useState(null);
+  console.log(series);
   return (
     <>
       <div className="py-10 space-y-18">
