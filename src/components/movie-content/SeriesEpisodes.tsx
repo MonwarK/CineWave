@@ -1,6 +1,7 @@
 'use client';
 import { Episode, Season } from '@/types/Movie';
 import { getEpisodesGroupedBySeason } from '@/utils/api';
+import { motion } from 'framer-motion';
 import { ChevronDown, ChevronUp, Play, Star } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -86,10 +87,13 @@ export default function SeriesEpisodes({
                   </div>
                 </div>
 
-                {isActive && (
+             
                   <React.Fragment>
-                    <div className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-4 pt-8">
-                      {episodesBySeason[season.season_number]
+                    <motion.div
+                    animate={ isActive ? { height: "auto", opacity: 1 } :  { height: 0, opacity: 0}}
+                   >
+                      <div  className="grid lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2 gap-4 pt-8">
+                      {isActive && episodesBySeason[season.season_number]
                         .slice(0, visibleEpisodes[season.season_number] || 0)
                         .map((ep: Episode, i: any) => (
                           <div
@@ -171,12 +175,14 @@ export default function SeriesEpisodes({
                             </div>
                           </div>
                         ))}
-                    </div>
-                    {season.episode_count >=
+                      </div>
+                    </motion.div>
+                    {isActive && season.episode_count >=
                       visibleEpisodes[season.season_number] && (
                       <div className="flex justify-center">
-                        <button
-                          className="text-sm text-blue-400 hover:underline py-5 cursor-pointer"
+                        <SquaredButton
+                        className='mt-6'
+                        variant='secondary'
                           onClick={() =>
                             setVisibleEpisodes(prev => ({
                               ...prev,
@@ -186,11 +192,10 @@ export default function SeriesEpisodes({
                           }
                         >
                           Load More Episodes
-                        </button>
+                        </SquaredButton>
                       </div>
                     )}
                   </React.Fragment>
-                )}
               </div>
             </div>
           );
