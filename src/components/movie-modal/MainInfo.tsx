@@ -8,6 +8,7 @@ import Genres from './Genres';
 import Meta from './Meta';
 import { Check, Play, Plus } from 'lucide-react';
 import SquaredButton from '../ui/SquaredButton';
+import Button from '../ui/RoundedButton';
 
 interface Props {
   fullMovie: Movie;
@@ -59,12 +60,13 @@ export default function MainInfo({ fullMovie }: Props) {
         <Link href={`/${mediaType}/${fullMovie.id}`}>
           <SquaredButton variant="secondary">View Details</SquaredButton>
         </Link>
-        <button
-          className="py-2 px-3 bg-zinc-700/50 hover:opacity-75 border border-zinc-500 rounded-xl cursor-pointer"
+        <Button
+          className="px-3"
+          variant="tertiary"
           onClick={() => isMovieSaved && addMovie(fullMovie)}
         >
           {isMovieSaved ? <Check size={20} /> : <Plus size={20} />}
-        </button>
+        </Button>
       </div>
     </div>
   );
