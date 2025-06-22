@@ -47,6 +47,10 @@ export default function WatchMoviePage({
   const [season, setSeason] = useState(initialSeasonValue);
   const [episode, setEpisode] = useState(initialEpisodeValue);
 
+  const currentEpisodeData = episodesBySeason?.[season]?.find(
+    ep => ep.episode_number === episode
+  );
+
   // Video src
   const [videoSrc, setVideoSrc] = useState('');
 
@@ -185,12 +189,11 @@ export default function WatchMoviePage({
             ) : (
               <div className="space-y-2">
                 <div className="font-medium text-lg">
-                  S{season} E{episode} -{' '}
-                  {episodesBySeason?.[season]?.[episode - 1]?.name}
+                  S{season} E{episode} - {currentEpisodeData?.name}
                 </div>
                 <div>
                   <p className="text-gray-300 leading-relaxed whitespace-pre-line">
-                    {episodesBySeason?.[season]?.[episode - 1]?.overview}
+                    {currentEpisodeData?.overview}
                   </p>
                 </div>
               </div>
@@ -207,7 +210,9 @@ export default function WatchMoviePage({
         {/* Available Servers */}
         <motion.div
           className="overflow-hidden"
-          animate={isOpen ? { width: 'auto' } : { width: 0 }}
+          animate={
+            isOpen ? { width: 'auto', height: 'auto' } : { width: 0, height: 0 }
+          }
         >
           <div className="lg:w-96 h-full border-l border-zinc-800 p-6">
             <h3 className="text-white font-semibold mb-4 uppercase">
