@@ -48,7 +48,6 @@ export default async function MoviePage({ params }: { params: Params }) {
 
         <MovieCredits credits={credits} />
       </div>
-      <Footer />
     </div>
   );
 }

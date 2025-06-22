@@ -50,49 +50,6 @@ export default async function SeriePage({ params }: { params: Params }) {
               <ShowInfo show={show} />
             </div>
 
-            {/* Seasons */}
-            {/* <div className="space-y-4">
-              <h2 className="text-2xl font-semibold">{`Seasons (${show.seasons.length})`}</h2>
-              <div className="grid gap-4">
-                {show.seasons.map((season: any) => (
-                  <div
-                    key={season.season_number}
-                    className="bg-zinc-900 p-5 rounded-lg border border-zinc-700"
-                  >
-                    <div className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="h-16 w-16 bg-gray-700/50 rounded-lg flex items-center justify-center">
-                            <span className="font-boldtext-lg">
-                              {season.season_number}
-                            </span>
-                          </div>
-                          <div>
-                            <h4>{season.name}</h4>
-                            <p>
-                              {season.episode_count} episodes •{" "}
-                              {season.air_date
-                                ? season.air_date.slice(0, 4)
-                                : ""}
-                            </p>
-                          </div>
-                        </div>
-                        {season.vote_average > 0 ? (
-                          <div className="flex items-center gap-2">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-medium">
-                              {season.vote_average}
-                            </span>
-                          </div>
-                        ) : (
-                          null
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div> */}
             <SeriesEpisodes seasons={show.seasons} id={show.id} />
           </div>
         </div>
@@ -101,7 +58,6 @@ export default async function SeriePage({ params }: { params: Params }) {
 
         <MovieCredits credits={credits} />
       </div>
-      <Footer />
     </div>
   );
 }

@@ -15,7 +15,6 @@ export default function ListPage() {
           Your Watchlist
         </h1>
         <WatchlistSection savedMovies={savedMovies} />
-        <Footer />
       </div>
     </div>
   );

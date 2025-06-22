@@ -26,7 +26,6 @@ export default function WatchMoviePage({
   const [season, setSeason] = useState(1);
   const [episode, setEpisode] = useState(1);
 
-
   // Video src
   const [videoSrc, setVideoSrc] = useState("");
 
@@ -51,10 +50,10 @@ export default function WatchMoviePage({
     );
   }, [movie.id]);
 
-  console.log("Seasons",episodesBySeason);
+  console.log("Seasons", episodesBySeason);
 
   return (
-    <div className="bg-black min-h-screen flex flex-col">
+    <div className="flex flex-col">
       {/* Top Navigation Bar */}
       <div className="bg-black border-b border-gray-800 px-6 py-3">
         <div className="flex items-center justify-between">
@@ -78,7 +77,7 @@ export default function WatchMoviePage({
       <div className="flex flex-col lg:flex-row max-w-screen-2xl w-full mx-auto flex-1">
         {/* Video Player Section */}
         <div className="flex-1">
-          <div className="aspect-video bg-black">
+          <div className="aspect-video">
             {videoSrc && (
               <iframe
                 src={videoSrc}
@@ -92,7 +91,7 @@ export default function WatchMoviePage({
           </div>
 
           {/* Video Info Section */}
-          <div className="p-6 bg-black space-y-4">
+          <div className="p-6 space-y-4">
             <div className="md:flex justify-between items-center">
               <h1 className="text-white text-xl md:text-2xl font-semibold leading-tight mb-4">
                 {isMovie ? movie.title : movie.name}
@@ -127,14 +126,16 @@ export default function WatchMoviePage({
                     className="bg-zinc-900 p-3 rounded-md"
                   >
                     {episodesBySeason &&
-                      episodesBySeason?.[season]?.map((ep: Episode, i: number) => (
-                        <option
-                          key={`season-${season}-episode-${i}`}
-                          value={ep.episode_number}
-                        >
-                          Episode {ep.episode_number}
-                        </option>
-                      ))}
+                      episodesBySeason?.[season]?.map(
+                        (ep: Episode, i: number) => (
+                          <option
+                            key={`season-${season}-episode-${i}`}
+                            value={ep.episode_number}
+                          >
+                            Episode {ep.episode_number}
+                          </option>
+                        )
+                      )}
                   </select>
                 </div>
               </div>
@@ -170,7 +171,7 @@ export default function WatchMoviePage({
         </div>
 
         {/* Available Servers */}
-        <div className="lg:w-96 bg-black border-l border-gray-800 p-6">
+        <div className="lg:w-96 border-l border-gray-800 p-6">
           <h3 className="text-white font-semibold mb-4 uppercase">
             Available Servers
           </h3>

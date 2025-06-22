@@ -26,7 +26,7 @@ export default function page() {
   };
 
   return (
-    <div className="bg-zinc-900/50 min-h-screen py-10">
+    <div className="py-10">
       <Header />
 
       <div className="pt-20 max-w-screen-xl mx-auto w-full px-7 space-y-14">
@@ -63,7 +63,6 @@ export default function page() {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

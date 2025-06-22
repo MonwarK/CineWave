@@ -28,7 +28,7 @@ export default async function page() {
   const nowPlaying = await fetchNowPlaying();
 
   return (
-    <div className="bg-zinc-900/50 relative">
+    <div className="relative">
       <Header />
 
       <Main
@@ -49,7 +49,6 @@ export default async function page() {
         airingToday={airingToday}
         nowPlaying={nowPlaying}
       />
-      <Footer />
     </div>
   );
 }

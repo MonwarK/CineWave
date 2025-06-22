@@ -22,8 +22,8 @@ export default function LandingPage() {
         {/* Features */}
         <Features />
       </div>
-      <Footer/>
 
+      <Footer />
     </div>
   );
 }

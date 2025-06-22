@@ -43,7 +43,6 @@ export default function ProfilePage({ currentPlan }: Props) {
           />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
