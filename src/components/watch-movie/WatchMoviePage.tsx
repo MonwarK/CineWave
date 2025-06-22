@@ -2,12 +2,13 @@
 
 import { Episode, Movie } from '@/types/Movie';
 import { getEpisodesGroupedBySeason } from '@/utils/api';
-import { getEpisodeServer, getMovieServer, servers } from '@/utils/servers';
+import { servers } from '@/utils/servers';
 import classNames from 'classnames';
 import { ChevronLeft, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function WatchMoviePage({
   movie,
@@ -16,6 +17,8 @@ export default function WatchMoviePage({
   movie: Movie;
   isMovie: boolean;
 }) {
+  const [isOpen, setIsOpen] = useState(true);
+
   // Server
   const [currentServerIndex, setCurrentServerIndex] = useState(0);
   const currentServer = servers[currentServerIndex];
@@ -50,11 +53,14 @@ export default function WatchMoviePage({
   useEffect(() => {
     setVideoSrc('');
     if (isMovie) {
-      const getMovieLink = getMovieServer(currentServerIndex, movie.id) || '';
+      const getMovieLink = servers[currentServerIndex].movieLink(movie.id);
       setVideoSrc(getMovieLink);
     } else {
-      const getEpisodeLink =
-        getEpisodeServer(currentServerIndex, movie.id, season, episode) || '';
+      const getEpisodeLink = servers[currentServerIndex].showLink(
+        movie.id,
+        season,
+        episode
+      );
       setVideoSrc(getEpisodeLink);
     }
   }, [season, episode, currentServerIndex]);
@@ -70,7 +76,7 @@ export default function WatchMoviePage({
   return (
     <div className="flex flex-col">
       {/* Top Navigation Bar */}
-      <div className="bg-black border-b border-gray-800 px-6 py-3">
+      <div className="bg-black border-b border-zinc-900 px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link href={`/${isMovie ? 'movies' : 'series'}/${movie.id}`}>
@@ -78,31 +84,38 @@ export default function WatchMoviePage({
                 <ChevronLeft className="w-6 h-6" />
               </div>
             </Link>
-            <div className="text-xl font-bold">CineWave</div>
+            <Link href="/">
+              <div className="text-xl font-bold">CineWave</div>
+            </Link>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <button className="text-white hover:text-gray-300 transition-colors">
+          <div>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-white hover:text-gray-300 transition-colors cursor-pointer"
+            >
               <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row max-w-screen-2xl w-full mx-auto flex-1">
+      <div className="flex flex-col lg:flex-row max-w-screen-2xl w-full mx-auto flex-1 lg:pt-10">
         {/* Video Player Section */}
         <div className="flex-1">
-          <div className="aspect-video">
-            {videoSrc && (
-              <iframe
-                src={videoSrc}
-                allowFullScreen
-                width="100%"
-                height="100%"
-                className="w-full h-full"
-                title="Video Player"
-              />
-            )}
+          <div className="bg-black/40">
+            <div className="aspect-video lg:px-5 max-h-[75vh] mx-auto">
+              {videoSrc && (
+                <iframe
+                  src={videoSrc}
+                  allowFullScreen
+                  width="100%"
+                  height="100%"
+                  className="w-full h-full"
+                  title="Video Player"
+                />
+              )}
+            </div>
           </div>
 
           {/* Video Info Section */}
@@ -127,7 +140,7 @@ export default function WatchMoviePage({
                         setSeason(Number(e.target.value));
                         setEpisode(episodesBySeason[season][0].episode_number);
                       }}
-                      className="bg-zinc-900 p-3 rounded-md"
+                      className="bg-zinc-900 p-3 rounded-md tracking-wide outline-0"
                       value={season}
                     >
                       {movie.seasons.map(
@@ -143,7 +156,7 @@ export default function WatchMoviePage({
 
                   <select
                     onChange={e => setEpisode(Number(e.target.value))}
-                    className="bg-zinc-900 p-3 rounded-md"
+                    className="bg-zinc-900 p-3 rounded-md tracking-wide outline-0"
                     value={episode}
                   >
                     {episodesBySeason &&
@@ -153,7 +166,7 @@ export default function WatchMoviePage({
                             key={`season-${season}-episode-${i}`}
                             value={ep.episode_number}
                           >
-                            Episode {ep.episode_number}
+                            E{ep.episode_number} - {ep.name}
                           </option>
                         )
                       )}
@@ -192,33 +205,39 @@ export default function WatchMoviePage({
         </div>
 
         {/* Available Servers */}
-        <div className="lg:w-96 border-l border-gray-800 p-6">
-          <h3 className="text-white font-semibold mb-4 uppercase">
-            Available Servers
-          </h3>
+        <motion.div
+          className="overflow-hidden"
+          animate={isOpen ? { width: 'auto' } : { width: 0 }}
+        >
+          <div className="lg:w-96 h-full border-l border-zinc-800 p-6">
+            <h3 className="text-white font-semibold mb-4 uppercase">
+              Available Servers
+            </h3>
 
-          <div className="space-y-4">
-            {servers.map((item, i) => (
-              <div
-                onClick={() => setCurrentServerIndex(i)}
-                key={item.id}
-                className={classNames(
-                  'p-5 rounded-lg border space-y-1 cursor-pointer',
-                  {
-                    'bg-zinc-800 border-zinc-500': currentServer.id === item.id,
-                    'bg-zinc-900 border-zinc-700 hover:opacity-80':
-                      currentServer.id !== item.id,
-                  }
-                )}
-              >
-                <h2 className="text-sm">
-                  Server {item.id}: {item.name}
-                </h2>
-                <p className="text-xs text-gray-400">{item.description}</p>
-              </div>
-            ))}
+            <div className="space-y-4">
+              {servers.map((item, i) => (
+                <div
+                  onClick={() => setCurrentServerIndex(i)}
+                  key={item.id}
+                  className={classNames(
+                    'p-5 rounded-lg border space-y-1 cursor-pointer',
+                    {
+                      'bg-zinc-800 border-zinc-500':
+                        currentServer.id === item.id,
+                      'bg-zinc-900 border-zinc-700 hover:opacity-80':
+                        currentServer.id !== item.id,
+                    }
+                  )}
+                >
+                  <h2 className="text-sm">
+                    Server {item.id}: {item.name}
+                  </h2>
+                  <p className="text-xs text-gray-400">{item.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
