@@ -1,10 +1,10 @@
 import Header from "@/components/main/Header";
 import Tabs from "@/components/trending/Tabs";
-import { fetchPopularMovies, fetchPopularTV } from "@/utils/api";
+import { fetchTrendingType } from "@/utils/api";
 
 export default async function TrendingPage() {
-    const popularTv = await fetchPopularTV();
-    const popularMovies = await fetchPopularMovies(); 
+    const popularTv = await fetchTrendingType("tv");
+    const popularMovies = await fetchTrendingType("movie"); 
 
     console.log("TV Shows",popularTv);
     console.log("Movies", popularMovies)

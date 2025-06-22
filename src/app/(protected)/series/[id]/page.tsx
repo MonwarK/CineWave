@@ -1,4 +1,3 @@
-import Footer from "@/components/main/Footer";
 import Header from "@/components/main/Header";
 import MovieAdditional from "@/components/movie-content/MovieAdditional";
 import MovieBanner from "@/components/movie-content/MovieBanner";
@@ -9,7 +8,7 @@ import MovieStatsGrid from "@/components/movie-content/MovieStatsGrid";
 import SeriesEpisodes from "@/components/movie-content/SeriesEpisodes";
 import ShowInfo from "@/components/movie-content/ShowInfo";
 import SimilarMovies from "@/components/movie-content/SimilarMovies";
-import { fetchTVById, getCredits, getSimilar } from "@/utils/api";
+import { fetchCredits, fetchSimilar, fetchTVById } from "@/utils/api";
 
 type Params = Promise<{ id: string }>;
 
@@ -17,8 +16,8 @@ export default async function SeriePage({ params }: { params: Params }) {
   const { id } = await params;
   const show = await fetchTVById(id);
 
-  const similarMovies = await getSimilar(id, "tv");
-  const credits = await getCredits(id, "tv");
+  const similarMovies = await fetchSimilar(id, "tv");
+  const credits = await fetchCredits(id, "tv");
 
   console.log(show);
 
