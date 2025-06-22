@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Movie } from "@/types/Movie";
-import { useState } from "react";
-import MovieRowItem from "../discover/MovieRowItem";
-import MovieModal from "../movie-modal/MovieModal";
+import { Movie } from '@/types/Movie';
+import { useState } from 'react';
+import MovieRowItem from '../discover/MovieRowItem';
+import MovieModal from '../movie-modal/MovieModal';
 
 interface Props {
   series: Movie[];
@@ -11,7 +11,7 @@ interface Props {
 
 export default function SeriesSection({ series }: Props) {
   const [selectSeries, setSelectedSeries] = useState(null);
-  console.log(series);
+
   return (
     <>
       <div className="py-10 space-y-18">

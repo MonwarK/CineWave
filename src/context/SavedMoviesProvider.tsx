@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Movie } from "@/types/Movie";
-import { SavedMovie } from "@/types/SavedMovies";
-import { saveMovie } from "@/utils/saveMovie";
-import { createContext, useContext, useState } from "react";
+import { Movie } from '@/types/Movie';
+import { SavedMovie } from '@/types/SavedMovies';
+import { saveMovie } from '@/utils/saveMovie';
+import { createContext, useContext, useState } from 'react';
 
 type SavedMoviesContextType = {
   savedMovies: SavedMovie[];
@@ -19,7 +19,7 @@ const SavedMoviesContext = createContext<SavedMoviesContextType | undefined>(
 export const useSavedMovies = () => {
   const context = useContext(SavedMoviesContext);
   if (!context) {
-    throw new Error("useSavedMovies must be used within a SavedMoviesProvider");
+    throw new Error('useSavedMovies must be used within a SavedMoviesProvider');
   }
   return context;
 };
@@ -40,28 +40,16 @@ export const SavedMoviesProvider = ({
     if (isMovieSaved) return;
 
     saveMovie(movie)
-      .then((res) => res.json())
-      .then((json) => {
-        setSavedMovies((prev) => [...prev, json.data[0]]);
+      .then(res => res.json())
+      .then(json => {
+        setSavedMovies(prev => [...prev, json.data[0]]);
       })
-      .catch((e) => console.log(3, e));
+      .catch(e => console.log(e));
   };
 
   const isSaved = (movie_id: number) => {
-    return savedMovies.some((m) => parseInt(m.movie_id) === movie_id);
+    return savedMovies.some(m => parseInt(m.movie_id) === movie_id);
   };
-
-  // const deleteMovie = (movie: Movie) => {
-  //   const isMovieSaved = isSaved(movie.id);
-  //   if(!isMovieSaved) return;
-
-  //   removeMovie(movie)
-  //   .then((res) => res.json())
-  //   .then((json) => {
-  //     setSavedMovies((prev) => [...prev, json.data[0]])
-  //   })
-  //   .catch((e) => console.log(3, e))
-  // }
 
   return (
     <SavedMoviesContext.Provider value={{ savedMovies, addMovie, isSaved }}>

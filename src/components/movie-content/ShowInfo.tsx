@@ -2,8 +2,6 @@ import { Movie } from '@/types/Movie';
 import React from 'react';
 
 export default function ShowInfo({ show }: { show: Movie }) {
-  console.log(show);
-
   const info = [
     {
       heading: 'First Air Date',

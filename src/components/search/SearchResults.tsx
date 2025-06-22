@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default function SearchResults({ results }: Props) {
-  console.log(results);
   return (
     <motion.div
       variants={containerVariants}

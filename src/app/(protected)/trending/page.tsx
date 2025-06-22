@@ -6,8 +6,6 @@ export default async function TrendingPage() {
   const popularTv = await fetchTrendingType('tv');
   const popularMovies = await fetchTrendingType('movie');
 
-  console.log('TV Shows', popularTv);
-  console.log('Movies', popularMovies);
   return (
     <div className="py-10">
       <Header />
