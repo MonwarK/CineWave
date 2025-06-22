@@ -1,13 +1,13 @@
 // utils/api.ts
 
-const BASE_URL = "https://api.themoviedb.org/3";
+const BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = process.env.TMDB_API_KEY;
 
 async function handleFetch(url: string) {
   const res = await fetch(url);
   const data = await res.json();
 
-  if (!res.ok) throw new Error(data.status_message || "TMDB fetch failed");
+  if (!res.ok) throw new Error(data.status_message || 'TMDB fetch failed');
   return data.results;
 }
 
@@ -118,24 +118,25 @@ export async function fetchCredits(id: string, mediaType: string) {
 }
 
 export async function fetchTrendingType(mediaType: string) {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/trending/${mediaType}/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-  );
+  const allResults: any[] = [];
 
-  if (!res.ok) return;
+  for (let page = 1; page <= 3; page++) {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/trending/${mediaType}/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&page=${page}`
+    );
 
-  const data = await res.json();
+    if (!res.ok) continue;
 
-  return data.results;
+    const data = await res.json();
+    allResults.push(...data.results);
+  }
+
+  return allResults;
 }
-
-
-
-
 
 export async function searchTMDB(
   query: string,
-  type: "movie" | "tv" | "multi" = "multi",
+  type: 'movie' | 'tv' | 'multi' = 'multi',
   genre?: string
 ) {
   if (!query.trim()) return [];

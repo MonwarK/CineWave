@@ -1,22 +1,26 @@
-import Header from "@/components/main/Header";
-import Tabs from "@/components/trending/Tabs";
-import { fetchTrendingType } from "@/utils/api";
+import Header from '@/components/main/Header';
+import Tabs from '@/components/trending/Tabs';
+import { fetchTrendingType } from '@/utils/api';
 
 export default async function TrendingPage() {
-    const popularTv = await fetchTrendingType("tv");
-    const popularMovies = await fetchTrendingType("movie"); 
+  const popularTv = await fetchTrendingType('tv');
+  const popularMovies = await fetchTrendingType('movie');
 
-    console.log("TV Shows",popularTv);
-    console.log("Movies", popularMovies)
+  console.log('TV Shows', popularTv);
+  console.log('Movies', popularMovies);
   return (
     <div className="py-10">
-        <Header /> 
+      <Header />
 
-        <div className="pt-20 max-w-screen-xl mx-auto w-full px-7">
-            <h1 className="text-3xl font-semibold">Trending</h1>
-            <p className="text-gray-300 text-sm mt-2">View all of the recently trending movies & tv shows.</p>
-            <Tabs shows={popularTv} movies={popularMovies} />
+      <div className="pt-20 max-w-screen-xl mx-auto w-full px-7">
+        <div>
+          <h1 className="text-3xl font-semibold">Trending</h1>
+          <p className="text-gray-300 text-sm mt-2">
+            View all of the recently trending movies & tv shows.
+          </p>
         </div>
+        <Tabs shows={popularTv} movies={popularMovies} />
+      </div>
     </div>
-  )
+  );
 }
