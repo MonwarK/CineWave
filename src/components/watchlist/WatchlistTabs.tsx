@@ -44,7 +44,7 @@ export default function WatchlistTabs({ SavedMovies }: Props) {
 
       <div>
         {isActive === 0 ? (
-          <div className="flex gap-5 flex-wrap">
+          <div className="flex justify-center gap-5 flex-wrap px-5">
             <AnimatePresence>
               {movies.map((movie: SavedMovie) => (
                 <motion.div
@@ -66,24 +66,26 @@ export default function WatchlistTabs({ SavedMovies }: Props) {
             </AnimatePresence>
           </div>
         ) : (
-          <div className="flex flex-wrap gap-5">
-            {shows.map((show: SavedMovie) => (
-              <motion.div
-                key={show.id}
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 50, opacity: 0 }}
-                transition={{
-                  type: 'spring',
-                  duration: 1,
-                  delay: 0.25,
-                  stiffness: 260,
-                  damping: 20,
-                }}
-              >
-                <MovieRowItem key={show.id} savedMovie={show} />
-              </motion.div>
-            ))}
+          <div className="flex justify-center gap-5 flex-wrap px-5">
+            <AnimatePresence>
+              {shows.map((show: SavedMovie) => (
+                <motion.div
+                  key={show.id}
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 50, opacity: 0 }}
+                  transition={{
+                    type: 'spring',
+                    duration: 1,
+                    delay: 0.25,
+                    stiffness: 260,
+                    damping: 20,
+                  }}
+                >
+                  <MovieRowItem key={show.id} savedMovie={show} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </div>

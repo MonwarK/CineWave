@@ -1,5 +1,5 @@
-import { Movie } from "@/types/Movie";
-import React from "react";
+import { Movie } from '@/types/Movie';
+import React from 'react';
 
 export default function MovieAdditional({ movie }: { movie: Movie }) {
   return (
@@ -17,7 +17,7 @@ export default function MovieAdditional({ movie }: { movie: Movie }) {
             </div>
             <div>
               <div className="flex flex-wrap gap-2">
-                {movie.spoken_languages?.map((language) => (
+                {movie.spoken_languages?.map(language => (
                   <div
                     key={`language-${language.iso_639_1}`}
                     className="bg-gray-700/50 border border-gray-600 text-gray-400 text-xs px-3 py-1 rounded-full"
@@ -36,7 +36,7 @@ export default function MovieAdditional({ movie }: { movie: Movie }) {
               <p className="uppercase mb-2 text-gray-300">Original Language</p>
             </div>
             <div>
-              <p>{movie.spoken_languages?.[0].english_name}</p>
+              <p>{movie.spoken_languages?.[0]?.english_name || 'Not Found'}</p>
             </div>
           </div>
 

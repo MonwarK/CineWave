@@ -1,13 +1,13 @@
 // components/movie/MovieStatsGrid.tsx
-import { Calendar, Clock } from "lucide-react";
-import { Movie } from "@/types/Movie";
+import { Calendar, Clock } from 'lucide-react';
+import { Movie } from '@/types/Movie';
 
 export default function MovieStatsGrid({ movie }: { movie: Movie }) {
   const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      trailingZeroDisplay: "stripIfInteger",
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      trailingZeroDisplay: 'stripIfInteger',
     }).format(value);
 
   return (
@@ -36,15 +36,15 @@ export default function MovieStatsGrid({ movie }: { movie: Movie }) {
       <InfoCard label="Status" value={movie.status} />
       <InfoCard
         label="Budget"
-        value={movie.budget ? formatCurrency(movie.budget) : "Unknown"}
+        value={movie.budget ? formatCurrency(movie.budget) : 'Unknown'}
       />
       <InfoCard
         label="Revenue"
-        value={movie.revenue ? formatCurrency(movie.revenue) : "Unknown"}
+        value={movie.revenue ? formatCurrency(movie.revenue) : 'Unknown'}
       />
       <InfoCard
         label="Language"
-        value={movie.spoken_languages?.[0].english_name}
+        value={movie.spoken_languages?.[0]?.english_name || 'Not found'}
       />
     </div>
   );

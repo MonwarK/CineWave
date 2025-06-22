@@ -109,7 +109,7 @@ export default function WatchMoviePage({
           <div className="p-6 space-y-4">
             <div className="md:flex justify-between items-center">
               <h1 className="text-white text-xl md:text-2xl font-semibold leading-tight mb-4">
-                {isMovie ? movie.title : movie.name}
+                {isMovie ? movie.title : movie?.name}
               </h1>
               <div>
                 <div className="text-xs text-whtie uppercase bg-orange-600 px-3 py-1 rounded-md font-semibold">
@@ -133,8 +133,8 @@ export default function WatchMoviePage({
                       {movie.seasons.map(
                         (season, i) =>
                           season.season_number !== 0 && (
-                            <option key={season.name} value={i}>
-                              {season.name}
+                            <option key={season?.name} value={i}>
+                              {season?.name}
                             </option>
                           )
                       )}
@@ -185,7 +185,7 @@ export default function WatchMoviePage({
 
             <div>
               <div className="text-gray-400 text-xs">
-                {movie?.production_companies?.[0].name}
+                {movie?.production_companies?.[0]?.name}
               </div>
             </div>
           </div>
