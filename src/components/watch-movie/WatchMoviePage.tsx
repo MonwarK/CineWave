@@ -48,7 +48,7 @@ export default function WatchMoviePage({
   const [episode, setEpisode] = useState(initialEpisodeValue);
 
   const currentEpisodeData = episodesBySeason?.[season]?.find(
-    ep => ep.episode_number === episode
+    ep => ep.episode_number == episode
   );
 
   // Video src
@@ -141,8 +141,14 @@ export default function WatchMoviePage({
                   {movie.seasons && (
                     <select
                       onChange={e => {
-                        setSeason(Number(e.target.value));
-                        setEpisode(episodesBySeason[season][0].episode_number);
+                        const assignedSeason = Number(e.target.value);
+                        setSeason(assignedSeason);
+                        console.log(
+                          episodesBySeason[assignedSeason][0].episode_number
+                        );
+                        setEpisode(
+                          episodesBySeason[assignedSeason][0].episode_number
+                        );
                       }}
                       className="bg-zinc-900 p-3 rounded-md tracking-wide outline-0"
                       value={season}
