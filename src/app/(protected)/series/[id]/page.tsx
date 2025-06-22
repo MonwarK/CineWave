@@ -7,8 +7,8 @@ import MovieRating from '@/components/movie-content/MovieRating';
 import MovieStatsGrid from '@/components/movie-content/MovieStatsGrid';
 import SeriesEpisodes from '@/components/movie-content/SeriesEpisodes';
 import ShowInfo from '@/components/movie-content/ShowInfo';
-import SimilarMovies from '@/components/movie-content/SimilarMovies';
-import { fetchCredits, fetchSimilar, fetchTVById } from '@/utils/api';
+import { fetchCredits, fetchRecommendations, fetchTVById } from '@/utils/api';
+import RecommendedMovies from '@/components/movie-content/RecommendedMovies';
 
 type Params = Promise<{ id: string }>;
 
@@ -16,7 +16,7 @@ export default async function SeriePage({ params }: { params: Params }) {
   const { id } = await params;
   const show = await fetchTVById(id);
 
-  const similarMovies = await fetchSimilar(id, 'tv');
+  const recommendedMovies = await fetchRecommendations(id, 'tv');
   const credits = await fetchCredits(id, 'tv');
 
   return (
@@ -51,8 +51,8 @@ export default async function SeriePage({ params }: { params: Params }) {
           </div>
         </div>
 
-        {similarMovies.length > 0 && (
-          <SimilarMovies similarMovies={similarMovies} />
+        {recommendedMovies.length > 0 && (
+          <RecommendedMovies recommendedMovies={recommendedMovies} />
         )}
 
         <MovieCredits credits={credits} />
