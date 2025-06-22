@@ -1,4 +1,3 @@
-import Footer from '@/components/main/Footer';
 import Header from '@/components/main/Header';
 import MovieAdditional from '@/components/movie-content/MovieAdditional';
 import MovieBanner from '@/components/movie-content/MovieBanner';
@@ -19,8 +18,6 @@ export default async function MoviePage({ params }: { params: Params }) {
 
   const similarMovies = await getSimilar(id, 'movie');
   const credits = await getCredits(id, 'movie');
-
-  console.log(similarMovies);
 
   return (
     <div>
