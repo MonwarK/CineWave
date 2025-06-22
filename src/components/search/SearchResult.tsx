@@ -1,14 +1,13 @@
 'use client';
 
+import { useSavedMovies } from '@/context/SavedMoviesProvider';
+import { itemVariants } from '@/motion/variants/motion';
 import { Movie } from '@/types/Movie';
-import { Check, Info, Play, Plus, Star } from 'lucide-react';
-import React from 'react';
-import Genres from '../movie-modal/Genres';
 import { getGenreNameFromId } from '@/utils/genreMap';
 import { motion } from 'framer-motion';
-import { itemVariants } from '@/motion/variants/motion';
+import { Check, Play, Plus, Star } from 'lucide-react';
 import Link from 'next/link';
-import { useSavedMovies } from '@/context/SavedMoviesProvider';
+import Genres from '../movie-modal/Genres';
 import SquaredButton from '../ui/SquaredButton';
 
 interface Props {
@@ -19,6 +18,7 @@ export default function SearchResult({ result }: Props) {
   const { addMovie, isSaved } = useSavedMovies();
 
   const isResultSaved = isSaved(result.id);
+
 
   const genres = result.genre_ids.map(
     (id, i) =>
