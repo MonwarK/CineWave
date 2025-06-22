@@ -1,8 +1,8 @@
-"use client";
-import { containerVariants, itemVariants } from "@/motion/variants/motion";
-import { CastMember } from "@/types/Credits";
-import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+'use client';
+import { itemVariants } from '@/motion/variants/motion';
+import { CastMember } from '@/types/Credits';
+import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 export default function MovieCredits({ credits }: { credits: CastMember[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,8 +19,8 @@ export default function MovieCredits({ credits }: { credits: CastMember[] }) {
     };
 
     updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
   }, [credits]);
 
   return (
@@ -36,22 +36,22 @@ export default function MovieCredits({ credits }: { credits: CastMember[] }) {
               className="flex space-x-4 cursor-grab py-5"
               viewport={{ once: true, amount: 0.3 }}
             >
-              {credits.map((member) => (
+              {credits.map(member => (
                 <motion.div
                   key={member?.id}
                   className="flex-shrink-0 w-40 relative overflow-hidden flex flex-col"
                   variants={itemVariants}
                 >
-                  <div className="relative flex-1">
+                  <div className="relative">
                     <div className="absolute w-full h-full z-10" />
                     {member.profile_path ? (
                       <img
                         src={`https://image.tmdb.org/t/p/w500${member.profile_path}`}
                         alt={member.name}
-                        className="w-full h-full object-cover group-hover:blur-[2px] z-0 rounded-xl"
+                        className="w-full h-60 object-cover z-0 rounded-xl"
                       />
                     ) : (
-                      <div className="h-full w-full bg-gray-800 rounded-xl" />
+                      <div className="w-full h-60 bg-gray-800 rounded-xl" />
                     )}
                   </div>
                   <div>

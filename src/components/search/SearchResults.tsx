@@ -1,14 +1,17 @@
-import { containerVariants } from "@/motion/variants/motion";
-import React from "react";
-import { motion } from "framer-motion";
-import SearchResult from "./SearchResult";
-import { Movie } from "@/types/Movie";
+'use client';
+
+import { containerVariants } from '@/motion/variants/motion';
+import React from 'react';
+import { motion } from 'framer-motion';
+import SearchResult from './SearchResult';
+import { Movie } from '@/types/Movie';
 
 interface Props {
   results: Movie[];
 }
 
 export default function SearchResults({ results }: Props) {
+  console.log(results);
   return (
     <motion.div
       variants={containerVariants}

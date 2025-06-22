@@ -1,3 +1,4 @@
+import Footer from "@/components/main/Footer";
 import Header from "@/components/main/Header";
 import MovieLandscapeThumbnail from "@/components/movie-card/MovieLandscapeThumbnail";
 import { Movie } from "@/types/Movie";
@@ -7,7 +8,7 @@ export default async function MoviesPage() {
   const movies = await fetchMovies();
 
   return (
-    <div className="bg-zinc-900/50 min-h-screen py-10">
+    <div className="py-10">
       <Header />
 
       <div className="pt-20 max-w-screen-xl mx-auto w-full px-7">
@@ -23,7 +24,7 @@ export default async function MoviesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {movies.map((movie: Movie) => (
               <MovieLandscapeThumbnail
-              mediaType="movie"
+                mediaType="movie"
                 key={`movie-thumbnail-${movie.id}`}
                 movie={movie}
               />

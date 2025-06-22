@@ -1,15 +1,17 @@
-"use client";
-import { useSavedMovies } from "@/context/SavedMoviesProvider";
-import { Movie } from "@/types/Movie";
-import classNames from "classnames";
-import Link from "next/link";
-import { useState } from "react";
-import Genres from "./Genres";
-import Meta from "./Meta";
+'use client';
+import { useSavedMovies } from '@/context/SavedMoviesProvider';
+import { Movie } from '@/types/Movie';
+import classNames from 'classnames';
+import Link from 'next/link';
+import { useState } from 'react';
+import Genres from './Genres';
+import Meta from './Meta';
+import { Check, Play, Plus } from 'lucide-react';
+import SquaredButton from '../ui/SquaredButton';
+import Button from '../ui/RoundedButton';
 
 interface Props {
   fullMovie: Movie;
-
 }
 
 export default function MainInfo({ fullMovie }: Props) {
@@ -19,7 +21,7 @@ export default function MainInfo({ fullMovie }: Props) {
 
   const [selectedMovie, setSelectedMovie] = useState(null);
   const mediaType =
-    fullMovie.media_type || (fullMovie.name ? "series" : "movies");
+    fullMovie.media_type || (fullMovie.name ? 'series' : 'movies');
 
   return (
     <div className="p-4 space-y-5 items-center">
@@ -29,9 +31,9 @@ export default function MainInfo({ fullMovie }: Props) {
 
       <div
         className={classNames(
-          "justify-between items-center space-y-5 space-x-4 text-xs",
+          'justify-between items-center space-y-5 space-x-4 text-xs',
           {
-            "md:flex md:space-y-0": fullMovie.genres.length < 4,
+            'md:flex md:space-y-0': fullMovie.genres.length < 4,
           }
         )}
       >
@@ -49,17 +51,22 @@ export default function MainInfo({ fullMovie }: Props) {
       </div>
 
       <div className="flex flex-row gap-2">
-        <button
-          onClick={() => addMovie(fullMovie)}
-          className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2  font-semibold"
-        >
-          {isMovieSaved ? "Saved" : "Add To List"}
-        </button>
-        <Link href={`/${mediaType}/${fullMovie.id}`}>
-          <button className="hover:bg-white hover:text-gray-800 transition bg-black/30 rounded-md cursor-pointer border-2 border-white uppercase px-5 py-2  font-semibold">
-            View Details
-          </button>
+        <Link href={`/${mediaType}/watch/${fullMovie.id}`}>
+          <SquaredButton variant="primary">
+            <Play />
+            <p>Play</p>
+          </SquaredButton>
         </Link>
+        <Link href={`/${mediaType}/${fullMovie.id}`}>
+          <SquaredButton variant="secondary">View Details</SquaredButton>
+        </Link>
+        <Button
+          className="px-3"
+          variant="tertiary"
+          onClick={() => isMovieSaved && addMovie(fullMovie)}
+        >
+          {isMovieSaved ? <Check size={20} /> : <Plus size={20} />}
+        </Button>
       </div>
     </div>
   );

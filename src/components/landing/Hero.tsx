@@ -1,6 +1,5 @@
-import React from "react";
-import Header from "./Header";
 import TextBox from "../auth/TextBox";
+import Header from "./Header";
 
 export default function Hero() {
   return (
@@ -41,6 +40,7 @@ export default function Hero() {
       {/* Fades */}
       <div className="h-1/5 -z-40 left-0 top-0 bg-gradient-to-b from-black to-transparent absolute w-full" />
       <div className="h-1/5 -z-40 left-0 bottom-0 bg-gradient-to-t from-black to-transparent absolute w-full" />
+
     </div>
   );
 }

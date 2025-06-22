@@ -1,13 +1,13 @@
 // utils/api.ts
 
-const BASE_URL = "https://api.themoviedb.org/3";
+const BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = process.env.TMDB_API_KEY;
 
 async function handleFetch(url: string) {
   const res = await fetch(url);
   const data = await res.json();
 
-  if (!res.ok) throw new Error(data.status_message || "TMDB fetch failed");
+  if (!res.ok) throw new Error(data.status_message || 'TMDB fetch failed');
   return data.results;
 }
 
@@ -52,32 +52,32 @@ export async function fetchHorrorMovies() {
 export async function fetchAiringToday() {
   return handleFetch(
     `${BASE_URL}/tv/airing_today?language=en-US&api_key=${API_KEY}`
-  )
+  );
 }
 
 export async function fetchNowPlaying() {
   return handleFetch(
     `${BASE_URL}/movie/now_playing?language=en-US&api_key=${API_KEY}`
-  )
+  );
 }
 
 export async function fetchSeries() {
   return handleFetch(
     `${BASE_URL}/discover/tv?language=en-US&api_key=${API_KEY}`
-  )
+  );
 }
 
 export async function fetchMovies() {
   return handleFetch(
     `${BASE_URL}/discover/movie?language=en-US&api_key=${API_KEY}`
-  )
+  );
 }
 
 export async function fetchTVById(slug: string) {
   const res = await fetch(
     `${BASE_URL}/tv/${slug}?language=en-US&api_key=${API_KEY}`
-  )
-  if(!res.ok) return undefined;
+  );
+  if (!res.ok) return undefined;
 
   const data = await res.json();
   return data;
@@ -86,42 +86,58 @@ export async function fetchTVById(slug: string) {
 export async function fetchMovieById(slug: string) {
   const res = await fetch(
     `${BASE_URL}/movie/${slug}?language=en-US&api_key=${API_KEY}`
-  )
-  if(!res.ok) return undefined;
+  );
+  if (!res.ok) return undefined;
 
   const data = await res.json();
   return data;
 }
 
-export async function getSimilar(id: string, mediaType: string) {
+export async function fetchSimilar(id: string, mediaType: string) {
   const res = await fetch(
-      `https://api.themoviedb.org/3/${mediaType}/${id}/similar?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-  )
+    `https://api.themoviedb.org/3/${mediaType}/${id}/similar?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+  );
 
-  if(!res.ok) return
+  if (!res.ok) return;
 
   const data = await res.json();
 
   return data.results;
 }
 
-export async function getCredits(id: string, mediaType: string) {
+export async function fetchCredits(id: string, mediaType: string) {
   const res = await fetch(
-      `https://api.themoviedb.org/3/${mediaType}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-  )
+    `https://api.themoviedb.org/3/${mediaType}/${id}/credits?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+  );
 
-  if(!res.ok) return
+  if (!res.ok) return;
 
   const data = await res.json();
 
   return data.cast;
 }
 
+export async function fetchTrendingType(mediaType: string) {
+  const allResults: any[] = [];
+
+  for (let page = 1; page <= 3; page++) {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/trending/${mediaType}/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&page=${page}`
+    );
+
+    if (!res.ok) continue;
+
+    const data = await res.json();
+    allResults.push(...data.results);
+  }
+
+  return allResults;
+}
 
 export async function searchTMDB(
   query: string,
-  type: "movie" | "tv" | "multi" = "multi",
-  genre?: string,
+  type: 'movie' | 'tv' | 'multi' = 'multi',
+  genre?: string
 ) {
   if (!query.trim()) return [];
 
@@ -130,4 +146,19 @@ export async function searchTMDB(
   }&language=en-US&include_adult=false&query=${encodeURIComponent(query)}`;
 
   return handleFetch(url);
+}
+
+export async function getEpisodesGroupedBySeason(tvId: number, seasons: any) {
+  const groupedEpisodes: Record<number, any[]> = {};
+
+  for (const season of seasons) {
+    const seasonRes = await fetch(
+      `${BASE_URL}/tv/${tvId}/season/${season.season_number}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+    );
+    const seasonData = await seasonRes.json();
+
+    groupedEpisodes[season.season_number] = seasonData.episodes;
+  }
+
+  return groupedEpisodes;
 }

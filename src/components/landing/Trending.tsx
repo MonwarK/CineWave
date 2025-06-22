@@ -1,8 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { containerVariants } from "@/motion/variants/motion";
-import Marquee from "react-fast-marquee";
 import { movies } from "@/data/movies";
+import { containerVariants } from "@/motion/variants/motion";
+import { motion } from "framer-motion";
+import Marquee from "react-fast-marquee";
 
 export default function Trending() {
   return (

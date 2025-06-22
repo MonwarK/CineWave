@@ -1,3 +1,4 @@
+import Footer from "@/components/main/Footer";
 import Header from "@/components/main/Header";
 import { SavedMoviesProvider } from "@/context/SavedMoviesProvider";
 import { supabase } from "@/libs/supabaseClient";
@@ -17,11 +18,9 @@ export default async function ProtectedLayout({
     .eq("user_id", userId);
 
   return (
-    <>
-    <Header/>
-        <SavedMoviesProvider initialMovies={savedMovies as SavedMovie[]}>
-      {children}
+    <SavedMoviesProvider initialMovies={savedMovies as SavedMovie[]}>
+      <div className="min-h-[90vh] bg-zinc-900/50 pb-10">{children}</div>
+      <Footer />
     </SavedMoviesProvider>
-    </>
   );
 }
