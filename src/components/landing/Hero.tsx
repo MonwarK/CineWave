@@ -23,7 +23,7 @@ export default function Hero() {
           <div className="text-gray-300 font-medium space-y-2">
             <p>Starts at £5.99. Cancel at any time.</p>
             <p>
-              Ready to watch? Enter your email to creatr or restart your
+              Ready to watch? Enter your email to create or restart your
               membership.
             </p>
           </div>
