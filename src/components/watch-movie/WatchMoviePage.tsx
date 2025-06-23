@@ -223,10 +223,16 @@ export default function WatchMoviePage({
             isOpen ? { width: 'auto', height: 'auto' } : { width: 0, height: 0 }
           }
         >
-          <div className="lg:w-96 h-full border-l border-zinc-800 p-6">
-            <h3 className="text-white font-semibold mb-4 uppercase">
+          <div className="lg:w-96 h-full border-l border-zinc-800 p-6 space-y-5">
+            <h3 className="text-white font-semibold uppercase">
               Available Servers
             </h3>
+
+            <div>
+              <p className="italic text-xs text-gray-500">
+                *If you aren't happy with one server, please try the others*
+              </p>
+            </div>
 
             <div className="space-y-4">
               {servers.map((item, i) => (
