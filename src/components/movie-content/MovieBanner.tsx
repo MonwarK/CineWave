@@ -5,7 +5,7 @@ import { useSavedMovies } from '@/context/SavedMoviesProvider';
 import { Movie } from '@/types/Movie';
 import { Check, Heart, Play, Plus, Share2 } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function MovieBanner({
   movie,
@@ -16,6 +16,10 @@ export default function MovieBanner({
 }) {
   const { addMovie, isSaved } = useSavedMovies();
   const isMovie = movie.title ? true : false;
+
+  useEffect(() => {
+    document.title = `${movie.title || movie.name} | CineWave`;
+  }, [movie]);
 
   return (
     <div className="flex flex-col justify-center items-center p-0">

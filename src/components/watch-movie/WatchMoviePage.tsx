@@ -46,6 +46,7 @@ export default function WatchMoviePage({
 
   const [season, setSeason] = useState(initialSeasonValue);
   const [episode, setEpisode] = useState(initialEpisodeValue);
+  document.title = `Watching ${movie.title || movie.name} | CineWave`;
 
   const currentEpisodeData = episodesBySeason?.[season]?.find(
     ep => ep.episode_number == episode
@@ -56,6 +57,8 @@ export default function WatchMoviePage({
 
   useEffect(() => {
     setVideoSrc('');
+    if (!movie) return; // guard clause if movie is not loaded
+
     if (isMovie) {
       const getMovieLink = servers[currentServerIndex].movieLink(movie.id);
       setVideoSrc(getMovieLink);
@@ -67,7 +70,7 @@ export default function WatchMoviePage({
       );
       setVideoSrc(getEpisodeLink);
     }
-  }, [season, episode, currentServerIndex]);
+  }, [season, episode, currentServerIndex, movie, isMovie]);
 
   useEffect(() => {
     // Call and store in state

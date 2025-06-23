@@ -2,6 +2,12 @@ import Header from '@/components/main/Header';
 import Tabs from '@/components/trending/Tabs';
 import { fetchTrendingType } from '@/utils/api';
 
+export const metadata = {
+  title: 'Trending Now | Cinewave',
+  description:
+    'Check out what’s trending in movies and TV shows today. Updated daily on Cinewave.',
+};
+
 export default async function TrendingPage() {
   const popularTv = await fetchTrendingType('tv');
   const popularMovies = await fetchTrendingType('movie');

@@ -3,6 +3,12 @@ import MovieLandscapeThumbnail from '@/components/movie-card/MovieLandscapeThumb
 import { Movie } from '@/types/Movie';
 import { fetchTopRated } from '@/utils/api';
 
+export const metadata = {
+  title: 'Movies | Cinewave',
+  description:
+    'Browse the most popular and trending Movies right now on Cinewave. Discover your next favorite movies today!',
+};
+
 export default async function MoviesPage() {
   const movies = await fetchTopRated('movie');
 

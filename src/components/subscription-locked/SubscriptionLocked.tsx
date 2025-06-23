@@ -3,6 +3,10 @@ import Header from '../main/Header';
 import { Lock } from 'lucide-react';
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Subscription Required | CineWave',
+};
+
 export default function SubscriptionLocked() {
   return (
     <div>

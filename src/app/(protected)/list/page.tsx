@@ -1,12 +1,13 @@
-"use client";
-import Footer from "@/components/main/Footer";
-import Header from "@/components/main/Header";
-import WatchlistSection from "@/components/watchlist/WatchlistSection";
-import { useSavedMovies } from "@/context/SavedMoviesProvider";
+import Header from '@/components/main/Header';
+import WatchlistSection from '@/components/watchlist/WatchlistSection';
+
+export const metadata = {
+  title: 'My Saved List | Cinewave',
+  description:
+    'View your saved movies and TV shows on Cinewave. Continue watching or pick up where you left off.',
+};
 
 export default function ListPage() {
-  const { savedMovies } = useSavedMovies();
-
   return (
     <div>
       <Header />
@@ -14,7 +15,7 @@ export default function ListPage() {
         <h1 className="leading-2 text-3xl font-semibold text-center">
           Your Watchlist
         </h1>
-        <WatchlistSection savedMovies={savedMovies} />
+        <WatchlistSection />
       </div>
     </div>
   );

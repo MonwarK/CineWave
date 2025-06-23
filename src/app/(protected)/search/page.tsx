@@ -6,7 +6,7 @@ import SearchBarSection from '@/components/search/SearchBarSection';
 import SearchNoResults from '@/components/search/SearchNoResults';
 import SearchResults from '@/components/search/SearchResults';
 import { searchTMDB } from '@/utils/api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function page() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +18,14 @@ export default function page() {
 
     searchTMDB(search, 'multi').then(results => {
       setResults(results);
+
       setTimeout(() => setIsLoading(false), 500);
     });
   };
+
+  useEffect(() => {
+    document.title = `${results.length} results for "${search}" | CineWorld`;
+  }, [results]);
 
   return (
     <div className="py-10">

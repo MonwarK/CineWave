@@ -1,18 +1,15 @@
-"use client";
+'use client';
 
-import { SavedMovie } from "@/types/SavedMovies";
-import WatchlistTabs from "./WatchlistTabs";
+import WatchlistTabs from './WatchlistTabs';
+import { useSavedMovies } from '@/context/SavedMoviesProvider';
 
-interface Props {
-  savedMovies: SavedMovie[];
-}
+export default function WatchlistSection() {
+  const { savedMovies } = useSavedMovies();
 
-export default function WatchlistSection({ savedMovies }: Props) {
-  
   return (
     <>
       <div className="py-10 space-y-18">
-        <WatchlistTabs SavedMovies={savedMovies} />  
+        <WatchlistTabs SavedMovies={savedMovies} />
       </div>
     </>
   );

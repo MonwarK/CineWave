@@ -3,7 +3,6 @@ import { fetchMovieById } from '@/utils/api';
 import { Movie } from '@/types/Movie';
 import WatchMoviePage from '@/components/watch-movie/WatchMoviePage';
 import SubscriptionLocked from '@/components/subscription-locked/SubscriptionLocked';
-import Header from '@/components/landing/Header';
 import { getCurrentPlan } from '@/utils/getCurrentPlan';
 import { auth } from '@clerk/nextjs/server';
 

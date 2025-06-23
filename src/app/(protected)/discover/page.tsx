@@ -1,6 +1,5 @@
 import Main from '@/components/discover/Main';
 import Sections from '@/components/discover/Sections';
-import Footer from '@/components/main/Footer';
 import Header from '@/components/main/Header';
 import {
   fetchActionMovies,
@@ -14,6 +13,12 @@ import {
   fetchTrending,
   fetchUpcoming,
 } from '@/utils/api';
+
+export const metadata = {
+  title: 'Discover Movies & TV Shows | Entflix',
+  description:
+    'Browse trending, popular, and recommended movies and TV shows on Entflix. Find your next favorite watch.',
+};
 
 export default async function page() {
   const trending = await fetchTrending();
@@ -33,7 +38,9 @@ export default async function page() {
 
       <Main
         movie={
-          trending ? trending[Math.floor(Math.random() * trending.length)] : []
+          trending
+            ? trending[Math.floor(Math.random() * popularMovie.length)]
+            : []
         }
       />
 
