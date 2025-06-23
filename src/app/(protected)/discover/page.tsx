@@ -15,9 +15,9 @@ import {
 } from '@/utils/api';
 
 export const metadata = {
-  title: 'Discover Movies & TV Shows | Entflix',
+  title: 'Discover Movies & TV Shows | CineWave',
   description:
-    'Browse trending, popular, and recommended movies and TV shows on Entflix. Find your next favorite watch.',
+    'Browse trending, popular, and recommended movies and TV shows on CineWave. Find your next favorite watch.',
 };
 
 export default async function page() {
