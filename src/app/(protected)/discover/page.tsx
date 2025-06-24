@@ -38,8 +38,8 @@ export default async function page() {
 
       <Main
         movie={
-          trending
-            ? trending[Math.floor(Math.random() * popularMovie.length)]
+          popularMovie
+            ? popularMovie[Math.floor(Math.random() * popularMovie.length)]
             : []
         }
       />
