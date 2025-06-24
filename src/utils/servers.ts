@@ -11,7 +11,7 @@ export const servers = [
   },
   {
     id: 2,
-    name: 'GlueGangGarry612',
+    name: 'Necrydark',
     description:
       'Stable embed with basic features and TMDb ID support. No autoplay by default.',
     movieLink: (movieId: number) =>
@@ -21,7 +21,7 @@ export const servers = [
   },
   {
     id: 3,
-    name: 'Big Man Yusef',
+    name: 'The 𝓯𝓻𝓮𝓪𝓴ness 😎',
     description: 'Reliable source with vidsrc.cc embeds. Autoplay off.',
     movieLink: (movieId: number) =>
       `https://vidsrc.cc/v3/embed/movie/${movieId}?autoPlay=false`,
@@ -31,7 +31,8 @@ export const servers = [
   {
     id: 4,
     name: "Drake's Third Leg",
-    description: 'Clean UI with poster and title. Autoplay disabled, next episode available.',
+    description:
+      'Clean UI with poster and title. Autoplay disabled, next episode available.',
     movieLink: (movieId: number) =>
       `https://vidlink.pro/movie/${movieId}?title=true&poster=true&autoplay=false`,
     showLink: (showId: number, season: number, episode: number) =>
@@ -41,15 +42,15 @@ export const servers = [
     id: 5,
     name: 'Twice (LETS GOOOO)',
     description: 'MoviesAPI.club source with simple movie and TV embeds.',
-    movieLink: (movieId: number) =>
-      `https://moviesapi.club/movie/${movieId}`,
+    movieLink: (movieId: number) => `https://moviesapi.club/movie/${movieId}`,
     showLink: (showId: number, season: number, episode: number) =>
       `https://moviesapi.club/tv/${showId}-${season}-${episode}`,
   },
   {
     id: 6,
     name: "Teemo's Balls",
-    description: 'Player.Videasy.net with next episode and episode selector support.',
+    description:
+      'Player.Videasy.net with next episode and episode selector support.',
     movieLink: (movieId: number) =>
       `https://player.videasy.net/movie/${movieId}`,
     showLink: (showId: number, season: number, episode: number) =>
