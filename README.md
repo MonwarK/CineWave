@@ -1,4 +1,4 @@
-> 🚀 This is a joint project developed by [Monwar Khan](https://github.com/monwark) and [Necrydark](https://github.com/necrydark).
+> 🚀 This is a joint project developed by [Monwar Khan](https://github.com/monwark) and [Michael Connor](https://github.com/necrydark).
 
 # 🎬 CineWave
 
@@ -34,7 +34,7 @@ CineWave is a fully responsive, Netflix-inspired streaming web application that 
 
 ## 📸 Screenshots
 
-Will Add doon
+Will add soon
 
 ---
 
