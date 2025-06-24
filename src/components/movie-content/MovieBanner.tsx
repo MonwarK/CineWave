@@ -19,14 +19,6 @@ export default function MovieBanner({
   const isMovie = movie.title ? true : false;
   const [trailerKey, setTrailerKey] = useState('');
 
-  const proxiedImage = `/api/image-proxy?url=${encodeURIComponent(
-    `https://image.tmdb.org/t/p/w1920${movie.backdrop_path}`
-  )}`;
-
-  const color = useExtractColors(proxiedImage);
-
-  console.log(color);
-
   useEffect(() => {
     document.title = `${movie.title || movie.name} | CineWave`;
   }, [movie]);
