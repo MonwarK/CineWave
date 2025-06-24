@@ -55,10 +55,13 @@ export const SavedMoviesProvider = ({
     removeMovie(movie)
       .then(res => res.json())
       .then(json => {
-        console.log(json);
-        setSavedMovies(prev =>
-          prev.filter(m => parseInt(m.id) !== movie.id && m.isMovie === isMovie)
+        const currentMovie = json.data[0];
+
+        const movies = savedMovies.filter(
+          m => !(m.movie_id === currentMovie.movie_id && m.isMovie && isMovie)
         );
+
+        setSavedMovies(movies);
       })
       .catch(e => console.log(e));
   };

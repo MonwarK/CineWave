@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
-  const { addMovie, isSaved } = useSavedMovies();
+  const { addMovie, deleteMovie, isSaved } = useSavedMovies();
   const [isTapped, setIsTapped] = useState(false);
 
   return (
@@ -73,7 +73,10 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
                   </button>
                 </Link>
                 {isSaved(movie.id, isMovie) ? (
-                  <button className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition">
+                  <button
+                    onClick={() => deleteMovie(movie, isMovie)}
+                    className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition"
+                  >
                     <Check size={16} />
                   </button>
                 ) : (
