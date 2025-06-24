@@ -1,43 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+> 🚀 This is a joint project developed by [Monwar Khan](https://github.com/monwark) and [Necrydark](https://github.com/necrydark).
 
-## Getting Started
+# 🎬 CineWave
 
-First, run the development server:
+CineWave is a fully responsive, Netflix-inspired streaming web application that provides access to thousands of movies and TV shows. Built with modern web technologies like **Next.js**, **Tailwind CSS**, and **TypeScript**, it offers a sleek user experience with premium features, dynamic content, and smooth UI transitions.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔥 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🔐 **Authentication with Clerk** – Secure sign-up, login, and session handling.
+- 💳 **Stripe Subscriptions** – Manage premium memberships with payment integration.
+- 🎥 **Streaming with Video APIs** – Access thousands of shows and movies via third-party providers.
+- 📡 **TMDB Integration** – Movie and TV show metadata, images, genres, and trailers.
+- 🎞️ **Detailed Movie Pages** – Trailers, overviews, cast info, and related content.
+- 🔎 **Search & Filter** – Discover content by genre or keyword.
+- 🎨 **Framer Motion** – Smooth transitions and animations for an engaging UI.
+- ☁️ **Deployed on Vercel** – Optimized for fast, global performance.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Todo
-- saved section 
-- maybe in-built user rating 
-- comments 
-- sort by category 
+## 🛠 Tech Stack
 
+- **Frontend Framework:** [Next.js](https://nextjs.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Language:** TypeScript
+- **Authentication:** [Clerk](https://clerk.dev/)
+- **Payments:** [Stripe](https://stripe.com/)
+- **Content API:** [TMDB API](https://www.themoviedb.org/documentation/api)
+- **Deployment:** [Vercel](https://vercel.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📸 Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Will Add doon
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🚀 Getting Started
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/yourusername/cinewave.git
+   cd cinewave
