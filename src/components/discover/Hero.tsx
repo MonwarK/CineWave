@@ -11,7 +11,7 @@ interface Props {
 
 export default function Hero({ movie, dominantColor, openMovie }: Props) {
   const [color, setColor] = useState<string>('white');
-  const { addMovie, isSaved } = useSavedMovies();
+  const { addMovie, deleteMovie, isSaved } = useSavedMovies();
   const isMovie = movie.title ? true : false;
 
   const isMovieSaved = isSaved(movie.id, isMovie);
@@ -72,10 +72,14 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
             </div>
             <div>
               <button
-                onClick={() => addMovie(movie, isMovie)}
+                onClick={() =>
+                  isMovieSaved
+                    ? deleteMovie(movie, isMovie)
+                    : addMovie(movie, isMovie)
+                }
                 className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition uppercase"
               >
-                {isMovieSaved ? 'Saved' : 'Add To List'}
+                {isMovieSaved ? 'Remove from List' : 'Add To List'}
               </button>
             </div>
           </div>

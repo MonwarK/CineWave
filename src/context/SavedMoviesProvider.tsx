@@ -2,13 +2,14 @@
 
 import { Movie } from '@/types/Movie';
 import { SavedMovie } from '@/types/SavedMovies';
+import { removeMovie } from '@/utils/removeMovie';
 import { saveMovie } from '@/utils/saveMovie';
 import { createContext, useContext, useState } from 'react';
 
 type SavedMoviesContextType = {
   savedMovies: SavedMovie[];
   addMovie: (movie: Movie, isMovie: boolean) => void;
-  // removeMovie: (movie: Movie) => void;
+  deleteMovie: (movie: Movie, isMovie: boolean) => void;
   isSaved: (movie_id: number, isMovie: boolean) => boolean;
 };
 
@@ -47,6 +48,21 @@ export const SavedMoviesProvider = ({
       .catch(e => console.log(e));
   };
 
+  const deleteMovie = (movie: Movie, isMovie: boolean) => {
+    const isMovieSaved = isSaved(movie.id, isMovie);
+    if (!isMovieSaved) return;
+
+    removeMovie(movie)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        setSavedMovies(prev =>
+          prev.filter(m => parseInt(m.id) !== movie.id && m.isMovie === isMovie)
+        );
+      })
+      .catch(e => console.log(e));
+  };
+
   const isSaved = (movie_id: number, isMovie: boolean) => {
     return savedMovies.some(
       m => parseInt(m.movie_id) === movie_id && m.isMovie === isMovie
@@ -54,7 +70,9 @@ export const SavedMoviesProvider = ({
   };
 
   return (
-    <SavedMoviesContext.Provider value={{ savedMovies, addMovie, isSaved }}>
+    <SavedMoviesContext.Provider
+      value={{ savedMovies, addMovie, deleteMovie, isSaved }}
+    >
       {children}
     </SavedMoviesContext.Provider>
   );

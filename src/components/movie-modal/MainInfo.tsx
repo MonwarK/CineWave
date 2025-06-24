@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function MainInfo({ fullMovie }: Props) {
-  const { addMovie, isSaved } = useSavedMovies();
+  const { addMovie, deleteMovie, isSaved } = useSavedMovies();
 
   const isMovie = fullMovie.title ? true : false;
   const isMovieSaved = isSaved(fullMovie.id, isMovie);
@@ -63,7 +63,11 @@ export default function MainInfo({ fullMovie }: Props) {
         <Button
           className="px-3"
           variant="tertiary"
-          onClick={() => isMovieSaved && addMovie(fullMovie, isMovie)}
+          onClick={() =>
+            isMovieSaved
+              ? deleteMovie(fullMovie, isMovie)
+              : addMovie(fullMovie, isMovie)
+          }
         >
           {isMovieSaved ? <Check size={20} /> : <Plus size={20} />}
         </Button>

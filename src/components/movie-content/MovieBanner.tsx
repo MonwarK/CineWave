@@ -15,7 +15,7 @@ export default function MovieBanner({
   movie: Movie;
   link: string;
 }) {
-  const { addMovie, isSaved } = useSavedMovies();
+  const { addMovie, deleteMovie, isSaved } = useSavedMovies();
   const isMovie = movie.title ? true : false;
   const [trailerKey, setTrailerKey] = useState('');
 
@@ -99,7 +99,10 @@ export default function MovieBanner({
 
               {isSaved(movie.id, isMovie) ? (
                 <React.Fragment>
-                  <SquaredButton variant="secondary">
+                  <SquaredButton
+                    onClick={() => deleteMovie(movie, isMovie)}
+                    variant="secondary"
+                  >
                     <Check className="w-5 h-5" />
                     <p>Added</p>
                   </SquaredButton>
