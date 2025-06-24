@@ -44,3 +44,63 @@ Will add soon
    ```bash
    git clone https://github.com/yourusername/cinewave.git
    cd cinewave
+
+   # Install dependencies
+   npm i (Node)
+   bun install (bun)
+   ```
+
+2. **Start the App**
+   ```bash
+   npm run dev (Node)
+   bun dev (bun)
+   ```
+
+### Environment Setup
+
+1. **Create a .env file**
+   
+   - Open the `.env` file and add the following to it
+  
+
+   ```env
+   TMDB_API_KEY
+   NEXT_PUBLIC_TMDB_API_KEY
+   NEXT_PUBLIC_SUPABASE_URL
+   NEXT_PUBLIC_SUPABASE_ANON_KEY
+   ```
+
+3. **Clerk Setup** (Required for auth)
+
+   - Go To [Clerk](https://clerk.com/)
+   - Create a new project
+   - Configure your project to allow First and last name
+   - Next go to API Keys and quick copy your keys
+   - Place them inside the `.env` under their respective variable names
+   - Setup Stripe payments inside Clerks dashboard
+  
+4. **TMDB Setup** (Required for indexing items)
+
+   - Go to [TMDB API](https://developer.themoviedb.org/docs/getting-started)
+   - Create an account & register for an API key
+   - Copy your API Key not the read access token
+   - Fill your TMDB_API_KEY and NEXT_PUBLIC_TMDB_API_KEY with the API Key
+  
+5. **Supabase Setup**
+
+   - Go To [Supabase](https://supabase.com/)
+   - Create a account and a new database
+   - Copy the URL and Anon key
+   - Fill the respective variable with each key
+
+
+## Contribute
+
+   If you want to contribute fork the project and push any changes or features onto new branches and then create a PR describing what the change is or the new feature is.
+
+**🤍 The team**
+
+
+
+   
+
