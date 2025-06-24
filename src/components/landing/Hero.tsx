@@ -1,7 +1,17 @@
-import TextBox from "../auth/TextBox";
-import Header from "./Header";
+import { useState } from 'react';
+import TextBox from '../auth/TextBox';
+import Header from './Header';
+import { useRouter } from 'next/navigation';
 
 export default function Hero() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    router.push(`/sign-up?email=${email}`);
+  };
+
   return (
     <div className="relative h-[90vh] overflow-hidden p-5 flex flex-col">
       <img
@@ -28,19 +38,26 @@ export default function Hero() {
             </p>
           </div>
 
-          <div className="flex space-x-4">
-            <TextBox placeholder="Email address" />
-            <button className="cursor-pointer md:text-lg tracking-wide px-5 py-2 bg-primary hover:brightness-80 transition rounded font-semibold w-1/2">
+          <form onSubmit={handleSubmit} className="flex space-x-4">
+            <TextBox
+              placeholder="Email address"
+              value={email}
+              onChange={(e: any) => setEmail(e.target.value)}
+              type="email"
+            />
+            <button
+              type="submit"
+              className="cursor-pointer md:text-lg tracking-wide px-5 py-2 bg-primary hover:brightness-80 transition rounded font-semibold w-1/2"
+            >
               Get Started
             </button>
-          </div>
+          </form>
         </div>
       </div>
 
       {/* Fades */}
       <div className="h-1/5 -z-40 left-0 top-0 bg-gradient-to-b from-black to-transparent absolute w-full" />
       <div className="h-1/5 -z-40 left-0 bottom-0 bg-gradient-to-t from-black to-transparent absolute w-full" />
-
     </div>
   );
 }

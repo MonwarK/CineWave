@@ -1,27 +1,30 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import BackgroundImage from "@/components/auth/BackgroundImage";
-import HeightAnimationContainer from "@/components/animation/HeightAnimationContainer";
-import TextBox from "@/components/auth/TextBox";
-import ErrorText from "@/components/auth/ErrorText";
-import AuthFormButton from "@/components/auth/AuthFormButton";
-import BottomLink from "@/components/auth/BottomLink";
+import React, { useState } from 'react';
+import { useSignUp } from '@clerk/nextjs';
+import { useRouter, useSearchParams } from 'next/navigation';
+import BackgroundImage from '@/components/auth/BackgroundImage';
+import HeightAnimationContainer from '@/components/animation/HeightAnimationContainer';
+import TextBox from '@/components/auth/TextBox';
+import ErrorText from '@/components/auth/ErrorText';
+import AuthFormButton from '@/components/auth/AuthFormButton';
+import BottomLink from '@/components/auth/BottomLink';
 
 export default function SignUpPage() {
   const { signUp, isLoaded } = useSignUp();
+  const params = useSearchParams();
+
+  console.log(params);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(true);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState(params.get('email') || '');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,7 +32,7 @@ export default function SignUpPage() {
     if (!isLoaded || isLoading) return;
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       return;
     }
 
@@ -43,11 +46,11 @@ export default function SignUpPage() {
         password,
       });
 
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
 
-      router.push("/verify-email");
+      router.push('/verify-email');
     } catch (err: any) {
-      setError(err.errors?.[0]?.longMessage || "Sign-up failed");
+      setError(err.errors?.[0]?.longMessage || 'Sign-up failed');
       setIsLoading(false);
     }
   };
@@ -110,7 +113,7 @@ export default function SignUpPage() {
               link="Sign in here"
               onClick={() => {
                 setIsFormOpen(false);
-                setTimeout(() => router.push("/sign-in"), 500);
+                setTimeout(() => router.push('/sign-in'), 500);
               }}
             />
           </div>
