@@ -69,7 +69,7 @@ export default function Tabs({ shows, movies }: Props) {
                     }}
                   >
                     <MovieLandscapeThumbnail
-                      mediaType="movie"
+                      isMovie={true}
                       key={`movie-thumbnail-${movie.id}`}
                       movie={movie}
                     />
@@ -107,7 +107,7 @@ export default function Tabs({ shows, movies }: Props) {
                   }}
                 >
                   <MovieLandscapeThumbnail
-                    mediaType="tv"
+                    isMovie={false}
                     key={`movie-thumbnail-${show.id}`}
                     movie={show}
                   />

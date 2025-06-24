@@ -1,7 +1,7 @@
-import { useSavedMovies } from "@/context/SavedMoviesProvider";
-import { Movie } from "@/types/Movie";
-import { Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useSavedMovies } from '@/context/SavedMoviesProvider';
+import { Movie } from '@/types/Movie';
+import { Star } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   movie: Movie;
@@ -10,18 +10,19 @@ interface Props {
 }
 
 export default function Hero({ movie, dominantColor, openMovie }: Props) {
-  const [color, setColor] = useState<string>("white");
+  const [color, setColor] = useState<string>('white');
   const { addMovie, isSaved } = useSavedMovies();
+  const isMovie = movie.title ? true : false;
 
-  const isMovieSaved = isSaved(movie.id);
+  const isMovieSaved = isSaved(movie.id, isMovie);
 
   useEffect(() => {
-    const isDark = isColorDark(dominantColor || "#000000"); // your color logic
-    setColor(isDark ? "black" : "white");
+    const isDark = isColorDark(dominantColor || '#000000'); // your color logic
+    setColor(isDark ? 'black' : 'white');
   }, [dominantColor]);
 
   function isColorDark(hex: string): boolean {
-    const cleanHex = hex.replace("#", "");
+    const cleanHex = hex.replace('#', '');
 
     const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
     const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
@@ -39,7 +40,10 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
     <div className="max-w-screen-xl mx-auto w-full px-10">
       <div className="space-y-4 md:space-y-6 md:w-1/2">
         <div className="flex space-x-4 items-center">
-          <div>{movie.vote_average.toFixed(1)} <Star className="inline-flex ml-2 fill-orange-500 text-orange-500 items-center"/></div>
+          <div>
+            {movie.vote_average.toFixed(1)}{' '}
+            <Star className="inline-flex ml-2 fill-orange-500 text-orange-500 items-center" />
+          </div>
           <div>
             {new Date(movie.release_date || movie.first_air_date).getFullYear()}
           </div>
@@ -68,10 +72,10 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
             </div>
             <div>
               <button
-                onClick={() => addMovie(movie)}
+                onClick={() => addMovie(movie, isMovie)}
                 className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition uppercase"
               >
-                {isMovieSaved ? "Saved" : "Add To List"}
+                {isMovieSaved ? 'Saved' : 'Add To List'}
               </button>
             </div>
           </div>

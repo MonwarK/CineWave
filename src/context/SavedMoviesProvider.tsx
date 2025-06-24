@@ -7,9 +7,9 @@ import { createContext, useContext, useState } from 'react';
 
 type SavedMoviesContextType = {
   savedMovies: SavedMovie[];
-  addMovie: (movie: Movie) => void;
+  addMovie: (movie: Movie, isMovie: boolean) => void;
   // removeMovie: (movie: Movie) => void;
-  isSaved: (movie_id: number) => boolean;
+  isSaved: (movie_id: number, isMovie: boolean) => boolean;
 };
 
 const SavedMoviesContext = createContext<SavedMoviesContextType | undefined>(
@@ -35,8 +35,8 @@ export const SavedMoviesProvider = ({
 }: ProviderProps) => {
   const [savedMovies, setSavedMovies] = useState<SavedMovie[]>(initialMovies);
 
-  const addMovie = (movie: Movie) => {
-    const isMovieSaved = isSaved(movie.id);
+  const addMovie = (movie: Movie, isMovie: boolean) => {
+    const isMovieSaved = isSaved(movie.id, isMovie);
     if (isMovieSaved) return;
 
     saveMovie(movie)
@@ -47,8 +47,10 @@ export const SavedMoviesProvider = ({
       .catch(e => console.log(e));
   };
 
-  const isSaved = (movie_id: number) => {
-    return savedMovies.some(m => parseInt(m.movie_id) === movie_id);
+  const isSaved = (movie_id: number, isMovie: boolean) => {
+    return savedMovies.some(
+      m => parseInt(m.movie_id) === movie_id && m.isMovie === isMovie
+    );
   };
 
   return (

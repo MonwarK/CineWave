@@ -17,7 +17,8 @@ interface Props {
 export default function SearchResult({ result }: Props) {
   const { addMovie, isSaved } = useSavedMovies();
 
-  const isResultSaved = isSaved(result.id);
+  const isMovie = result.title ? true : false;
+  const isResultSaved = isSaved(result.id, isMovie);
 
   const genres =
     result?.genre_ids?.map(
@@ -117,7 +118,7 @@ export default function SearchResult({ result }: Props) {
           <SquaredButton
             variant="info"
             className="rounded-3xl"
-            onClick={() => addMovie(result)}
+            onClick={() => addMovie(result, isMovie)}
           >
             {isResultSaved ? (
               <Check className="w-4 h-4" />

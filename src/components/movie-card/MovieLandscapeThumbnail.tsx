@@ -1,19 +1,21 @@
 'use client';
 
+import { useSavedMovies } from '@/context/SavedMoviesProvider';
 import { itemVariants } from '@/motion/variants/motion';
 import { Movie } from '@/types/Movie';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
-import { Info, Play, Plus, Star } from 'lucide-react';
+import { Check, Info, Play, Plus, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
 interface Props {
   movie: Movie;
-  mediaType: string;
+  isMovie: boolean;
 }
 
-export default function MovieLandscapeThumbnail({ movie, mediaType }: Props) {
+export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
+  const { addMovie, isSaved } = useSavedMovies();
   const [isTapped, setIsTapped] = useState(false);
 
   return (
@@ -51,7 +53,7 @@ export default function MovieLandscapeThumbnail({ movie, mediaType }: Props) {
               <div className="flex items-center space-x-2">
                 <Link
                   href={
-                    mediaType === 'movie'
+                    isMovie
                       ? `/movies/watch/${movie.id}`
                       : `/series/watch/${movie.id}`
                   }
@@ -63,20 +65,25 @@ export default function MovieLandscapeThumbnail({ movie, mediaType }: Props) {
                   </button>
                 </Link>
                 <Link
-                  href={
-                    mediaType === 'movie'
-                      ? `/movies/${movie.id}`
-                      : `/series/${movie.id}`
-                  }
+                  href={isMovie ? `/movies/${movie.id}` : `/series/${movie.id}`}
                 >
                   <button className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-2 px-4 tracking-wider font-medium rounded-full transition uppercase flex items-center space-x-2">
                     <Info size={16} />
                     <p>Details</p>
                   </button>
                 </Link>
-                <button className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition">
-                  <Plus size={16} />
-                </button>
+                {isSaved(movie.id, isMovie) ? (
+                  <button className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition">
+                    <Check size={16} />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => addMovie(movie, isMovie)}
+                    className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition"
+                  >
+                    <Plus size={16} />
+                  </button>
+                )}
               </div>
             </div>
           </div>

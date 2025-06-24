@@ -1,9 +1,9 @@
 'use client';
+
 import { useSavedMovies } from '@/context/SavedMoviesProvider';
 import { Movie } from '@/types/Movie';
 import classNames from 'classnames';
 import Link from 'next/link';
-import { useState } from 'react';
 import Genres from './Genres';
 import Meta from './Meta';
 import { Check, Play, Plus } from 'lucide-react';
@@ -17,9 +17,9 @@ interface Props {
 export default function MainInfo({ fullMovie }: Props) {
   const { addMovie, isSaved } = useSavedMovies();
 
-  const isMovieSaved = isSaved(fullMovie.id);
+  const isMovie = fullMovie.title ? true : false;
+  const isMovieSaved = isSaved(fullMovie.id, isMovie);
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
   const mediaType =
     fullMovie.media_type || (fullMovie.name ? 'series' : 'movies');
 
@@ -63,7 +63,7 @@ export default function MainInfo({ fullMovie }: Props) {
         <Button
           className="px-3"
           variant="tertiary"
-          onClick={() => isMovieSaved && addMovie(fullMovie)}
+          onClick={() => isMovieSaved && addMovie(fullMovie, isMovie)}
         >
           {isMovieSaved ? <Check size={20} /> : <Plus size={20} />}
         </Button>

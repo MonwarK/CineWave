@@ -30,7 +30,7 @@ export default async function SeriesPage() {
             {series.map((serie: Movie) => (
               <MovieLandscapeThumbnail
                 key={`movie-thumbnail-${serie.id}`}
-                mediaType="tv"
+                isMovie={false}
                 movie={serie}
               />
             ))}

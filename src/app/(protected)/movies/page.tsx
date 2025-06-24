@@ -29,7 +29,7 @@ export default async function MoviesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {movies.map((movie: Movie) => (
               <MovieLandscapeThumbnail
-                mediaType="movie"
+                isMovie={true}
                 key={`movie-thumbnail-${movie.id}`}
                 movie={movie}
               />

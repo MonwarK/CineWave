@@ -97,7 +97,7 @@ export default function MovieBanner({
                 </Link>
               )}
 
-              {isSaved(movie.id) ? (
+              {isSaved(movie.id, isMovie) ? (
                 <React.Fragment>
                   <SquaredButton variant="secondary">
                     <Check className="w-5 h-5" />
@@ -107,7 +107,7 @@ export default function MovieBanner({
               ) : (
                 <React.Fragment>
                   <SquaredButton
-                    onClick={() => addMovie(movie)}
+                    onClick={() => addMovie(movie, isMovie)}
                     variant="secondary"
                   >
                     <Plus className="w-5 h-5" />
