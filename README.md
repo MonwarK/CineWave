@@ -23,7 +23,7 @@ CineWave is a fully responsive, Netflix-inspired streaming web application that 
 
 - **Frontend Framework:** [Next.js](https://nextjs.org/)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Language:** TypeScript
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Authentication:** [Clerk](https://clerk.dev/)
 - **Payments:** [Stripe](https://stripe.com/)
 - **Content API:** [TMDB API](https://www.themoviedb.org/documentation/api)
