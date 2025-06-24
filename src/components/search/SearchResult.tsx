@@ -32,8 +32,6 @@ export default function SearchResult({ result }: Props) {
     ? { name: 'Series', url: 'series' }
     : { name: 'Movies', url: 'movies' };
 
-  console.log(result);
-
   return (
     <motion.div
       key={result.id}

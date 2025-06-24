@@ -146,9 +146,6 @@ export default function WatchMoviePage({
                       onChange={e => {
                         const assignedSeason = Number(e.target.value);
                         setSeason(assignedSeason);
-                        console.log(
-                          episodesBySeason[assignedSeason][0].episode_number
-                        );
                         setEpisode(
                           episodesBySeason[assignedSeason][0].episode_number
                         );

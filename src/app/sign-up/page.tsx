@@ -14,8 +14,6 @@ export default function SignUpPage() {
   const { signUp, isLoaded } = useSignUp();
   const params = useSearchParams();
 
-  console.log(params);
-
   const [isLoading, setIsLoading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [firstName, setFirstName] = useState('');
