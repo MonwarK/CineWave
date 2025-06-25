@@ -1,4 +1,5 @@
 import Header from '@/components/main/Header';
+import Content from '@/components/other/Content';
 import WatchlistSection from '@/components/watchlist/WatchlistSection';
 
 export const metadata = {
@@ -11,12 +12,12 @@ export default function ListPage() {
   return (
     <div>
       <Header />
-      <div className="pt-[7rem] container max-w-6xl mx-auto flex flex-col">
+      <Content>
         <h1 className="leading-2 text-3xl font-semibold text-center">
           Your Watchlist
         </h1>
         <WatchlistSection />
-      </div>
+      </Content>
     </div>
   );
 }

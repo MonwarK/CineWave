@@ -6,7 +6,6 @@ import { Movie } from '@/types/Movie';
 import { Check, Clapperboard, Heart, Play, Plus, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useExtractColors } from 'react-extract-colors';
 
 export default function MovieBanner({
   movie,
@@ -79,7 +78,7 @@ export default function MovieBanner({
             <div className="flex flex-wrap gap-3">
               <Link href={link}>
                 <SquaredButton>
-                  <Play className="w-5 h-5" />
+                  <Play size={18} className="fill-white" />
                   <p>Watch Now {!isMovie && 'S1 E1'}</p>
                 </SquaredButton>
               </Link>

@@ -1,5 +1,6 @@
 import Header from '@/components/main/Header';
 import MovieLandscapeThumbnail from '@/components/movie-card/MovieLandscapeThumbnail';
+import Content from '@/components/other/Content';
 import { Movie } from '@/types/Movie';
 import { fetchTopRated } from '@/utils/api';
 
@@ -13,15 +14,17 @@ export default async function MoviesPage() {
   const movies = await fetchTopRated('movie');
 
   return (
-    <div className="py-10">
+    <div>
       <Header />
 
-      <div className="pt-20 max-w-screen-xl mx-auto w-full px-7">
-        <div className="flex flex-col justify-between space-y-5">
-          <div className="px-4 space-y-5">
+      <Content>
+        <div className="flex flex-col justify-between space-y-10">
+          <div className="space-y-5">
             <h1 className="text-3xl font-semibold ">Movies</h1>
             <p className="text-gray-300">
-            Explore thousands of movies across every genre, from blockbuster hits to hidden indie gems. Whatever your taste, there&apos;s something waiting for you.
+              Explore thousands of movies across every genre, from blockbuster
+              hits to hidden indie gems. Whatever your taste, there&apos;s
+              something waiting for you.
             </p>
           </div>
 
@@ -35,7 +38,7 @@ export default async function MoviesPage() {
             ))}
           </div>
         </div>
-      </div>
+      </Content>
     </div>
   );
 }

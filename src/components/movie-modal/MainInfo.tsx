@@ -53,7 +53,7 @@ export default function MainInfo({ fullMovie }: Props) {
       <div className="flex flex-row gap-2">
         <Link href={`/${mediaType}/watch/${fullMovie.id}`}>
           <SquaredButton variant="primary">
-            <Play />
+            <Play size={18} className="fill-white" />
             <p>Play</p>
           </SquaredButton>
         </Link>
