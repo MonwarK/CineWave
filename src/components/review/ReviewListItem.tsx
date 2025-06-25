@@ -30,9 +30,9 @@ export default function ReviewListItem({ review }: Props) {
           <div className="flex-1 space-y-1">
             <p className="font-semibold text-sm">{user?.fullName}</p>
             <p className="text-xs text-gray-500">
-              {new Date(
-                review.updated_at || review.created_at || ''
-              ).toUTCString()}
+              {review.updated_at !== review.created_at
+                ? `Updated at ${new Date(review.updated_at).toUTCString()}`
+                : `Posted at ${new Date(review.created_at).toUTCString()}`}
             </p>
           </div>
 
