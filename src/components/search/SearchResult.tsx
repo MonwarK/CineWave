@@ -103,14 +103,14 @@ export default function SearchResult({ result }: Props) {
         <div className="flex items-center space-x-3 mt-4">
           <Link href={`/${resultType.url}/watch/${result.id}`} target="_blank">
             <SquaredButton variant="primary">
-              <Play className="w-4 h-4 fill-current" />
+              <Play size={18} className="fill-white" />
               <span className="font-semibold">Play</span>
             </SquaredButton>
           </Link>
           <Link href={`/${resultType.url}/${result.id}`} target="_blank">
             <SquaredButton
               variant="secondary"
-              className="border-none hover:opacity-95"
+              className="!border-zinc-900 hover:opacity-95"
             >
               <span className="font-semibold">Details</span>
             </SquaredButton>

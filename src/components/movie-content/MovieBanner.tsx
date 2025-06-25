@@ -77,8 +77,8 @@ export default function MovieBanner({
 
             <div className="flex flex-wrap gap-3">
               <Link href={link}>
-                <SquaredButton className='!bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300'>
-                  <Play className="w-5 h-5" />
+                <SquaredButton>
+                  <Play size={18} className="fill-white" />
                   <p>Watch Now {!isMovie && 'S1 E1'}</p>
                 </SquaredButton>
               </Link>

@@ -18,10 +18,11 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
   const { user } = useUser();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log(reviews);
+  const isMovie = movie.title ? true : false;
 
   const usersReview = reviews.find((x: Review) => x.user_id === user?.id);
+
+  console.log(movie);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -29,7 +30,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
 
     const fetchReviews = async () => {
       const res = await fetch(
-        `/api/reviews?movie_id=${movie.id}&is_movie=true`
+        `/api/reviews?movie_id=${movie.id}&is_movie=${isMovie}`
       );
       const json = await res.json();
       setReviews(json.reviews);
@@ -50,8 +51,6 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       : '0.0';
 
   const onSubmit = (rating: number, review: string) => {
-    const isMovie = movie.title ? true : false;
-
     //TODO: Add checking if there is already a review from the user to stop botting and save DB resources
     submitReview({
       movieId: movie.id,
@@ -86,16 +85,20 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
         <div className="space-y-10">
           {/* Header */}
           <ReviewHeader
-            link={`/movies/${movie.id}`}
-            title={movie.title || ''}
+            link={`/${isMovie ? 'movies' : 'series'}/${movie.id}`}
+            title={movie.title || movie.name || ''}
           />
 
           {/* Tags */}
           <ReviewTags
             info={[
-              new Date(movie.release_date).getFullYear().toString(),
-              'Movie',
-              `${movie.runtime} minutes`,
+              new Date(movie.release_date || movie.first_air_date)
+                .getFullYear()
+                .toString(),
+              isMovie ? 'Movie' : 'Series',
+              isMovie
+                ? `${movie.runtime} minutes`
+                : `${movie.number_of_episodes} episodes`,
               movie.genres
                 .slice(0, 3)
                 .map(x => x.name)

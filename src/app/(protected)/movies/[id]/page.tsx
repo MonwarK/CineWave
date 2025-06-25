@@ -48,28 +48,26 @@ export default async function MoviePage({ params }: { params: Params }) {
 
       <div className="pt-10 px-5 pb-[1rem] container mx-auto space-y-10">
         {/* Reviews */}
-        <div className='bg-zinc-900 p-5 rounded-lg border border-zinc-700'>
-      <h2 className='text-xl leading-tight mb-2 font-bold'>Our Reviews</h2>
-        <div
-          className={clsx(
-            'flex items-center ',
-            hasRatings ? 'justify-between' : 'justify-end'
-          )}
-        >
-          {hasRatings && (
+        <div className="bg-zinc-900 p-5 rounded-lg border border-zinc-700">
+          <div className="font-semibold uppercase mb-4">User Reviews</div>
+          <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Star className="text-orange-400 fill-orange-400" size={14} />
-              <div className="text-gray-400 text-xs">
-                {averageRating} Rating
+              <Star
+                className="text-orange-400 fill-orange-400 mb-0.5"
+                size={16}
+              />
+              <div className="text-zinc-400 text-sm">
+                {hasRatings ? `${averageRating} rating` : 'No Reviews'}
               </div>
             </div>
-          )}
-          <div className="flex gap-5">
-            <Link href={`/movies/reviews/${movie.id}`}>
-              <SquaredButton  className='!bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300'>View All Reviews</SquaredButton>
-            </Link>
+            <div className="flex gap-5">
+              <Link href={`/movies/reviews/${movie.id}`}>
+                <SquaredButton variant={hasRatings ? 'primary' : 'secondary'}>
+                  {hasRatings ? 'View All Reviews' : 'Leave a Review'}
+                </SquaredButton>
+              </Link>
+            </div>
           </div>
-        </div>
         </div>
 
         {/* Stats */}

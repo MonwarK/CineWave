@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -6,20 +6,22 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variants;
 }
 
-type Variants = "primary" | "secondary" | "info";
+type Variants = 'primary' | 'secondary' | 'white' | 'info';
 
 const buttonVariantClasses: Record<Variants, string> = {
   primary:
-    "bg-white hover:opacity-95 text-black px-6 py-2 rounded-md transition-colors flex items-center cursor-pointer uppercase space-x-2 font-semibold border-2 border-white",
+    'bg-[#e86914] hover:opacity-80 text-white px-6 py-2 rounded-md transition flex items-center cursor-pointer uppercase space-x-2 font-semibold border-2 border-[#e86914] duration-300',
   secondary:
-    "bg-black/30 hover:bg-white hover:text-gray-800 text-white px-6 py-2 rounded-md transition duration-300 flex items-center cursor-pointer uppercase space-x-2 border-2 border-white font-semibold",
-  info: "p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition",
+    'bg-black/30 hover:bg-white hover:text-gray-800 text-white px-6 py-2 rounded-md transition duration-300 flex items-center cursor-pointer uppercase space-x-2 border-2 border-white font-semibold',
+  white:
+    'bg-white hover:opacity-80 text-black px-6 py-2 rounded-md transition flex items-center cursor-pointer uppercase space-x-2 font-semibold border-2 border-white duration-300',
+  info: 'p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition',
 };
 
 export default function SquaredButton({
   children,
   className,
-  variant = "primary",
+  variant = 'primary',
   ...props
 }: Props) {
   return (
