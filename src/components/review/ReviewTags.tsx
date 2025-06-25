@@ -5,7 +5,10 @@ export default function ReviewTags({ info }: { info: string[] }) {
     <div>
       <div className="flex justify-center space-x-6">
         {info.map(x => (
-          <div className="px-4 py-1 border border-orange-500 text-xs bg-zinc-700/50 rounded-full">
+          <div
+            key={`key-${x}`}
+            className="px-4 py-1 border border-orange-500 text-xs bg-zinc-700/50 rounded-full"
+          >
             {x}
           </div>
         ))}
