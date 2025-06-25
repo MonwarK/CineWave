@@ -29,7 +29,7 @@ export default function Tabs({ shows, movies }: Props) {
 
   return (
     <div>
-      <div className="flex flex-row justify-center space-x-4  rounded-md w-fit p-2 mx-auto items-center mb-4">
+      <div className="flex flex-row justify-center space-x-4 mt-4  rounded-md w-fit p-2 mx-auto items-center mb-4">
         <button
           className={clsx(
             isActive === 0 ? 'bg-orange-900' : 'bg-black/50',
@@ -121,7 +121,7 @@ export default function Tabs({ shows, movies }: Props) {
                   className="mt-6"
                   variant="secondary"
                 >
-                  Load More Episodes
+                  Load More Shows
                 </SquaredButton>
               )}
             </div>
