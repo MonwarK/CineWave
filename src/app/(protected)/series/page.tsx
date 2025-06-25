@@ -21,8 +21,7 @@ export default async function SeriesPage() {
           <div className="px-4 space-y-5">
             <h1 className="text-3xl font-semibold ">TV Shows</h1>
             <p className="text-gray-300">
-              Discover thousands of tv shows from every genre, from talk shows
-              to crime shows.
+            Explore thousands of TV shows across every genre, from gripping crime dramas and lively talk shows to captivating anime and more. Whatever you&apos;re into, we&apos;ve got something for you.
             </p>
           </div>
 

@@ -21,8 +21,7 @@ export default async function MoviesPage() {
           <div className="px-4 space-y-5">
             <h1 className="text-3xl font-semibold ">Movies</h1>
             <p className="text-gray-300">
-              Discover thousands of movies from every genre. From blockbuster
-              hits to indie gems.
+            Explore thousands of movies across every genre, from blockbuster hits to hidden indie gems. Whatever your taste, there&apos;s something waiting for you.
             </p>
           </div>
 

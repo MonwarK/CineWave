@@ -17,10 +17,10 @@ export default async function TrendingPage() {
       <Header />
 
       <div className="pt-20 max-w-screen-xl mx-auto w-full px-7">
-        <div>
+        <div className='px-4 space-y-5'>
           <h1 className="text-3xl font-semibold">Trending</h1>
-          <p className="text-gray-300 text-sm mt-2">
-            View all of the recently trending movies & tv shows.
+          <p className="text-gray-300">
+          Explore a curated selection of the latest trending movies and TV shows.
           </p>
         </div>
         <Tabs shows={popularTv} movies={popularMovies} />
