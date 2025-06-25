@@ -1,4 +1,5 @@
 import Header from '@/components/main/Header';
+import Content from '@/components/other/Content';
 import Tabs from '@/components/trending/Tabs';
 import { fetchTrendingType } from '@/utils/api';
 
@@ -13,18 +14,19 @@ export default async function TrendingPage() {
   const popularMovies = await fetchTrendingType('movie');
 
   return (
-    <div className="py-10">
+    <div>
       <Header />
 
-      <div className="pt-20 max-w-screen-xl mx-auto w-full px-7">
-        <div className='px-4 space-y-5'>
+      <Content>
+        <div className="space-y-5">
           <h1 className="text-3xl font-semibold">Trending</h1>
           <p className="text-gray-300">
-          Explore a curated selection of the latest trending movies and TV shows.
+            Explore a curated selection of the latest trending movies and TV
+            shows.
           </p>
         </div>
         <Tabs shows={popularTv} movies={popularMovies} />
-      </div>
+      </Content>
     </div>
   );
 }

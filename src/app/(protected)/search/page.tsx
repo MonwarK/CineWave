@@ -2,6 +2,7 @@
 
 import FullPageLoader from '@/components/loading/FullPageLoader';
 import Header from '@/components/main/Header';
+import Content from '@/components/other/Content';
 import SearchBarSection from '@/components/search/SearchBarSection';
 import SearchNoResults from '@/components/search/SearchNoResults';
 import SearchResults from '@/components/search/SearchResults';
@@ -28,10 +29,10 @@ export default function page() {
   }, [results]);
 
   return (
-    <div className="py-10">
+    <div>
       <Header />
 
-      <div className="pt-20 max-w-screen-xl mx-auto w-full px-7 space-y-14">
+      <Content>
         {/* Search Section */}
         <div className="space-y-7">
           <SearchBarSection
@@ -57,7 +58,7 @@ export default function page() {
             </div>
           )}
         </div>
-      </div>
+      </Content>
     </div>
   );
 }
