@@ -3,6 +3,8 @@ import { useUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import { EllipsisVertical } from 'lucide-react';
 import { useState } from 'react';
+import Markdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
 
 interface Props {
   review: Review;
@@ -11,10 +13,14 @@ interface Props {
 export default function ReviewListItem({ review }: Props) {
   const { user } = useUser();
   const [isOpen, SetIsOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleOpen = () => {
     SetIsOpen(!isOpen);
   };
+
+  const shouldShowToggle =
+    review.review.split('\n').length > 3 || review.review.length > 300;
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-900/10 p-5 border border-zinc-700 rounded-lg space-y-3">
@@ -87,7 +93,21 @@ export default function ReviewListItem({ review }: Props) {
 
       {/* Mid Section */}
       <div>
-        <p className="text-sm">{review.review}</p>
+        <div
+          className={`whitespace-pre-wrap transition-all duration-300 ease-in-out ${
+            expanded ? '' : 'line-clamp-3'
+          }`}
+        >
+          <Markdown>{review.review}</Markdown>
+        </div>
+        {shouldShowToggle && (
+          <button
+            className="text-sm text-blue-500 hover:underline cursor-pointer"
+            onClick={() => setExpanded(prev => !prev)}
+          >
+            {expanded ? 'Show less' : 'Show more'}
+          </button>
+        )}
       </div>
     </div>
   );

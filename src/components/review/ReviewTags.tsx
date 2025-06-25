@@ -3,7 +3,7 @@ import React from 'react';
 export default function ReviewTags({ info }: { info: string[] }) {
   return (
     <div>
-      <div className="flex justify-center space-x-6">
+      <div className="flex flex-wrap justify-center gap-4">
         {info.map(x => (
           <div
             key={`key-${x}`}
