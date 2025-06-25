@@ -18,6 +18,9 @@ export default function MovieBanner({
   const isMovie = movie.title ? true : false;
   const [trailerKey, setTrailerKey] = useState('');
 
+  const isReleased =
+    new Date() >= new Date(movie.release_date || movie.first_air_date);
+
   useEffect(() => {
     document.title = `${movie.title || movie.name} | CineWave`;
   }, [movie]);
@@ -77,12 +80,14 @@ export default function MovieBanner({
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Link href={link}>
-                  <SquaredButton>
-                    <Play size={18} className="fill-white" />
-                    <p>Watch Now {!isMovie && 'S1 E1'}</p>
-                  </SquaredButton>
-                </Link>
+                {isReleased && (
+                  <Link href={link}>
+                    <SquaredButton>
+                      <Play size={18} className="fill-white" />
+                      <p>Watch Now {!isMovie && 'S1 E1'}</p>
+                    </SquaredButton>
+                  </Link>
+                )}
 
                 {trailerKey && (
                   <Link

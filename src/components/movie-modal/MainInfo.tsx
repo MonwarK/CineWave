@@ -19,6 +19,8 @@ export default function MainInfo({ fullMovie }: Props) {
 
   const isMovie = fullMovie.title ? true : false;
   const isMovieSaved = isSaved(fullMovie.id, isMovie);
+  const isReleased =
+    new Date() >= new Date(fullMovie.release_date || fullMovie.first_air_date);
 
   const mediaType =
     fullMovie.media_type || (fullMovie.name ? 'series' : 'movies');
@@ -51,14 +53,18 @@ export default function MainInfo({ fullMovie }: Props) {
       </div>
 
       <div className="flex flex-row gap-2">
-        <Link href={`/${mediaType}/watch/${fullMovie.id}`}>
-          <SquaredButton variant="primary">
-            <Play size={18} className="fill-white" />
-            <p>Play</p>
-          </SquaredButton>
-        </Link>
+        {isReleased && (
+          <Link href={`/${mediaType}/watch/${fullMovie.id}`}>
+            <SquaredButton variant="primary">
+              <Play size={18} className="fill-white" />
+              <p>Play</p>
+            </SquaredButton>
+          </Link>
+        )}
         <Link href={`/${mediaType}/${fullMovie.id}`}>
-          <SquaredButton variant="secondary">View Details</SquaredButton>
+          <SquaredButton variant={isReleased ? 'secondary' : 'white'}>
+            View Details
+          </SquaredButton>
         </Link>
         <Button
           className="px-3"
