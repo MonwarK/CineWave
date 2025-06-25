@@ -17,6 +17,9 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+
+    //TODO: Add checking if there is already a review from the user to stop botting and save DB resources
+    
     submitReview({
       movieId: movie.id,
       isMovie,

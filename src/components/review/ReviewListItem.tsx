@@ -11,6 +11,7 @@ export default function ReviewListItem({ review }: any) {
     SetIsOpen(!isOpen);
   };
 
+  //For testing
   console.log('User Reviews', review);
 
   return (
@@ -37,6 +38,7 @@ export default function ReviewListItem({ review }: any) {
               {review.rating}/10
             </div>
             {/* Dropdown */}
+            {/* TODO: Add editing and deletion functionality */}
             <div>
               <button type="button" onClick={handleOpen}>
                 <EllipsisVertical />

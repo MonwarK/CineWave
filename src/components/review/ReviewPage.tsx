@@ -84,6 +84,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
             </div>
           )}
         </div>
+        {/* Add Pagination later */}
       </Content>
     </div>
   );
