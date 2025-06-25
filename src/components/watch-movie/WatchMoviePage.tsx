@@ -3,14 +3,10 @@
 import { Episode, Movie } from '@/types/Movie';
 import { getEpisodesGroupedBySeason } from '@/utils/api';
 import { servers } from '@/utils/servers';
-import classNames from 'classnames';
 import { ChevronLeft, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import SquaredButton from '../ui/SquaredButton';
-import Comment from '../comments/Comment';
 import CommentSection from '../comments/CommentSection';
 import AvailableServers from './AvailableServers';
 
@@ -22,6 +18,7 @@ export default function WatchMoviePage({
   isMovie: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [isCommentsLoading, setIsCommentsLoading] = useState(true);
 
   // Server
   const [currentServerIndex, setCurrentServerIndex] = useState(0);
@@ -61,6 +58,7 @@ export default function WatchMoviePage({
 
   useEffect(() => {
     setVideoSrc('');
+    setIsCommentsLoading(true);
     if (!movie) return; // guard clause if movie is not loaded
 
     if (isMovie) {
@@ -228,7 +226,14 @@ export default function WatchMoviePage({
         </div>
 
         {/* Comments */}
-        <CommentSection />
+        <CommentSection
+          movieId={movie.id}
+          isMovie={isMovie}
+          episode={episode}
+          season={season}
+          loading={isCommentsLoading}
+          setLoading={setIsCommentsLoading}
+        />
       </div>
     </div>
   );
