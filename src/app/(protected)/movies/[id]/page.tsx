@@ -48,9 +48,11 @@ export default async function MoviePage({ params }: { params: Params }) {
 
       <div className="pt-10 px-5 pb-[1rem] container mx-auto space-y-10">
         {/* Reviews */}
+        <div className='bg-zinc-900 p-5 rounded-lg border border-zinc-700'>
+      <h2 className='text-xl leading-tight mb-2 font-bold'>Our Reviews</h2>
         <div
           className={clsx(
-            'flex items-center',
+            'flex items-center ',
             hasRatings ? 'justify-between' : 'justify-end'
           )}
         >
@@ -64,9 +66,10 @@ export default async function MoviePage({ params }: { params: Params }) {
           )}
           <div className="flex gap-5">
             <Link href={`/movies/reviews/${movie.id}`}>
-              <SquaredButton>View All Reviews</SquaredButton>
+              <SquaredButton  className='!bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300'>View All Reviews</SquaredButton>
             </Link>
           </div>
+        </div>
         </div>
 
         {/* Stats */}

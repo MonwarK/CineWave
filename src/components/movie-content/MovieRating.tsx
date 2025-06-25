@@ -1,8 +1,5 @@
 import { Movie } from '@/types/Movie';
-import { Star } from 'lucide-react';
-import Link from 'next/link';
 import StarRating from '../other/StarRating';
-import SquaredButton from '../ui/SquaredButton';
 
 export default function MovieRating({ movie }: { movie: Movie }) {
   return (
@@ -19,6 +16,7 @@ export default function MovieRating({ movie }: { movie: Movie }) {
             </div>
           </div>
         </div>
+        <hr className="border-gray-500 my-4" />
 
 
         <div className="grid grid-cols-2 gap-5">
@@ -39,20 +37,8 @@ export default function MovieRating({ movie }: { movie: Movie }) {
             </p>
           </div>
         </div>
-        <hr className="border-gray-500 my-4" />
 
-  <h2 className="text-xl uppercase font-semibold mb-2">Our Reviews</h2>
-        <div className="flex md:items-center justify-between gap-5">
-<div className="flex items-center space-x-2">
-  <Star className="text-orange-400 fill-orange-400" size={20} />
-  <div className="text-gray-400 text-sm mt-1">8.7 Ratings</div>
-</div>
-<div className="flex gap-5">
-  <Link href={`/movies/reviews/${movie.id}`}>
-    <SquaredButton className='!bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300'>View All Reviews</SquaredButton>
-  </Link>
-</div>
-</div>
+ 
       </div>
     </div>
   );
