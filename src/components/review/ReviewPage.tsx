@@ -15,9 +15,12 @@ import { useUser } from '@clerk/nextjs';
 import Loader from '../ui/Loader';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
-  const { user, isLoaded } = useUser();
+  const { user } = useUser();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log(reviews);
+
   const usersReview = reviews.find((x: Review) => x.user_id === user?.id);
 
   useEffect(() => {

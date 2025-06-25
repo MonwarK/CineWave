@@ -1,17 +1,14 @@
 import { Review } from '@/types/Review';
-import { useUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import { EllipsisVertical } from 'lucide-react';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
-import remarkBreaks from 'remark-breaks';
 
 interface Props {
   review: Review;
 }
 
 export default function ReviewListItem({ review }: Props) {
-  const { user } = useUser();
   const [isOpen, SetIsOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -22,6 +19,8 @@ export default function ReviewListItem({ review }: Props) {
   const shouldShowToggle =
     review.review.split('\n').length > 3 || review.review.length > 300;
 
+  console;
+
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-900/10 p-5 border border-zinc-700 rounded-lg space-y-3">
       {/* Top Section */}
@@ -29,12 +28,18 @@ export default function ReviewListItem({ review }: Props) {
         <div className="flex items-center space-x-5">
           {/* Profile Picture */}
           <div>
-            <img className="w-14 rounded-full" src={user?.imageUrl} alt="" />
+            <img
+              className="w-14 rounded-full"
+              src={review.users.profile_image_url}
+              alt=""
+            />
           </div>
 
           {/* Username and time sent */}
           <div className="flex-1 space-y-1">
-            <p className="font-semibold text-sm">{user?.fullName}</p>
+            <p className="font-semibold text-sm">
+              {review.users.first_name} {review.users.last_name}
+            </p>
             <p className="text-xs text-gray-500">
               {review.updated_at !== review.created_at
                 ? `Updated at ${new Date(review.updated_at).toUTCString()}`

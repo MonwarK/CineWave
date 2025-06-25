@@ -33,3 +33,9 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ ignored: true }, { status: 200 });
 }
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
