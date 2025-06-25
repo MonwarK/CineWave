@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function NumberRating({ rating, onRate }: any) {
   return (
-    <div className="mb-4">
+    <div>
       <div className="flex space-x-2">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(star => (
           <button

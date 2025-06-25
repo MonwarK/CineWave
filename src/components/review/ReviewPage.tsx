@@ -113,7 +113,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
 
           {/* Reviews */}
           {reviews.length > 0 ? (
-            <ReviewList reviews={reviews} />
+            <ReviewList reviews={reviews} onSubmit={onSubmit} />
           ) : (
             <div>
               <p className="text-center">
