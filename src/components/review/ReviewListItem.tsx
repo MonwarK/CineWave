@@ -50,7 +50,11 @@ export default function ReviewListItem({ review }: Props) {
             {/* Dropdown */}
             {/* TODO: Add editing and deletion functionality */}
             <div>
-              <button type="button" onClick={handleOpen}>
+              <button
+                className="cursor-pointer"
+                type="button"
+                onClick={handleOpen}
+              >
                 <EllipsisVertical />
               </button>
               {isOpen && (
