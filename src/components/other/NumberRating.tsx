@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default function NumberRating({ rating }: any) {
+export default function NumberRating({ rating, onRate }: any) {
   return (
     <div className="mb-4">
       <div className="flex space-x-2">
@@ -10,7 +10,7 @@ export default function NumberRating({ rating }: any) {
           <button
             key={star}
             type="button"
-            // onClick={() => onRate(star)}
+            onClick={() => onRate(star)}
             className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200 cursor-pointer ${
               star <= rating
                 ? 'bg-orange-500 text-white shadow-lg scale-110'
