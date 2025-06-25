@@ -56,10 +56,7 @@ export default function CommentSection({
   }, [movieId, isMovie, season, episode, loading]);
 
   const handleSubmit = async (comment: string) => {
-    if (!comment.trim()) return;
-
-    setLoading(true);
-
+    if (!comment) return;
     try {
       const res = await fetch('/api/comments', {
         method: 'POST',
@@ -77,10 +74,9 @@ export default function CommentSection({
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to post comment');
+      setLoading(true);
     } catch (err: any) {
       console.log(err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
