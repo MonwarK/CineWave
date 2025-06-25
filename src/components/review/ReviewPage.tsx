@@ -12,6 +12,7 @@ import ReviewTags from './ReviewTags';
 import { submitReview } from '@/utils/submitReview';
 import { Review } from '@/types/Review';
 import { useUser } from '@clerk/nextjs';
+import Loader from '../ui/Loader';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
   const { user, isLoaded } = useUser();
@@ -63,7 +64,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
     return (
       <div>
         <Header />
-        <Content>Loading...</Content>
+        <Loader />
       </div>
     );
   }
