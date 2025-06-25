@@ -1,5 +1,4 @@
 import { Movie } from '@/types/Movie';
-import { Star } from 'lucide-react';
 import React from 'react';
 import StarRating from '../other/StarRating';
 
