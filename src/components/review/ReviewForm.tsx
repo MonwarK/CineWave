@@ -19,7 +19,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
 
 
     //TODO: Add checking if there is already a review from the user to stop botting and save DB resources
-    
+
     submitReview({
       movieId: movie.id,
       isMovie,
@@ -70,7 +70,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
                 />
               </div>
             </div>
-            <SquaredButton className='!bg-orange-900 !border-orange-800 text-white !hover:bg-orange-600/50 transition duration-300'>Submit Review</SquaredButton>
+            <SquaredButton className='!bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300'>Submit Review</SquaredButton>
           </form>
         </motion.div>
       </AnimatePresence>

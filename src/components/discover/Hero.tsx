@@ -2,6 +2,7 @@ import { useSavedMovies } from '@/context/SavedMoviesProvider';
 import { Movie } from '@/types/Movie';
 import { Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import SquaredButton from '../ui/SquaredButton';
 
 interface Props {
   movie: Movie;
@@ -59,19 +60,20 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
         {dominantColor && (
           <div className="sm:flex space-y-5 sm:space-y-0 sm:space-x-5 py-5">
             <div>
-              <button
+              <SquaredButton
+
                 onClick={openMovie}
                 style={{
                   backgroundColor: dominantColor || undefined,
                   color,
                 }}
-                className="hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition uppercase"
+                className="hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition uppercase !border-0" 
               >
                 Watch
-              </button>
+              </SquaredButton>
             </div>
             <div>
-              <button
+              <SquaredButton
                 onClick={() =>
                   isMovieSaved
                     ? deleteMovie(movie, isMovie)
@@ -80,7 +82,7 @@ export default function Hero({ movie, dominantColor, openMovie }: Props) {
                 className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-3 px-10 tracking-wider font-medium spacing-x-2 rounded-full transition uppercase"
               >
                 {isMovieSaved ? 'Remove from List' : 'Add To List'}
-              </button>
+              </SquaredButton>
             </div>
           </div>
         )}

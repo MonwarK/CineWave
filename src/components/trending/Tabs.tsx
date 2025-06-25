@@ -32,7 +32,7 @@ export default function Tabs({ shows, movies }: Props) {
       <div className="flex flex-row justify-center space-x-4 mt-4  rounded-md w-fit p-2 mx-auto items-center mb-4">
         <button
           className={clsx(
-            isActive === 0 ? 'bg-orange-900' : 'bg-black/50',
+            isActive === 0 ? 'bg-orange-900' : 'hover:!bg-orange-800/20 bg-orange-600/20',
             'px-4 py-2 rounded-md transition duration-300 cursor-pointer'
           )}
           onClick={() => changeTab(0)}
@@ -41,7 +41,7 @@ export default function Tabs({ shows, movies }: Props) {
         </button>
         <button
           className={clsx(
-            isActive === 1 ? 'bg-orange-900' : 'bg-black/50',
+            isActive === 1 ? 'bg-orange-900' : 'hover:!bg-orange-800/20 bg-orange-600/20',
             'px-4 py-2 rounded-md transition duration-300 cursor-pointer'
           )}
           onClick={() => changeTab(1)}
@@ -81,7 +81,7 @@ export default function Tabs({ shows, movies }: Props) {
               {movies.length > visibleResults && (
                 <SquaredButton
                   onClick={loadMoreResults}
-                  className="mt-6"
+                  className="mt-6 !bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300 hover:!text-white"
                   variant="secondary"
                 >
                   Load More Movies
@@ -118,7 +118,7 @@ export default function Tabs({ shows, movies }: Props) {
               {shows.length > visibleResults && (
                 <SquaredButton
                   onClick={loadMoreResults}
-                  className="mt-6"
+                  className="mt-6 !bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300  hover:!text-white"
                   variant="secondary"
                 >
                   Load More Shows
