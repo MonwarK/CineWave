@@ -1,14 +1,14 @@
 'use client';
 
 import { Movie } from '@/types/Movie';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../main/Header';
 import Content from '../other/Content';
-import ReviewHeader from './ReviewHeader';
-import ReviewTags from './ReviewTags';
-import ReviewOverview from './ReviewOverview';
 import ReviewForm from './ReviewForm';
+import ReviewHeader from './ReviewHeader';
 import ReviewList from './ReviewList';
+import ReviewOverview from './ReviewOverview';
+import ReviewTags from './ReviewTags';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
   const [reviews, setReviews] = useState([]);
@@ -26,9 +26,15 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
   }, [movie.id]);
 
   const numberOfReviews = reviews.length;
-  const reviewAverage = (
-    reviews.reduce((sum, review) => sum + review.rating, 0) / numberOfReviews
-  ).toFixed(1);
+  const reviewAverage =
+    numberOfReviews > 0
+      ? (
+          reviews.reduce(
+            (sum: number, review: { rating: number }) => sum + review.rating,
+            0
+          ) / numberOfReviews
+        ).toFixed(1)
+      : '0.0';
 
   return (
     <div>
@@ -57,7 +63,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
 
           {/* Review Overview */}
           <ReviewOverview
-            voteAverage={reviewAverage || 0}
+            voteAverage={Number(reviewAverage) || 0}
             voteCount={numberOfReviews || 0}
           />
 
@@ -70,7 +76,13 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
           </div>
 
           {/* Reviews */}
-          <ReviewList reviews={reviews} />
+          {reviews.length > 0 ? (
+            <ReviewList reviews={reviews} />
+          ) : (
+            <div>
+              <p className='text-center'>This hasn&apos;t been reviewed yet. Start the conversation!</p>
+            </div>
+          )}
         </div>
       </Content>
     </div>

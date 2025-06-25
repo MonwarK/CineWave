@@ -1,10 +1,10 @@
+import { Movie } from '@/types/Movie';
+import { submitReview } from '@/utils/submitReview';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import React, { useState } from 'react';
 import NumberRating from '../other/NumberRating';
 import SquaredButton from '../ui/SquaredButton';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Movie } from '@/types/Movie';
-import { submitReview } from '@/utils/submitReview';
 
 export default function ReviewForm({ movie }: { movie: Movie }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
 
   const Chevron = isOpen ? ChevronUp : ChevronDown;
 
-  const onSubmit = e => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     submitReview({
@@ -67,7 +67,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
                 />
               </div>
             </div>
-            <SquaredButton>Submit Review</SquaredButton>
+            <SquaredButton className='!bg-orange-900 !border-orange-800 text-white !hover:bg-orange-600/50 transition duration-300'>Submit Review</SquaredButton>
           </form>
         </motion.div>
       </AnimatePresence>
