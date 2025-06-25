@@ -59,7 +59,7 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
                   }
                   target="_blank"
                 >
-                  <button className="bg-orange-500 hover:opacity-80 transition text-white cursor-pointer px-4 py-2 rounded-full uppercase font-bold flex items-center space-x-1">
+                  <button className="bg-[#d36013] hover:opacity-80 transition text-white cursor-pointer px-4 py-2 rounded-full uppercase font-bold flex items-center space-x-1">
                     <Play size={14} className="fill-white" />
                     <p>Play</p>
                   </button>

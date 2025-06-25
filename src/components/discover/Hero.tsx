@@ -2,8 +2,6 @@ import { useSavedMovies } from '@/context/SavedMoviesProvider';
 import { Movie } from '@/types/Movie';
 import { Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import SquaredButton from '../ui/SquaredButton';
-import Button from '../ui/RoundedButton';
 
 interface Props {
   movie: Movie;
