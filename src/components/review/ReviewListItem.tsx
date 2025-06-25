@@ -1,18 +1,20 @@
+import { Review } from '@/types/Review';
 import { useUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import { EllipsisVertical } from 'lucide-react';
 import { useState } from 'react';
 
-export default function ReviewListItem({ review }: any) {
+interface Props {
+  review: Review;
+}
+
+export default function ReviewListItem({ review }: Props) {
   const { user } = useUser();
   const [isOpen, SetIsOpen] = useState(false);
 
   const handleOpen = () => {
     SetIsOpen(!isOpen);
   };
-
-  //For testing
-  console.log('User Reviews', review);
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-900/10 p-5 border border-zinc-700 rounded-lg space-y-3">
@@ -28,7 +30,9 @@ export default function ReviewListItem({ review }: any) {
           <div className="flex-1 space-y-1">
             <p className="font-semibold text-sm">{user?.fullName}</p>
             <p className="text-xs text-gray-500">
-              {new Date(user?.createdAt || '').toDateString()}
+              {new Date(
+                review.updated_at || review.created_at || ''
+              ).toUTCString()}
             </p>
           </div>
 
