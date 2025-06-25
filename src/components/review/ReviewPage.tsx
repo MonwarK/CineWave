@@ -63,6 +63,12 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
     }).then(() => setIsLoading(true));
   };
 
+  const deleteReview = async (reviewId: string) => {
+    await fetch(`/api/reviews?review_id=${reviewId}`, {
+      method: 'DELETE',
+    }).then(() => setIsLoading(true));
+  };
+
   if (isLoading) {
     return (
       <div>
@@ -113,7 +119,11 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
 
           {/* Reviews */}
           {reviews.length > 0 ? (
-            <ReviewList reviews={reviews} onSubmit={onSubmit} />
+            <ReviewList
+              reviews={reviews}
+              onSubmit={onSubmit}
+              deleteReview={deleteReview}
+            />
           ) : (
             <div>
               <p className="text-center">

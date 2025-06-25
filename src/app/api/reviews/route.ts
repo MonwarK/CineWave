@@ -65,3 +65,28 @@ export async function GET(req: NextRequest) {
   if (error) return NextResponse.json({ error }, { status: 500 });
   return NextResponse.json({ reviews: data }, { status: 200 });
 }
+
+export async function DELETE(req: NextRequest) {
+  const { userId } = getAuth(req);
+  if (!userId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { searchParams } = new URL(req.url);
+  const review_id = searchParams.get('review_id');
+
+  if (!review_id) {
+    return NextResponse.json({ error: 'Missing review_id' }, { status: 400 });
+  }
+
+  const { error } = await supabase
+    .from('movie_reviews')
+    .delete()
+    .match({ id: review_id });
+
+  if (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+
+  return NextResponse.json({ success: true }, { status: 200 });
+}

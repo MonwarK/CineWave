@@ -11,8 +11,8 @@ export default function ReviewHeader({
   return (
     <div className="grid grid-cols-8 items-center">
       <div>
-        <Link  href={link}>
-          <ChevronLeft className='hover:bg-orange-900 rounded-full transition duration-300 ' />
+        <Link href={link}>
+          <ChevronLeft className="hover:opacity-60 rounded-full transition duration-300 " />
         </Link>
       </div>
       <div className="text-center col-span-6">

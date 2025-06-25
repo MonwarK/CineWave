@@ -9,9 +9,14 @@ import { useUser } from '@clerk/nextjs';
 interface Props {
   review: Review;
   onSubmit: (rating: number, review: string) => void;
+  deleteReview: (reviewId: string) => void;
 }
 
-export default function ReviewListItem({ review, onSubmit }: Props) {
+export default function ReviewListItem({
+  review,
+  deleteReview,
+  onSubmit,
+}: Props) {
   const { user } = useUser();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -103,6 +108,10 @@ export default function ReviewListItem({ review, onSubmit }: Props) {
                         Edit
                       </motion.p>
                       <motion.p
+                        onClick={() => {
+                          deleteReview(review.id);
+                          setIsOpen(false);
+                        }}
                         initial={{ x: -16, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.2 }}
