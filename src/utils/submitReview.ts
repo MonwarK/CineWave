@@ -7,7 +7,7 @@ type Review = {
   posterPath: string;
 }
 
-const submitReview = async ({ movieId, isMovie, rating, review, movieTitle, posterPath }: Review) => {
+export const submitReview = async ({ movieId, isMovie, rating, review, movieTitle, posterPath }: Review) => {
   const res = await fetch("/api/reviews", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -1,7 +1,7 @@
 'use client';
 
 import { Movie } from '@/types/Movie';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../main/Header';
 import Content from '../other/Content';
 import ReviewHeader from './ReviewHeader';
@@ -11,6 +11,25 @@ import ReviewForm from './ReviewForm';
 import ReviewList from './ReviewList';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const res = await fetch(
+        `/api/reviews?movie_id=${movie.id}&is_movie=true`
+      );
+      const json = await res.json();
+      setReviews(json.reviews);
+    };
+
+    fetchReviews();
+  }, [movie.id]);
+
+  const numberOfReviews = reviews.length;
+  const reviewAverage = (
+    reviews.reduce((sum, review) => sum + review.rating, 0) / numberOfReviews
+  ).toFixed(1);
+
   return (
     <div>
       <Header />
@@ -38,12 +57,12 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
 
           {/* Review Overview */}
           <ReviewOverview
-            voteAverage={movie.vote_average}
-            voteCount={movie.vote_count}
+            voteAverage={reviewAverage || 0}
+            voteCount={numberOfReviews || 0}
           />
 
           {/* Write a Review */}
-          <ReviewForm />
+          <ReviewForm movie={movie} />
 
           {/* User Reviews Header */}
           <div>
@@ -51,7 +70,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
           </div>
 
           {/* Reviews */}
-          <ReviewList />
+          <ReviewList reviews={reviews} />
         </div>
       </Content>
     </div>

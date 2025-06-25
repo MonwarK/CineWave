@@ -1,8 +1,10 @@
 import { useUser } from '@clerk/nextjs';
 import React from 'react';
 
-export default function ReviewListItem() {
+export default function ReviewListItem({ review }: any) {
   const { user } = useUser();
+
+  console.log(review);
 
   return (
     <div className="bg-gradient-to-br from-zinc-800 to-zinc-900/10 p-5 border border-zinc-700 rounded-lg space-y-3">
@@ -23,16 +25,17 @@ export default function ReviewListItem() {
           </div>
 
           {/* Rating */}
+          <div>
+            <div className="px-2 py-1 bg-orange-500 rounded-md text-xs font-semibold">
+              {review.rating}/10
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Mid Section */}
       <div>
-        <p className="text-sm">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-          necessitatibus quos culpa nesciunt tempore numquam voluptas vero cum
-          ex unde sequi et vitae eaque adipisci impedit ducimus, sint quam nemo?
-        </p>
+        <p className="text-sm">{review.review}</p>
       </div>
     </div>
   );
