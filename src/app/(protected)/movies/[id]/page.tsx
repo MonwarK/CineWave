@@ -7,12 +7,17 @@ import MovieProduction from '@/components/movie-content/MovieProduction';
 import MovieRating from '@/components/movie-content/MovieRating';
 import MovieStatsGrid from '@/components/movie-content/MovieStatsGrid';
 import RecommendedMovies from '@/components/movie-content/RecommendedMovies';
+import SquaredButton from '@/components/ui/SquaredButton';
+import { supabase } from '@/libs/supabaseClient';
 import { Movie } from '@/types/Movie';
 import {
   fetchCredits,
   fetchMovieById,
   fetchRecommendations,
 } from '@/utils/api';
+import clsx from 'clsx';
+import { Star } from 'lucide-react';
+import Link from 'next/link';
 
 type Params = Promise<{ id: string }>;
 
@@ -23,13 +28,46 @@ export default async function MoviePage({ params }: { params: Params }) {
   const similarMovies = await fetchRecommendations(id, 'movie');
   const credits = await fetchCredits(id, 'movie');
 
+  const { data, error } = await supabase
+    .from('movie_reviews')
+    .select('rating', { head: false })
+    .eq('movie_id', id);
+
+  const ratings = data?.map(r => r.rating) ?? [];
+  const hasRatings = ratings.length > 0;
+  const averageRating = (
+    ratings.length
+      ? parseInt(ratings.reduce((sum, r) => sum + r, 0)) / ratings.length
+      : 0
+  ).toFixed(1);
+
   return (
     <div>
       <Header />
       <MovieBanner movie={movie} link={`/movies/watch/${movie.id}`} />
 
       <div className="pt-10 px-5 pb-[1rem] container mx-auto space-y-10">
-
+        {/* Reviews */}
+        <div
+          className={clsx(
+            'flex items-center',
+            hasRatings ? 'justify-between' : 'justify-end'
+          )}
+        >
+          {hasRatings && (
+            <div className="flex items-center space-x-2">
+              <Star className="text-orange-400 fill-orange-400" size={14} />
+              <div className="text-gray-400 text-xs">
+                {averageRating} Rating
+              </div>
+            </div>
+          )}
+          <div className="flex gap-5">
+            <Link href={`/movies/reviews/${movie.id}`}>
+              <SquaredButton>View All Reviews</SquaredButton>
+            </Link>
+          </div>
+        </div>
 
         {/* Stats */}
         <MovieStatsGrid movie={movie} />

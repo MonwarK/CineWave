@@ -1,33 +1,26 @@
-import { Movie } from '@/types/Movie';
-import { submitReview } from '@/utils/submitReview';
+import { Review } from '@/types/Review';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import React, { useState } from 'react';
 import NumberRating from '../other/NumberRating';
 import SquaredButton from '../ui/SquaredButton';
 
-export default function ReviewForm({ movie }: { movie: Movie }) {
+export default function ReviewForm({
+  usersReview,
+  onSubmit,
+}: {
+  usersReview?: Review;
+  onSubmit: (rating: number, review: string) => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [rating, setRating] = useState(1);
-  const [review, setReview] = useState('');
-  const isMovie = movie.title ? true : false;
+  const [rating, setRating] = useState(usersReview?.rating || 1);
+  const [review, setReview] = useState(usersReview?.review || '');
 
   const Chevron = isOpen ? ChevronUp : ChevronDown;
 
-  const onSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-
-    //TODO: Add checking if there is already a review from the user to stop botting and save DB resources
-
-    submitReview({
-      movieId: movie.id,
-      isMovie,
-      rating,
-      review,
-      movieTitle: movie.title || movie.name || '',
-      posterPath: movie.poster_path,
-    });
+    onSubmit(rating, review);
   };
 
   return (
@@ -35,7 +28,9 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
       {/* Heading */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-semibold">Write a Review</h2>
+          <h2 className="text-xl font-semibold">
+            {usersReview ? 'Edit your Review' : 'Write a Review'}
+          </h2>
         </div>
         <div>
           <Chevron
@@ -51,7 +46,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
           animate={isOpen ? { height: 'auto' } : { height: 0 }}
         >
           {/* Form */}
-          <form onSubmit={onSubmit} className="py-5 space-y-7">
+          <form onSubmit={handleSubmit} className="py-5 space-y-7">
             <div className="space-y-2">
               <div className="space-y-2">
                 <div>Your Rating</div>
@@ -70,7 +65,7 @@ export default function ReviewForm({ movie }: { movie: Movie }) {
                 />
               </div>
             </div>
-            <SquaredButton className='!bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300'>Submit Review</SquaredButton>
+            <SquaredButton className='!bg-orange-900 !border-orange-800 text-white hover:!bg-orange-500/20 transition duration-300' type='submit'>Submit Review</SquaredButton>
           </form>
         </motion.div>
       </AnimatePresence>

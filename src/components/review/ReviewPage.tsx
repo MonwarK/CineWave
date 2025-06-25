@@ -9,11 +9,24 @@ import ReviewHeader from './ReviewHeader';
 import ReviewList from './ReviewList';
 import ReviewOverview from './ReviewOverview';
 import ReviewTags from './ReviewTags';
+import { submitReview } from '@/utils/submitReview';
+import { Review } from '@/types/Review';
+import { useUser } from '@clerk/nextjs';
+import Loader from '../ui/Loader';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
+  const { user } = useUser();
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  console.log(reviews);
+
+  const usersReview = reviews.find((x: Review) => x.user_id === user?.id);
 
   useEffect(() => {
+    if (!isLoading) return;
+    setReviews([]);
+
     const fetchReviews = async () => {
       const res = await fetch(
         `/api/reviews?movie_id=${movie.id}&is_movie=true`
@@ -22,8 +35,8 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       setReviews(json.reviews);
     };
 
-    fetchReviews();
-  }, [movie.id]);
+    fetchReviews().then(() => setIsLoading(false));
+  }, [movie.id, isLoading]);
 
   const numberOfReviews = reviews.length;
   const reviewAverage =
@@ -35,6 +48,35 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
           ) / numberOfReviews
         ).toFixed(1)
       : '0.0';
+
+  const onSubmit = (rating: number, review: string) => {
+    const isMovie = movie.title ? true : false;
+
+    //TODO: Add checking if there is already a review from the user to stop botting and save DB resources
+    submitReview({
+      movieId: movie.id,
+      isMovie,
+      rating,
+      review,
+      movieTitle: movie.title || movie.name || '',
+      posterPath: movie.poster_path,
+    }).then(() => setIsLoading(true));
+  };
+
+  const deleteReview = async (reviewId: string) => {
+    await fetch(`/api/reviews?review_id=${reviewId}`, {
+      method: 'DELETE',
+    }).then(() => setIsLoading(true));
+  };
+
+  if (isLoading) {
+    return (
+      <div>
+        <Header />
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -68,7 +110,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
           />
 
           {/* Write a Review */}
-          <ReviewForm movie={movie} />
+          <ReviewForm usersReview={usersReview} onSubmit={onSubmit} />
 
           {/* User Reviews Header */}
           <div>
@@ -77,10 +119,16 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
 
           {/* Reviews */}
           {reviews.length > 0 ? (
-            <ReviewList reviews={reviews} />
+            <ReviewList
+              reviews={reviews}
+              onSubmit={onSubmit}
+              deleteReview={deleteReview}
+            />
           ) : (
             <div>
-              <p className='text-center'>This hasn&apos;t been reviewed yet. Start the conversation!</p>
+              <p className="text-center">
+                This hasn&apos;t been reviewed yet. Start the conversation!
+              </p>
             </div>
           )}
         </div>
