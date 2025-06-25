@@ -104,7 +104,7 @@ export default function CommentSection({
           <div className="space-y-5">
             {comments.length > 0 ? (
               comments.map((comment: CommentType) => (
-                <Comment comment={comment} />
+                <Comment key={comment.id} comment={comment} />
               ))
             ) : (
               <div className="text-center text-zinc-500">
