@@ -62,75 +62,77 @@ export default function MovieBanner({
         </div>
 
         <div className="relative z-0 p-4 mx-auto w-full container space-y-10 mb-5 mt-20 flex items-center space-x-4 justify-between gap-15">
-          <div className="space-y-5 flex-1">
-            <div className="space-y-5">
-              <h1 className="text-4xl lg:text-5xl font-bold mb-5">
-                {movie.title || movie.name}
-              </h1>
-              {movie.tagline && (
-                <p className="text-xl text-gray-300 italic">
-                  "{movie.tagline}"
-                </p>
-              )}
-              <p className="text-sm leading-relaxed">{movie.overview}</p>
-            </div>
+          <div className="flex-1">
+            <div className="space-y-8 w-full">
+              <div className="space-y-5">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2">
+                  {movie.title || movie.name}
+                </h1>
+                {movie.tagline && (
+                  <p className="text-xl text-gray-300 italic">
+                    "{movie.tagline}"
+                  </p>
+                )}
+                <p className="text-sm leading-relaxed">{movie.overview}</p>
+              </div>
 
-            <div className="flex flex-wrap gap-3">
-              <Link href={link}>
-                <SquaredButton>
-                  <Play size={18} className="fill-white" />
-                  <p>Watch Now {!isMovie && 'S1 E1'}</p>
-                </SquaredButton>
-              </Link>
-
-              {trailerKey && (
-                <Link
-                  className="xl:hidden"
-                  href={`https://www.youtube.com/watch?v=${trailerKey}`}
-                  target="_blank"
-                >
-                  <SquaredButton variant="secondary">
-                    <Clapperboard className="w-5 h-5" />
-                    <p>Play Trailer</p>
+              <div className="flex flex-wrap gap-3">
+                <Link href={link}>
+                  <SquaredButton>
+                    <Play size={18} className="fill-white" />
+                    <p>Watch Now {!isMovie && 'S1 E1'}</p>
                   </SquaredButton>
                 </Link>
-              )}
 
-              {isSaved(movie.id, isMovie) ? (
-                <React.Fragment>
-                  <SquaredButton
-                    onClick={() => deleteMovie(movie, isMovie)}
-                    variant="secondary"
+                {trailerKey && (
+                  <Link
+                    className="xl:hidden"
+                    href={`https://www.youtube.com/watch?v=${trailerKey}`}
+                    target="_blank"
                   >
-                    <Check className="w-5 h-5" />
-                    <p>Added</p>
-                  </SquaredButton>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <SquaredButton
-                    onClick={() => addMovie(movie, isMovie)}
-                    variant="secondary"
-                  >
-                    <Plus className="w-5 h-5" />
-                    <p>Watchlist</p>
-                  </SquaredButton>
-                </React.Fragment>
-              )}
+                    <SquaredButton variant="secondary">
+                      <Clapperboard className="w-5 h-5" />
+                      <p>Play Trailer</p>
+                    </SquaredButton>
+                  </Link>
+                )}
 
-              <SquaredButton variant="secondary">
-                <Heart className="w-5 h-5" />
-                <p>Favorite</p>
-              </SquaredButton>
-              <SquaredButton
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                }}
-                variant="secondary"
-              >
-                <Share2 className="w-5 h-5" />
-                <p>Share</p>
-              </SquaredButton>
+                {isSaved(movie.id, isMovie) ? (
+                  <React.Fragment>
+                    <SquaredButton
+                      onClick={() => deleteMovie(movie, isMovie)}
+                      variant="secondary"
+                    >
+                      <Check className="w-5 h-5" />
+                      <p>Added</p>
+                    </SquaredButton>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <SquaredButton
+                      onClick={() => addMovie(movie, isMovie)}
+                      variant="secondary"
+                    >
+                      <Plus className="w-5 h-5" />
+                      <p>Watchlist</p>
+                    </SquaredButton>
+                  </React.Fragment>
+                )}
+
+                <SquaredButton variant="secondary">
+                  <Heart className="w-5 h-5" />
+                  <p>Favorite</p>
+                </SquaredButton>
+                <SquaredButton
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                  }}
+                  variant="secondary"
+                >
+                  <Share2 className="w-5 h-5" />
+                  <p>Share</p>
+                </SquaredButton>
+              </div>
             </div>
           </div>
 
