@@ -10,7 +10,7 @@ type Variants = 'primary' | 'secondary' | 'white' | 'info';
 
 const buttonVariantClasses: Record<Variants, string> = {
   primary:
-    'bg-[#d36013] hover:opacity-80 text-white px-6 py-2 rounded-md transition flex items-center cursor-pointer uppercase space-x-2 font-semibold border-2 border-[#e86914] duration-300',
+    'bg-[#d36013] hover:opacity-80 text-white px-6 py-2 rounded-md transition flex items-center cursor-pointer uppercase space-x-2 font-semibold border-2 border-[#d36013] duration-300 shadow-sm',
   secondary:
     'bg-black/30 hover:bg-white hover:text-gray-800 text-white px-6 py-2 rounded-md transition duration-300 flex items-center cursor-pointer uppercase space-x-2 border-2 border-white font-semibold',
   white:
