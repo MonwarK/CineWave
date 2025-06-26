@@ -39,15 +39,14 @@ export default function VideoPlayer({
       timer.totalSeconds >= 30 && timer.totalSeconds / 60 <= runtime * 0.75;
     const watchedLateEnough = timer.totalSeconds / 60 >= runtime * 0.75;
 
+    // Tracks current episode if user is on page for 30 seconds
     if (watchedMinEnough && !hasEarlySaved) {
-      console.log('Saving early');
       saveProgress(season, episode);
       setHasEarlySaved(true);
     }
 
+    // Tracks onto next episode if 3/4 of episode watched
     if (watchedLateEnough && !hasLateSaved && nextEpisode) {
-      console.log('Saving later');
-
       saveProgress(nextEpisode.season, nextEpisode.episode);
       setHasLateSaved(true);
 
@@ -65,7 +64,7 @@ export default function VideoPlayer({
   }, [season, episode]);
 
   return (
-    <div className="lg:px-6">
+    <div className="lg:px-6 bg-black">
       <div className="aspect-video max-h-[75vh] mx-auto">
         {videoSrc && (
           <iframe
@@ -73,7 +72,7 @@ export default function VideoPlayer({
             allowFullScreen
             width="100%"
             height="100%"
-            className="w-full h-full b"
+            className="w-full h-full"
             title="Video Player"
           />
         )}
