@@ -10,9 +10,16 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { movie_id, title, isMovie, poster_path } = body;
+  const { movie_id, title, overview, isMovie, poster_path } = body;
 
-  const movieItem = { user_id: userId, movie_id, title, isMovie, poster_path };
+  const movieItem = {
+    user_id: userId,
+    movie_id,
+    title,
+    overview,
+    isMovie,
+    poster_path,
+  };
 
   const { data, error } = await supabase
     .from('saved_movies')

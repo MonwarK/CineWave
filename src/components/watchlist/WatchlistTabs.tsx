@@ -3,15 +3,15 @@ import { SavedMovie } from '@/types/SavedMovies';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
-import MovieRowItem from '../discover/MovieRowItem';
+import MovieLandscapeThumbnail from '../movie-card/MovieLandscapeThumbnail';
 
 interface Props {
-  SavedMovies: SavedMovie[];
+  savedMovies: SavedMovie[];
 }
 
-export default function WatchlistTabs({ SavedMovies }: Props) {
-  const movies = SavedMovies.filter(x => x.isMovie === true);
-  const shows = SavedMovies.filter(x => x.isMovie === false);
+export default function WatchlistTabs({ savedMovies }: Props) {
+  const movies = savedMovies.filter(x => x.isMovie === true);
+  const shows = savedMovies.filter(x => x.isMovie === false);
 
   const [isActive, setIsActive] = useState(movies.length > 0 ? 0 : 1);
 
@@ -43,50 +43,56 @@ export default function WatchlistTabs({ SavedMovies }: Props) {
       </div>
 
       <div>
-        {isActive === 0 ? (
-          <AnimatePresence>
-            <div className="flex justify-center gap-5 flex-wrap px-5">
-              {movies.map((movie: SavedMovie) => (
-                <motion.div
-                  key={movie.id}
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 50, opacity: 0 }}
-                  transition={{
-                    type: 'spring',
-                    duration: 1,
-                    delay: 0.25,
-                    stiffness: 260,
-                    damping: 20,
-                  }}
-                >
-                  <MovieRowItem key={movie.id} savedMovie={movie} />
-                </motion.div>
-              ))}
-            </div>
-          </AnimatePresence>
+        {savedMovies.length > 0 ? (
+          isActive === 0 ? (
+            <AnimatePresence>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {movies.map((movie: SavedMovie) => (
+                  <motion.div
+                    key={movie.id}
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 50, opacity: 0 }}
+                    transition={{
+                      type: 'spring',
+                      duration: 1,
+                      delay: 0.25,
+                      stiffness: 260,
+                      damping: 20,
+                    }}
+                  >
+                    <MovieLandscapeThumbnail isMovie={true} movie={movie} />
+                  </motion.div>
+                ))}
+              </div>
+            </AnimatePresence>
+          ) : (
+            <AnimatePresence>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {shows.map((show: SavedMovie) => (
+                  <motion.div
+                    key={show.id}
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 50, opacity: 0 }}
+                    transition={{
+                      type: 'spring',
+                      duration: 1,
+                      delay: 0.25,
+                      stiffness: 260,
+                      damping: 20,
+                    }}
+                  >
+                    <MovieLandscapeThumbnail isMovie={false} movie={show} />
+                  </motion.div>
+                ))}
+              </div>
+            </AnimatePresence>
+          )
         ) : (
-          <AnimatePresence>
-            <div className="flex justify-center gap-5 flex-wrap px-5">
-              {shows.map((show: SavedMovie) => (
-                <motion.div
-                  key={show.id}
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 50, opacity: 0 }}
-                  transition={{
-                    type: 'spring',
-                    duration: 1,
-                    delay: 0.25,
-                    stiffness: 260,
-                    damping: 20,
-                  }}
-                >
-                  <MovieRowItem key={show.id} savedMovie={show} />
-                </motion.div>
-              ))}
-            </div>
-          </AnimatePresence>
+          <div className="text-center text-gray-300 py-5 text-sm">
+            <p>You haven't saved any movies or shows</p>
+          </div>
         )}
       </div>
     </div>

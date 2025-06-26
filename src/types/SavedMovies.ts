@@ -7,4 +7,5 @@ export type SavedMovie = {
   hasWatched: boolean;
   created_at: Date;
   isMovie: boolean;
+  overview: string;
 };
