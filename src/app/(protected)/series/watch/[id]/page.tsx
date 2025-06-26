@@ -36,8 +36,6 @@ export default async function MovieWatchPage({ params }: { params: Params }) {
     episode: seriesProgress?.[0]?.episode || 1,
   };
 
-  console.log(currentPlan);
-
   if (!currentPlan) {
     return <SubscriptionLocked />;
   }
