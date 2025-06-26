@@ -13,9 +13,14 @@ export default function ListPage() {
     <div>
       <Header />
       <Content>
-        <h1 className="leading-2 text-3xl font-semibold text-center">
-          Your Watchlist
-        </h1>
+        <div className="space-y-5">
+          <h1 className="text-3xl font-semibold">Your WatchList</h1>
+          <p className="text-gray-300">
+            Build your own personal cinema lineup. Whether you're planning a
+            weekend binge or just bookmarking something for later, your
+            Watchlist keeps everything you care about in one easy-to-access hub.
+          </p>
+        </div>
         <WatchlistSection />
       </Content>
     </div>
