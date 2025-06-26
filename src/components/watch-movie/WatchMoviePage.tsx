@@ -9,13 +9,19 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CommentSection from '../comments/CommentSection';
 import AvailableServers from './AvailableServers';
+import VideoPlayer from './VideoPlayer';
 
 export default function WatchMoviePage({
   movie,
   isMovie,
+  currentEpisode,
 }: {
   movie: Movie;
   isMovie: boolean;
+  currentEpisode?: {
+    season: number;
+    episode: number;
+  };
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isCommentsLoading, setIsCommentsLoading] = useState(true);
@@ -30,14 +36,18 @@ export default function WatchMoviePage({
     Record<number, Episode[]>
   >({});
 
-  const searchSeasonParam = parseInt(searchParams.get('season') || '1');
+  const searchSeasonParam = parseInt(
+    searchParams.get('season') || currentEpisode?.season.toString() || '1'
+  );
   const initialSeasonValue = movie.seasons?.find(
     x => x.season_number === searchSeasonParam
   )
     ? searchSeasonParam
     : 1;
 
-  const searchEpisodeParam = parseInt(searchParams.get('episode') || '1');
+  const searchEpisodeParam = parseInt(
+    searchParams.get('episode') || currentEpisode?.episode.toString() || '1'
+  );
   const initialEpisodeValue =
     movie.seasons?.find(x => x.season_number === initialSeasonValue)
       ?.episode_count ||
@@ -59,6 +69,7 @@ export default function WatchMoviePage({
   useEffect(() => {
     setVideoSrc('');
     setIsCommentsLoading(true);
+
     if (!movie) return; // guard clause if movie is not loaded
 
     if (isMovie) {
@@ -82,6 +93,51 @@ export default function WatchMoviePage({
     );
   }, [movie.id]);
 
+  const saveProgress = async (season: number, episode: number) => {
+    await fetch('/api/series-progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        show_id: movie.id,
+        season,
+        episode,
+      }),
+    });
+  };
+
+  function getNextEpisode() {
+    // Sort seasons just in case
+    const currentSeason = season;
+    const nextEpisodeNumber = episode + 1;
+
+    const nextEpisode = episodesBySeason?.[currentSeason]?.find(
+      x => x.episode_number === nextEpisodeNumber
+    );
+
+    // If there's another episode in the current season
+    if (nextEpisode) {
+      return {
+        season: currentSeason,
+        episode: nextEpisode?.episode_number,
+      };
+    }
+
+    // Otherwise, check if there's a next season
+    const nextSeason = season + 1 <= movie.number_of_seasons;
+
+    if (nextSeason) {
+      return {
+        season: season + 1,
+        episode: episodesBySeason[season + 1]?.[0]?.episode_number,
+      };
+    }
+
+    // No next episode
+    return undefined;
+  }
+
+  const nextEpisode = getNextEpisode();
+
   return (
     <div className="flex flex-col">
       {/* Top Navigation Bar */}
@@ -97,7 +153,6 @@ export default function WatchMoviePage({
               <div className="text-xl font-bold">CineWave</div>
             </Link>
           </div>
-
           <div>
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -114,20 +169,19 @@ export default function WatchMoviePage({
         <div className="flex flex-col lg:flex-row flex-1 lg:pt-10">
           {/* Video Player Section */}
           <div className="flex-1">
-            <div className="lg:px-6">
-              <div className="aspect-video max-h-[75vh] mx-auto">
-                {videoSrc && (
-                  <iframe
-                    src={videoSrc}
-                    allowFullScreen
-                    width="100%"
-                    height="100%"
-                    className="w-full h-full b"
-                    title="Video Player"
-                  />
-                )}
-              </div>
-            </div>
+            {isMovie ? (
+              <VideoPlayer videoSrc={videoSrc} />
+            ) : (
+              <VideoPlayer
+                videoSrc={videoSrc}
+                saveProgress={saveProgress}
+                showId={movie.id}
+                runtime={currentEpisodeData?.runtime}
+                season={season}
+                episode={episode}
+                nextEpisode={nextEpisode}
+              />
+            )}
 
             {/* Video Info Section */}
             <div className="p-6 space-y-5">

@@ -21,6 +21,7 @@
     "react-extract-colors": "^1.5.1",
     "react-fast-marquee": "^1.6.5",
     "react-markdown": "^10.1.0",
+    "react-timer-hook": "^4.0.5",
     "remark-breaks": "^4.0.0"
   },
   "devDependencies": {
