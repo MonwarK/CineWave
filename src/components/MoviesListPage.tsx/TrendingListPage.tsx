@@ -6,8 +6,6 @@ import Tabs from '../trending/Tabs';
 import { fetchTrendingType } from '@/utils/api';
 import { Movie } from '@/types/Movie';
 import Loader from '../ui/Loader';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import SquaredButton from '../ui/SquaredButton';
 import Pagination from './Pagination';
 
 export default function TrendingListPage() {
@@ -16,8 +14,13 @@ export default function TrendingListPage() {
   const [series, setSeries] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     setIsLoading(true);
+    scrollToTop();
 
     const fetchMovies = async () => {
       const movieData = await fetchTrendingType('movie', page);

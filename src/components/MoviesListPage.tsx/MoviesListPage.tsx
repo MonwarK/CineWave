@@ -21,8 +21,13 @@ export default function MoviesListPage({
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     setIsLoading(true);
+    scrollToTop();
 
     const fetchMovies = async () => {
       const movieData = await fetchTopRated(isMovie ? 'movie' : 'tv', page);
@@ -31,7 +36,9 @@ export default function MoviesListPage({
       setMovies(movieData);
     };
 
-    fetchMovies().finally(() => setIsLoading(false));
+    fetchMovies().finally(() => {
+      setIsLoading(false);
+    });
   }, [page]);
 
   return isLoading ? (
