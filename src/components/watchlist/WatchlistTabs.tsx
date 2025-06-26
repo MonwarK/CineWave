@@ -69,7 +69,10 @@ export default function WatchlistTabs({ savedMovies }: Props) {
                     damping: 20,
                   }}
                 >
-                  <MovieLandscapeThumbnail isMovie={false} movie={show} />
+                  <MovieLandscapeThumbnail
+                    isMovie={show.isMovie}
+                    movie={show}
+                  />
                 </motion.div>
               ))}
             </div>
