@@ -19,8 +19,15 @@ export async function fetchPopularMovies() {
   return handleFetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
 }
 
-export async function fetchTopRated(mediaType: 'movie' | 'tv') {
-  return handleFetch(`${BASE_URL}/${mediaType}/top_rated?api_key=${API_KEY}`);
+export async function fetchTopRated(
+  mediaType: 'movie' | 'tv',
+  page: number = 1
+) {
+  return handleFetch(
+    `${BASE_URL}/${mediaType}/top_rated?api_key=${
+      API_KEY || process.env.NEXT_PUBLIC_TMDB_API_KEY
+    }&page=${page}`
+  );
 }
 
 export async function fetchUpcoming() {
@@ -117,19 +124,18 @@ export async function fetchCredits(id: string, mediaType: string) {
   return data.cast;
 }
 
-export async function fetchTrendingType(mediaType: string) {
+export async function fetchTrendingType(
+  mediaType: 'tv' | 'movie',
+  page: number
+) {
   const allResults: any[] = [];
 
-  for (let page = 1; page <= 3; page++) {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/trending/${mediaType}/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&page=${page}`
-    );
+  const res = await fetch(
+    `https://api.themoviedb.org/3/trending/${mediaType}/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&page=${page}`
+  );
 
-    if (!res.ok) continue;
-
-    const data = await res.json();
-    allResults.push(...data.results);
-  }
+  const data = await res.json();
+  allResults.push(...data.results);
 
   return allResults;
 }
