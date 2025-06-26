@@ -33,6 +33,9 @@ export default function SearchResult({ result }: Props) {
     ? { name: 'Series', url: 'series' }
     : { name: 'Movies', url: 'movies' };
 
+  const isReleased =
+    new Date() >= new Date(result.release_date || result.first_air_date);
+
   return (
     <motion.div
       key={result.id}
@@ -101,12 +104,17 @@ export default function SearchResult({ result }: Props) {
 
         {/* Buttons */}
         <div className="flex items-center space-x-3 mt-4">
-          <Link href={`/${resultType.url}/watch/${result.id}`} target="_blank">
-            <SquaredButton variant="primary">
-              <Play size={18} className="fill-white" />
-              <span className="font-semibold">Play</span>
-            </SquaredButton>
-          </Link>
+          {isReleased && (
+            <Link
+              href={`/${resultType.url}/watch/${result.id}`}
+              target="_blank"
+            >
+              <SquaredButton variant="primary">
+                <Play size={18} className="fill-white" />
+                <span className="font-semibold">Play</span>
+              </SquaredButton>
+            </Link>
+          )}
           <Link href={`/${resultType.url}/${result.id}`} target="_blank">
             <SquaredButton
               variant="secondary"
