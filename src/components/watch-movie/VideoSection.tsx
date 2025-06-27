@@ -66,7 +66,14 @@ export default function VideoSection({ ...props }) {
     await fetch('/api/series-progress', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ show_id: movie.id, season, episode }),
+      body: JSON.stringify({
+        show_id: movie.id,
+        title: movie.name,
+        overview: movie.overview,
+        poster_path: movie.backdrop_path,
+        season,
+        episode,
+      }),
     });
   };
 
