@@ -1,6 +1,8 @@
 import { getUserData, getUserReviews } from '@/app/db/queries';
 import Header from '@/components/main/Header';
 import ProfileReviewListItem from '@/components/profile/ProfileReviewListItem';
+import SquaredButton from '@/components/ui/SquaredButton';
+import Link from 'next/link';
 
 type Params = Promise<{ id: string }>;
 
@@ -45,10 +47,19 @@ export default async function ProfilePage({ params }: { params: Params }) {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold mb-2">User Reviews</h2>
-          {userReviews?.map((review, idx) => (
+          <div className='flex justify-between items-center mb-2'>
+          <h2 className="text-2xl font-bold">Most Recent Reviews</h2>
+          <Link href={`/profile/${id}/reviews`} >
+          <SquaredButton>
+            View All
+          </SquaredButton>
+          </Link>
+          </div>
+          <div className='space-y-6'>
+          {userReviews?.slice(0,3).map((review, idx) => (
             <ProfileReviewListItem key={idx} review={review} />
           ))}
+          </div>
         </div>
       </div>
     </div>
