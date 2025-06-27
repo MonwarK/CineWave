@@ -1,12 +1,11 @@
 "use client";
 
-import Footer from "@/components/main/Footer";
 import { PricingTable, useUser } from "@clerk/nextjs";
 import Header from "../main/Header";
 import UserCard from "./UserCard";
 
 interface Props {
-  currentPlan: string | undefined;
+  currentPlan?: string | undefined;
 }
 
 export default function ProfilePage({ currentPlan }: Props) {
