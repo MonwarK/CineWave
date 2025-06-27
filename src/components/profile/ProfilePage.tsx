@@ -1,8 +1,9 @@
-import React from 'react';
-import Header from '../main/Header';
-import { User } from '@/types/User';
-import ProfileBanner from './ProfileBanner';
+"use client"
 import { Review } from '@/types/Review';
+import { User } from '@/types/User';
+import { useState } from 'react';
+import Header from '../main/Header';
+import ProfileBanner from './ProfileBanner';
 import ProfileReviewListItem from './ProfileReviewListItem';
 
 export default function ProfilePage({
@@ -12,6 +13,20 @@ export default function ProfilePage({
   user: User;
   userReviews: Review[];
 }) {
+  const [sortBy, setSortBy] = useState("title");
+  const [order, setOrder] = useState("asc");
+
+  const sortedMovies = [...userReviews]
+  .sort((a, b) => {
+    if(sortBy === "title") {
+      return order === "asc"
+      ? a.movie_title.localeCompare(b.movie_title) 
+      : b.movie_title.localeCompare(a.movie_title)
+    } else if (sortBy === "rating") {
+      return order === "asc" ? a.rating - b.rating : b.rating - a.rating;;
+    }
+    return 0;
+  })
   return (
     <div>
       <Header />
@@ -30,15 +45,45 @@ export default function ProfilePage({
               Series
             </div>
             <div className="uppercase font-semibold text-gray-400 text-xl hover:text-white cursor-pointer hover:border-b-2 border-orange-400 pb-1">
-              Achievments
+              Achievements
             </div>
           </div>
           <hr className="border-gray-600" />
         </div>
         {userReviews.length > 0 && (
           <div>
+            <div className='mb-4 space-x-2 mt-4 flex justify-end items-center'>
+              <label>Sort By:</label>
+              <select 
+              className="bg-orange-500/60 p-2 rounded-md"
+
+              onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option
+                className='rounded-md hover:bg-orange-700/60'
+                
+                value={"title"}>Title</option>
+                <option
+                
+                className='rounded-md hover:bg-orange-700/60'
+                value={"rating"}>Rating</option>
+              </select>
+              <label>Order:</label>
+              <select
+              className="bg-orange-500/60 p-2 rounded-md "
+              onChange={(e) => setOrder(e.target.value)}
+              >
+                <option value={"asc"} 
+                className='rounded-md hover:bg-orange-700/60'
+                >Ascending</option>
+                <option
+                className='rounded-md hover:bg-orange-700/60 decoration-orange-500/60'
+                
+                value={"desc"}>Descending</option>
+              </select>
+            </div>
             <div className="space-y-5 py-10">
-              {userReviews?.map((review, idx) => (
+              {sortedMovies?.map((review, idx) => (
                 <ProfileReviewListItem key={idx} review={review} />
               ))}
             </div>
