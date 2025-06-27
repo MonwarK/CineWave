@@ -9,7 +9,7 @@ export default function WatchlistSection() {
   return (
     <>
       <div className="py-10 space-y-18">
-        <WatchlistTabs SavedMovies={savedMovies} />
+        <WatchlistTabs savedMovies={savedMovies} />
       </div>
     </>
   );

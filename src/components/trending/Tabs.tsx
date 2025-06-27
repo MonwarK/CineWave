@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import MovieLandscapeThumbnail from '../movie-card/MovieLandscapeThumbnail';
-import SquaredButton from '../ui/SquaredButton';
 
 interface Props {
   shows: Movie[];
@@ -12,18 +11,9 @@ interface Props {
 }
 
 export default function Tabs({ shows, movies }: Props) {
-  const initialSearchResults = 6;
-  const increaseSearch = 9;
-
   const [isActive, setIsActive] = useState(0);
-  const [visibleResults, setVisibleResults] = useState(initialSearchResults);
-
-  const resetResults = () => setVisibleResults(6);
-  const loadMoreResults = () =>
-    setVisibleResults(visibleResults + increaseSearch);
 
   const changeTab = (tabIndex: number) => {
-    resetResults();
     setIsActive(tabIndex);
   };
 
@@ -58,7 +48,7 @@ export default function Tabs({ shows, movies }: Props) {
           <React.Fragment>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               <AnimatePresence>
-                {movies.slice(0, visibleResults).map((movie: Movie) => (
+                {movies.map((movie: Movie) => (
                   <motion.div
                     key={`trending-${movie.id}`}
                     initial={{ y: 50, opacity: 0 }}
@@ -81,21 +71,11 @@ export default function Tabs({ shows, movies }: Props) {
                 ))}
               </AnimatePresence>
             </div>
-            <div>
-              {movies.length > visibleResults && (
-                <SquaredButton
-                  onClick={loadMoreResults}
-                  className="mt-6 !bg-orange-900 !border-orange-900"
-                >
-                  Load More Movies
-                </SquaredButton>
-              )}
-            </div>
           </React.Fragment>
         ) : (
           <React.Fragment>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {shows.slice(0, visibleResults).map((show: Movie) => (
+              {shows.map((show: Movie) => (
                 <motion.div
                   key={`trending-${show.id}`}
                   initial={{ y: 50, opacity: 0 }}
@@ -116,17 +96,6 @@ export default function Tabs({ shows, movies }: Props) {
                   />
                 </motion.div>
               ))}
-            </div>
-            <div>
-              {shows.length > visibleResults && (
-                <SquaredButton
-                  onClick={loadMoreResults}
-                  className="mt-6 !bg-orange-900 !border-orange-900"
-                  variant="secondary"
-                >
-                  Load More Shows
-                </SquaredButton>
-              )}
             </div>
           </React.Fragment>
         )}

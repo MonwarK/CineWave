@@ -13,23 +13,31 @@ import { Star } from 'lucide-react';
 import SquaredButton from '@/components/ui/SquaredButton';
 import Link from 'next/link';
 import { supabase } from '@/libs/supabaseClient';
+import { auth } from '@clerk/nextjs/server';
 
 type Params = Promise<{ id: string }>;
 
 export default async function SeriePage({ params }: { params: Params }) {
+  const { userId } = await auth();
   const { id } = await params;
   const show = await fetchTVById(id);
 
   const recommendedMovies = await fetchRecommendations(id, 'tv');
   const credits = await fetchCredits(id, 'tv');
 
-  const { data, error } = await supabase
+  const { data: reviews, error: reviewsError } = await supabase
     .from('movie_reviews')
     .select('rating', { head: false })
     .eq('movie_id', id)
     .eq('is_movie', false);
 
-  const ratings = data?.map(r => r.rating) ?? [];
+  const { data: seriesProgress, error: seriesProgressError } = await supabase
+    .from('series_progress')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('show_id', id);
+
+  const ratings = reviews?.map(r => r.rating) ?? [];
   const hasRatings = ratings.length > 0;
   const averageRating = (
     ratings.length
@@ -37,10 +45,19 @@ export default async function SeriePage({ params }: { params: Params }) {
       : 0
   ).toFixed(1);
 
+  const currentEpisode = {
+    season: seriesProgress?.[0]?.season || 1,
+    episode: seriesProgress?.[0]?.episode || 1,
+  };
+
   return (
     <div>
       <Header />
-      <MovieBanner movie={show} link={`/series/watch/${id}`} />
+      <MovieBanner
+        movie={show}
+        currentEpisode={currentEpisode}
+        link={`/series/watch/${id}?season=${currentEpisode.season}&episode=${currentEpisode.episode}`}
+      />
 
       <div className="pt-10 px-5 pb-[1rem] container mx-auto space-y-10">
         {/* Reviews */}

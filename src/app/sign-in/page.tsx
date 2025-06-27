@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import HeightAnimationContainer from "@/components/animation/HeightAnimationContainer";
-import AuthFormButton from "@/components/auth/AuthFormButton";
-import BackgroundImage from "@/components/auth/BackgroundImage";
-import BottomLink from "@/components/auth/BottomLink";
-import ErrorText from "@/components/auth/ErrorText";
-import TextBox from "@/components/auth/TextBox";
-import { useSignIn } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import HeightAnimationContainer from '@/components/animation/HeightAnimationContainer';
+import AuthFormButton from '@/components/auth/AuthFormButton';
+import BackgroundImage from '@/components/auth/BackgroundImage';
+import BottomLink from '@/components/auth/BottomLink';
+import ErrorText from '@/components/auth/ErrorText';
+import TextBox from '@/components/auth/TextBox';
+import { useSignIn } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 export default function SignInPage() {
   const { signIn, isLoaded, setActive } = useSignIn();
@@ -16,9 +16,9 @@ export default function SignInPage() {
 
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,12 +32,14 @@ export default function SignInPage() {
           identifier: email,
           password,
         })
-        .then((result) => {
+        .then(result => {
           setActive({ session: result.createdSessionId });
-          router.push("/discover");
+          setTimeout(() => {
+            router.push('/discover');
+          }, 500);
         });
     } catch (err: any) {
-      setError(err.errors?.[0]?.longMessage || "Sign-in failed");
+      setError(err.errors?.[0]?.longMessage || 'Sign-in failed');
       setIsLoading(false);
     }
   };
@@ -78,7 +80,7 @@ export default function SignInPage() {
             <p
               onClick={() => {
                 setIsFormOpen(false);
-                setTimeout(() => router.push("/forgot-password"), 500);
+                setTimeout(() => router.push('/forgot-password'), 500);
               }}
               className="font-light underline cursor-pointer hover:text-gray-300"
             >
@@ -94,7 +96,7 @@ export default function SignInPage() {
               link="Sign up now"
               onClick={() => {
                 setIsFormOpen(false);
-                setTimeout(() => router.push("/sign-up"), 500);
+                setTimeout(() => router.push('/sign-up'), 500);
               }}
             />
           </div>

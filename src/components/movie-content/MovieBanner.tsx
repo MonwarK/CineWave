@@ -10,9 +10,14 @@ import React, { useEffect, useState } from 'react';
 export default function MovieBanner({
   movie,
   link,
+  currentEpisode,
 }: {
   movie: Movie;
   link: string;
+  currentEpisode?: {
+    season: number;
+    episode: number;
+  };
 }) {
   const { addMovie, deleteMovie, isSaved } = useSavedMovies();
   const isMovie = movie.title ? true : false;
@@ -84,7 +89,11 @@ export default function MovieBanner({
                   <Link href={link}>
                     <SquaredButton>
                       <Play size={18} className="fill-white" />
-                      <p>Watch Now {!isMovie && 'S1 E1'}</p>
+                      <p>
+                        Watch Now{' '}
+                        {!isMovie &&
+                          `S${currentEpisode?.season} E${currentEpisode?.episode}`}
+                      </p>
                     </SquaredButton>
                   </Link>
                 )}

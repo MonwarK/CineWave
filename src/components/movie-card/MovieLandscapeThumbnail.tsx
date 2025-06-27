@@ -8,15 +8,21 @@ import { motion } from 'framer-motion';
 import { Check, Info, Play, Plus, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { SavedMovie } from '@/types/SavedMovies';
 
 interface Props {
-  movie: Movie;
+  movie: Movie | SavedMovie;
   isMovie: boolean;
+}
+
+function isFullMovie(movie: Movie | SavedMovie): movie is Movie {
+  return (movie as Movie).adult !== undefined;
 }
 
 export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
   const { addMovie, deleteMovie, isSaved } = useSavedMovies();
   const [isTapped, setIsTapped] = useState(false);
+  const isFull = isFullMovie(movie);
 
   return (
     <motion.div
@@ -28,8 +34,10 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
     >
       <div className="relative rounded-xl overflow-hidden group hover:shadow-md">
         <img
-          src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
-          alt={movie.name}
+          src={`https://image.tmdb.org/t/p/w1280${
+            isFull ? movie.backdrop_path : movie.poster_path
+          }`}
+          alt={movie.title || (isFull ? movie.name : '')}
           className={classNames('w-full h-full object-cover', {
             'blur-[2px] scale-105 transition-all': isTapped,
             'blur-0 scale-100 transition-all': !isTapped,
@@ -40,12 +48,17 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
             <div className="p-5 flex flex-col justify-between h-full space-y-3">
               <div>
                 <h2 className="text-lg font-medium line-clamp-1">
-                  {movie.title || movie.name}
+                  {movie.title || (isFull ? movie.name : '')}
                 </h2>
-                <div className="flex items-center space-x-1">
-                  <Star className="fill-yellow-400 text-yellow-400" size={12} />
-                  <p>{movie.vote_average.toFixed(1)}</p>
-                </div>
+                {isFull && (
+                  <div className="flex items-center space-x-1">
+                    <Star
+                      className="fill-yellow-400 text-yellow-400"
+                      size={12}
+                    />
+                    <p>{movie?.vote_average.toFixed(1)}</p>
+                  </div>
+                )}
               </div>
               <div className="flex-1">
                 <p className="line-clamp-3">{movie.overview}</p>
@@ -54,8 +67,12 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
                 <Link
                   href={
                     isMovie
-                      ? `/movies/watch/${movie.id}`
-                      : `/series/watch/${movie.id}`
+                      ? isFull
+                        ? `/movies/watch/${movie.id}`
+                        : `/movies/watch/${movie.movie_id}`
+                      : isFull
+                      ? `/series/watch/${movie.id}`
+                      : `/series/watch/${movie.movie_id}`
                   }
                   target="_blank"
                 >
@@ -65,28 +82,37 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
                   </button>
                 </Link>
                 <Link
-                  href={isMovie ? `/movies/${movie.id}` : `/series/${movie.id}`}
+                  href={
+                    isMovie
+                      ? isFull
+                        ? `/movies/${movie.id}`
+                        : `/movies/${movie.movie_id}`
+                      : isFull
+                      ? `/series/${movie.id}`
+                      : `/series/${movie.movie_id}`
+                  }
                 >
                   <button className="bg-gray-800/20 hover:opacity-85 cursor-pointer backdrop-blur-2xl py-2 px-4 tracking-wider font-medium rounded-full transition uppercase flex items-center space-x-2">
                     <Info size={16} />
                     <p>Details</p>
                   </button>
                 </Link>
-                {isSaved(movie.id, isMovie) ? (
-                  <button
-                    onClick={() => deleteMovie(movie, isMovie)}
-                    className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition"
-                  >
-                    <Check size={16} />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => addMovie(movie, isMovie)}
-                    className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition"
-                  >
-                    <Plus size={16} />
-                  </button>
-                )}
+                {isFull &&
+                  (isSaved(Number(movie.id), isMovie) ? (
+                    <button
+                      onClick={() => deleteMovie(movie, isMovie)}
+                      className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition"
+                    >
+                      <Check size={16} />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => addMovie(movie, isMovie)}
+                      className="p-2 bg-white/20 rounded-full cursor-pointer hover:opacity-80 transition"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  ))}
               </div>
             </div>
           </div>
