@@ -4,7 +4,7 @@ import { SavedMovie } from '@/types/SavedMovies';
 import { SeriesProgress } from '@/types/SeriesProgress';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WatchlistGrid } from './WatchlistGrid';
 
 interface Props {
@@ -32,7 +32,10 @@ export default function WatchlistTabs({
                 isActive === 0 ? 'bg-orange-900' : 'bg-orange-950',
                 'px-4 py-2 transition duration-300 cursor-pointer w-20'
               )}
-              onClick={() => setIsActive(0)}
+              onClick={() => {
+                setIsActive(0);
+                setShowContinueWatching(false);
+              }}
             >
               All
             </button>
@@ -41,7 +44,10 @@ export default function WatchlistTabs({
                 isActive === 1 ? 'bg-orange-900' : 'bg-orange-950',
                 'px-4 py-2 transition duration-300 cursor-pointer w-20'
               )}
-              onClick={() => setIsActive(1)}
+              onClick={() => {
+                setIsActive(1);
+                setShowContinueWatching(false);
+              }}
             >
               Movies
             </button>
@@ -50,7 +56,10 @@ export default function WatchlistTabs({
                 isActive === 2 ? 'bg-orange-900' : 'bg-orange-950',
                 'px-4 py-2 transition duration-300 cursor-pointer w-20'
               )}
-              onClick={() => setIsActive(2)}
+              onClick={() => {
+                setIsActive(2);
+                setShowContinueWatching(false);
+              }}
             >
               Shows
             </button>
@@ -60,17 +69,19 @@ export default function WatchlistTabs({
 
       <div>
         <section>
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="text-2xl uppercase font-bold">Continue Watching</h2>
-            {continueWatching.length > 0 && (
+          {continueWatching.length > 0 && (
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-2xl uppercase font-bold">
+                Continue Watching
+              </h2>
               <button
                 className="text-sm text-orange-400 hover:underline cursor-pointer"
                 onClick={() => setShowContinueWatching(prev => !prev)}
               >
                 {showContinueWatching ? 'Hide' : 'Show'}
               </button>
-            )}
-          </div>
+            </div>
+          )}
           <AnimatePresence initial={false}>
             {showContinueWatching && (
               <motion.div
