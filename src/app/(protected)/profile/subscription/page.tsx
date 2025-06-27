@@ -1,4 +1,4 @@
-import ProfilePage from '@/components/profile/ProfilePage';
+import ProfileSubscriptionPage from '@/components/profile/ProfileSubscriptionPage';
 import { getCurrentPlan } from '@/utils/getCurrentPlan';
 import { auth } from '@clerk/nextjs/server';
 
@@ -19,5 +19,5 @@ export default async function CustomProfilePage() {
     hasPremiumPlan
   );
 
-  return <ProfilePage currentPlan={currentPlan} />;
+  return <ProfileSubscriptionPage currentPlan={currentPlan} />;
 }
