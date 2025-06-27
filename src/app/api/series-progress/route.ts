@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { show_id, season, episode } = body;
+  const { show_id, title, overview, poster_path, season, episode } = body;
 
   if (!show_id || season == null || episode == null) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
@@ -21,6 +21,9 @@ export async function POST(req: NextRequest) {
       {
         user_id: userId,
         show_id,
+        title,
+        overview,
+        poster_path,
         season,
         episode,
         updated_at: new Date().toISOString(),

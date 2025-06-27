@@ -54,7 +54,7 @@ export default function MoviesListPage({
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {movies.map((movie: Movie) => (
             <MovieLandscapeThumbnail
-              isMovie={true}
+              isMovie={isMovie}
               key={`movie-thumbnail-${movie.id}`}
               movie={movie}
             />
