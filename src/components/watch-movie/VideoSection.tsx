@@ -3,7 +3,8 @@ import { servers } from '@/utils/servers';
 import VideoPlayer from './VideoPlayer';
 import EpisodeSelector from './EpisodeSelector';
 import Overview from './Overview';
-import { Episode } from '@/types/Movie';
+import { Episode, Movie } from '@/types/Movie';
+import { saveCompletedMedia } from '@/utils/completeMedia';
 
 export default function VideoSection({ ...props }) {
   const {
@@ -82,8 +83,11 @@ export default function VideoSection({ ...props }) {
       <VideoPlayer
         videoSrc={videoSrc}
         saveProgress={isMovie ? undefined : saveProgress}
-        showId={isMovie ? undefined : movie.id}
-        runtime={isMovie ? undefined : currentEpisodeData?.runtime}
+        completeWatched={() => saveCompletedMedia(movie)}
+        isMovie={isMovie}
+        runtime={
+          isMovie ? movie.runtime * 60 : currentEpisodeData?.runtime * 60
+        }
         season={isMovie ? undefined : season}
         episode={isMovie ? undefined : episode}
         nextEpisode={isMovie ? undefined : nextEpisode}

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useStopwatch } from 'react-timer-hook';
-
 interface Props {
   videoSrc: string;
-  showId?: number;
-  runtime?: number;
+  runtime: number;
   saveProgress?: (season: number, episode: number) => void;
+  completeWatched: () => void;
+  isMovie: boolean;
   season?: number;
   episode?: number;
   nextEpisode?: {
@@ -16,28 +16,41 @@ interface Props {
 
 export default function VideoPlayer({
   videoSrc,
-  showId,
   runtime,
   saveProgress,
+  completeWatched,
+  isMovie,
   season,
   episode,
   nextEpisode,
 }: Props) {
+  const [baseTime, setBaseTime] = useState(20);
   const [hasEarlySaved, setHasEarlySaved] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [hasLateSaved, setHasLateSaved] = useState(false);
 
-  const timer = useStopwatch({
-    autoStart: showId ? true : false,
+  const videoSessionSeconds = useStopwatch({
+    autoStart: isPlaying,
     interval: 20,
   });
+  const minTimeWatched = videoSessionSeconds.totalSeconds > 60;
 
   useEffect(() => {
-    if (hasLateSaved) return;
-    if (!showId || !runtime || !saveProgress || !season || !episode) return;
+    if (!minTimeWatched || hasLateSaved) return;
 
-    const watchedMinEnough =
-      timer.totalSeconds >= 30 && timer.totalSeconds / 60 <= runtime * 0.75;
-    const watchedLateEnough = timer.totalSeconds / 60 >= runtime * 0.75;
+    const watchedMinEnough = baseTime >= 60 && baseTime <= runtime * 0.8;
+    const watchedLateEnough = baseTime >= runtime * 0.8;
+
+    if (isMovie) {
+      console.log(1);
+      if (watchedLateEnough && !hasLateSaved) {
+        console.log('Hello');
+        completeWatched();
+        setHasLateSaved(true);
+      }
+    }
+
+    if (!saveProgress || !season || !episode) return;
 
     // Tracks current episode if user is on page for 30 seconds
     if (watchedMinEnough && !hasEarlySaved) {
@@ -49,38 +62,57 @@ export default function VideoPlayer({
     if (watchedLateEnough && !hasLateSaved && nextEpisode) {
       saveProgress(nextEpisode.season, nextEpisode.episode);
       setHasLateSaved(true);
-
-      timer.pause();
     }
-  }, [timer]);
+
+    if (watchedLateEnough && !hasLateSaved && nextEpisode) {
+      saveProgress(nextEpisode.season, nextEpisode.episode);
+      setHasLateSaved(true);
+    }
+
+    if (watchedLateEnough && !hasLateSaved && !nextEpisode) {
+      saveProgress(1, 1);
+      completeWatched();
+      setHasLateSaved(true);
+    }
+  }, [videoSessionSeconds]);
 
   useEffect(() => {
-    if (timer.totalSeconds === 0) return;
+    if (baseTime === 0) return;
 
     setHasEarlySaved(false);
     setHasLateSaved(false);
 
-    timer.reset();
+    setBaseTime(0);
+    videoSessionSeconds.reset();
   }, [season, episode]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      videoSessionSeconds.start();
+      return;
+    }
+
+    videoSessionSeconds.pause();
+  });
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.origin === 'http://localhost:3000/') return;
       if (event.data.timeupdate) return;
 
-      const { type: mediaMap, data } = event.data;
+      const { type: mediaMap, data } =
+        typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
       if (mediaMap !== 'PLAYER_EVENT') return;
 
       // If Video Played
-      if (data.event === 'play') {
-        console.log('played');
-        console.log(data);
-      }
+      if (data.event === 'play') setIsPlaying(true);
 
       // If Video Paused
-      if (data.event === 'pause') {
-        console.log('paused');
-        console.log(data);
+      if (data.event === 'pause') setIsPlaying(false);
+
+      if (data.event === 'timeupdate') {
+        if (baseTime === 0) return;
+        setBaseTime(Math.round(data.currentTime));
       }
     };
 
