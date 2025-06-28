@@ -3,14 +3,15 @@ import { SeriesProgress } from '@/types/SeriesProgress';
 import { AnimatePresence, motion } from 'framer-motion';
 import MovieLandscapeThumbnail from '../movie-card/MovieLandscapeThumbnail';
 
+function isSavedMovie(movie: SavedMovie | SeriesProgress): movie is SavedMovie {
+  return (movie as SavedMovie).isMovie !== undefined;
+}
+
 export function WatchlistGrid({
   items,
-  isMovie,
 }: {
   items: (SavedMovie | SeriesProgress)[];
-  isMovie: boolean;
 }) {
-  console.log(items);
   return (
     <div>
       <AnimatePresence>
@@ -35,7 +36,10 @@ export function WatchlistGrid({
                 damping: 20,
               }}
             >
-              <MovieLandscapeThumbnail isMovie={isMovie} movie={item} />
+              <MovieLandscapeThumbnail
+                isMovie={isSavedMovie(item) ? item.isMovie : false}
+                movie={item}
+              />
             </motion.div>
           ))}
         </motion.div>
