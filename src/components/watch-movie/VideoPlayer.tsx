@@ -63,6 +63,31 @@ export default function VideoPlayer({
     timer.reset();
   }, [season, episode]);
 
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin === 'http://localhost:3000/') return;
+      if (event.data.timeupdate) return;
+
+      const { type: mediaMap, data } = event.data;
+      if (mediaMap !== 'PLAYER_EVENT') return;
+
+      // If Video Played
+      if (data.event === 'play') {
+        console.log('played');
+        console.log(data);
+      }
+
+      // If Video Paused
+      if (data.event === 'pause') {
+        console.log('paused');
+        console.log(data);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   return (
     <div className="lg:px-6 bg-black">
       <div className="aspect-video max-h-[75vh] mx-auto">

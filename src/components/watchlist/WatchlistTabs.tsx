@@ -91,7 +91,7 @@ export default function WatchlistTabs({
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <WatchlistGrid items={continueWatching} isMovie={false} />
+                <WatchlistGrid items={continueWatching} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -100,21 +100,21 @@ export default function WatchlistTabs({
         {savedMovies.length > 0 && isActive === 0 && (
           <section>
             <h2 className="text-2xl mb-5 uppercase font-bold">All Watchlist</h2>
-            <WatchlistGrid items={savedMovies} isMovie={false} />
+            <WatchlistGrid items={savedMovies} />
           </section>
         )}
 
         {movies.length > 0 && isActive === 1 && (
           <section>
             <h2 className="text-2xl mb-5 uppercase font-bold">Saved Movies</h2>
-            <WatchlistGrid items={movies} isMovie={true} />
+            <WatchlistGrid items={movies} />
           </section>
         )}
 
         {shows.length > 0 && isActive === 2 && (
           <section>
             <h2 className="text-2xl mb-5 uppercase font-bold">Saved Shows</h2>
-            <WatchlistGrid items={shows} isMovie={false} />
+            <WatchlistGrid items={shows} />
           </section>
         )}
 
