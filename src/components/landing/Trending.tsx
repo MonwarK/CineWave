@@ -1,9 +1,14 @@
-import { movies } from "@/data/movies";
+'use client'
 import { containerVariants } from "@/motion/variants/motion";
+import { Movie } from "@/types/Movie";
 import { motion } from "framer-motion";
 import Marquee from "react-fast-marquee";
 
-export default function Trending() {
+interface Props {
+  movies: Movie[]
+}
+
+export default function Trending({ movies }: Props) {
   return (
     <motion.div
       variants={containerVariants}
@@ -22,7 +27,7 @@ export default function Trending() {
               className="relative w-40 h-60 rounded-xl overflow-hidden group"
             >
               <img
-                src={item.imageUrl}
+                src={`https://media.themoviedb.org/t/p/w220_and_h330_face/${item.poster_path}`}
                 alt={item.name}
                 className="w-full h-full object-cover group-hover:blur-[2px]"
               />
