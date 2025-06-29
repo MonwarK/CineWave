@@ -3,11 +3,11 @@ export const servers = [
     id: 1,
     name: 'Monwar',
     description:
-      'Fast and reliable player. Great UI with episode selector and next-episode support. Ideal for TV shows with multiple seasons.',
+      'Fast and reliable player. Great UI with episode selector and next-episode support. Ideal for TV shows with multiple seasons. Able to track ',
     movieLink: (movieId: number) =>
-      `${process.env.NEXT_PUBLIC_SERVER_1_BASE}/movie/${movieId}?title=true&poster=true&theme=00ACC1`,
+      `${process.env.NEXT_PUBLIC_SERVER_1_BASE}/movie/${movieId}?title=true&poster=true&theme=d36013`,
     showLink: (showId: number, season: number, episode: number) =>
-      `${process.env.NEXT_PUBLIC_SERVER_1_BASE}/tv/${showId}/${season}/${episode}?nextButton=true&autoNext=false&title=true&poster=true&episodeSelector=true&theme=00ACC1`,
+      `${process.env.NEXT_PUBLIC_SERVER_1_BASE}/tv/${showId}/${season}/${episode}?nextButton=true&autoNext=false&title=true&poster=true&episodeSelector=true&theme=d36013`,
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ export const servers = [
     id: 3,
     name: 'The 𝓯𝓻𝓮𝓪𝓴ness 😎',
     description:
-      'Responsive player with basic controls. Works best with popular or trending content. Limited advanced features.',
+      'Responsive player with basic controls. Works best with popular or trending content. Limited advanced features. Can\'t be used to track progress.',
     movieLink: (movieId: number) =>
       `${process.env.NEXT_PUBLIC_SERVER_3_BASE}/v3/embed/movie/${movieId}?autoPlay=false`,
     showLink: (showId: number, season: number, episode: number) =>
@@ -43,7 +43,7 @@ export const servers = [
     id: 5,
     name: 'Twice (LETS GOOOO)',
     description:
-      'Fastest updates for newly released movies and shows. Best used when other servers haven’t updated yet.',
+      'Fastest updates for newly released movies and shows. Best used when other servers haven’t updated yet. Can\'t be used to track progress.',
     movieLink: (movieId: number) =>
       `${process.env.NEXT_PUBLIC_SERVER_5_BASE}/movie/${movieId}`,
     showLink: (showId: number, season: number, episode: number) =>
