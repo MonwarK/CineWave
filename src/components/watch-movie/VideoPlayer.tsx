@@ -1,3 +1,4 @@
+import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useStopwatch } from 'react-timer-hook';
 interface Props {
@@ -28,6 +29,9 @@ export default function VideoPlayer({
   const [hasEarlySaved, setHasEarlySaved] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasLateSaved, setHasLateSaved] = useState(false);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const videoSessionSeconds = useStopwatch({
     autoStart: isPlaying,
@@ -93,7 +97,7 @@ export default function VideoPlayer({
     }
 
     videoSessionSeconds.pause();
-  });
+  }, [isPlaying]);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -102,16 +106,27 @@ export default function VideoPlayer({
 
       const { type: mediaMap, data } =
         typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+
       if (mediaMap !== 'PLAYER_EVENT') return;
 
+      const timestamp = Math.round(data?.currentTime);
+
+      if (!(episode === data.episode && season === data.season)) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('season', data.season);
+        params.set('episode', data.episode);
+
+        router.replace(`?${params.toString()}`);
+      }
+
       // If Video Played
-      if (data.event === 'play') setIsPlaying(true);
+      if (data.event === 'play' && isPlaying === false) setIsPlaying(true);
 
       // If Video Paused
-      if (data.event === 'pause') setIsPlaying(false);
+      if (data.event === 'pause' && isPlaying === true) setIsPlaying(false);
 
       if (data.event === 'timeupdate') {
-        if (baseTime === 0) return;
+        if (baseTime === 0 && baseTime != timestamp) return;
         setBaseTime(Math.round(data.currentTime));
       }
     };
