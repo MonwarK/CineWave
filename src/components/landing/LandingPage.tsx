@@ -9,6 +9,10 @@ import Trending from "./Trending";
 export default async function LandingPage() {
   const data = await fetchTrending();
 
+  if(!data) {
+    return <div>No Data Found</div>
+  }
+
   return (
     <div className="overflow-hidden">
       {/* Top Section */}
