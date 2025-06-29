@@ -1,6 +1,7 @@
 import Main from '@/components/discover/Main';
 import Sections from '@/components/discover/Sections';
 import Header from '@/components/main/Header';
+import { supabase } from '@/libs/supabaseClient';
 import {
   fetchActionMovies,
   fetchAiringToday,
@@ -13,6 +14,7 @@ import {
   fetchTrending,
   fetchUpcoming,
 } from '@/utils/api';
+import { auth } from '@clerk/nextjs/server';
 
 export const metadata = {
   title: 'Discover Movies & TV Shows | CineWave',
@@ -21,6 +23,12 @@ export const metadata = {
 };
 
 export default async function page() {
+  const { userId } = await auth();
+
+  const now = new Date();
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(now.getMonth() - 1);
+
   const trending = await fetchTrending();
   const popularMovie = await fetchPopularMovies();
   const topRated = await fetchTopRated('movie');
@@ -31,6 +39,14 @@ export default async function page() {
   const horrorMovies = await fetchHorrorMovies();
   const airingToday = await fetchAiringToday();
   const nowPlaying = await fetchNowPlaying();
+
+  const { data: seriesProgress, error: seriesProgressError } = await supabase
+    .from('series_progress')
+    .select('*')
+    .eq('user_id', userId)
+    .gte('updated_at', oneMonthAgo.toISOString())
+    .lte('updated_at', now.toISOString())
+    .order('updated_at', { ascending: false });
 
   return (
     <div className="relative">
@@ -45,6 +61,7 @@ export default async function page() {
       />
 
       <Sections
+        continueWatching={seriesProgress || undefined}
         trending={trending}
         popularMovie={popularMovie}
         topRated={topRated}
