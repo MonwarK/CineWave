@@ -1,11 +1,14 @@
-"use client";
+'use client';
 
-import { Movie } from "@/types/Movie";
-import { useState } from "react";
-import MovieModal from "../movie-modal/MovieModal";
-import MovieRowSection from "./MovieRowSection";
+import { Movie } from '@/types/Movie';
+import { useState } from 'react';
+import MovieModal from '../movie-modal/MovieModal';
+import MovieRowSection from './MovieRowSection';
+import { SeriesProgress } from '@/types/SeriesProgress';
+import ContinueWatching from '../watchlist/ContinueWatching';
 
 interface Props {
+  continueWatching?: SeriesProgress[];
   trending: Movie[];
   popularMovie: Movie[];
   topRated: Movie[];
@@ -19,6 +22,7 @@ interface Props {
 }
 
 export default function Sections({
+  continueWatching,
   trending,
   popularMovie,
   topRated,
@@ -34,7 +38,13 @@ export default function Sections({
 
   return (
     <>
-      <div className="py-10 space-y-18">
+      <div className="py-16 space-y-18 max-w-screen-xl w-full mx-auto px-5">
+        {continueWatching && continueWatching?.length > 0 && (
+          <ContinueWatching
+            continueWatching={continueWatching}
+            showToggle={false}
+          />
+        )}
         <MovieRowSection
           title="Shows Airing Today"
           movies={airingToday}
