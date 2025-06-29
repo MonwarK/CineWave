@@ -1,12 +1,14 @@
-"use client";
 
+import { fetchTrending } from "@/utils/api";
 import Footer from "../main/Footer";
 import Features from "./Features";
 import Hero from "./Hero";
 import Plan from "./Plan";
 import Trending from "./Trending";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const data = await fetchTrending();
+
   return (
     <div className="overflow-hidden">
       {/* Top Section */}
@@ -17,7 +19,7 @@ export default function LandingPage() {
         <Plan />
 
         {/* Trending */}
-        <Trending />
+        <Trending movies={data} />
 
         {/* Features */}
         <Features />

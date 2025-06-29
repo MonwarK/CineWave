@@ -1,7 +1,8 @@
+'use client'
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import TextBox from '../auth/TextBox';
 import Header from './Header';
-import { useRouter } from 'next/navigation';
 
 export default function Hero() {
   const router = useRouter();

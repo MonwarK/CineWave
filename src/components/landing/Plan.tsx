@@ -1,6 +1,6 @@
-import React from "react";
-import { motion } from "framer-motion";
+'use client'
 import { containerVariants } from "@/motion/variants/motion";
+import { motion } from "framer-motion";
 
 export default function Plan() {
   return (

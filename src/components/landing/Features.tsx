@@ -1,5 +1,5 @@
+'use client'
 import { containerVariants } from "@/motion/variants/motion";
-import React from "react";
 import { motion } from "framer-motion";
 import FeatureCard from "./FeatureCard";
 
