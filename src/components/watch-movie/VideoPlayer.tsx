@@ -111,7 +111,7 @@ export default function VideoPlayer({
 
       const timestamp = Math.round(data?.currentTime);
 
-      if (!(episode === data.episode && season === data.season)) {
+      if (!(episode == data.episode && season == data.season)) {
         const params = new URLSearchParams(searchParams.toString());
         params.set('season', data.season);
         params.set('episode', data.episode);
