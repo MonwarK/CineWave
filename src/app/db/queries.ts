@@ -29,3 +29,20 @@ export async function getUserReviews(id: string) {
 
   return data;
 }
+
+export async function getMediaProgress(id: string) {
+  if (!id) return;
+
+  const { data, error } = await supabase
+    .from('user_finished_media')
+    .select("*")
+    .eq('user_id', id)
+    .order('finished_at', { ascending: false });
+
+  if (error) {
+    console.log('Error fetching user media from supabase', error);
+    return;
+  }
+
+  return data;
+}

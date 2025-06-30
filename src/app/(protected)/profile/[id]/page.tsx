@@ -1,4 +1,8 @@
-import { getUserData, getUserReviews } from '@/app/db/queries';
+import {
+  getMediaProgress,
+  getUserData,
+  getUserReviews,
+} from '@/app/db/queries';
 import ProfilePage from '@/components/profile/ProfilePage';
 
 type Params = Promise<{ id: string }>;
@@ -17,6 +21,13 @@ export default async function Profile({ params }: { params: Params }) {
   }
 
   const userReviews = await getUserReviews(id);
+  const finishedMovies = await getMediaProgress(id);
 
-  return <ProfilePage user={user} userReviews={userReviews || []} />;
+  return (
+    <ProfilePage
+      user={user}
+      userReviews={userReviews || []}
+      finishedMovies={finishedMovies || []}
+    />
+  );
 }

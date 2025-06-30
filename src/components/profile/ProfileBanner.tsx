@@ -1,7 +1,17 @@
 import { User } from '@/types/User';
 import React from 'react';
 
-export default function ProfileBanner({ user }: { user: User }) {
+export default function ProfileBanner({
+  user,
+  reviewCount,
+  moviesWatched,
+  seriesWatched,
+}: {
+  user: User;
+  reviewCount: number;
+  moviesWatched: number;
+  seriesWatched: number;
+}) {
   const username = user.first_name.toLowerCase();
   const dateJoined = new Date(user.created_at).toLocaleString('en-US', {
     month: 'long',
@@ -50,17 +60,24 @@ export default function ProfileBanner({ user }: { user: User }) {
                     {/* Watch stats */}
                     <div className="flex gap-5 py-2">
                       <span className="cursor-pointer">
-                        <strong className="text-white mr-1">5</strong> Reviews
+                        <strong className="text-white mr-1">
+                          {reviewCount}
+                        </strong>{' '}
+                        Reviews
                       </span>
                       <span>|</span>
                       <span className="cursor-pointer">
-                        <strong className="text-white mr-1">3</strong> Movies
-                        Watched
+                        <strong className="text-white mr-1">
+                          {moviesWatched}
+                        </strong>{' '}
+                        Movies Watched
                       </span>
                       <span>|</span>
                       <span className="cursor-pointer">
-                        <strong className="text-white mr-1">1</strong> Series
-                        Completed
+                        <strong className="text-white mr-1">
+                          {seriesWatched}
+                        </strong>{' '}
+                        Series Completed
                       </span>
                     </div>
                   </div>

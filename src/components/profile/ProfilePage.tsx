@@ -1,36 +1,47 @@
-"use client"
+'use client';
 import { Review } from '@/types/Review';
 import { User } from '@/types/User';
 import { useState } from 'react';
 import Header from '../main/Header';
 import ProfileBanner from './ProfileBanner';
 import ProfileReviewListItem from './ProfileReviewListItem';
+import { FinishedMedia } from '@/types/FinishedMedia';
 
 export default function ProfilePage({
   user,
   userReviews,
+  finishedMovies,
 }: {
   user: User;
   userReviews: Review[];
+  finishedMovies: FinishedMedia[];
 }) {
-  const [sortBy, setSortBy] = useState("title");
-  const [order, setOrder] = useState("asc");
+  const [sortBy, setSortBy] = useState('title');
+  const [order, setOrder] = useState('asc');
 
-  const sortedMovies = [...userReviews]
-  .sort((a, b) => {
-    if(sortBy === "title") {
-      return order === "asc"
-      ? a.movie_title.localeCompare(b.movie_title) 
-      : b.movie_title.localeCompare(a.movie_title)
-    } else if (sortBy === "rating") {
-      return order === "asc" ? a.rating - b.rating : b.rating - a.rating;;
+  const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
+  const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
+
+  const sortedMovies = [...userReviews].sort((a, b) => {
+    if (sortBy === 'title') {
+      return order === 'asc'
+        ? a.movie_title.localeCompare(b.movie_title)
+        : b.movie_title.localeCompare(a.movie_title);
+    } else if (sortBy === 'rating') {
+      return order === 'asc' ? a.rating - b.rating : b.rating - a.rating;
     }
     return 0;
-  })
+  });
+
   return (
     <div>
       <Header />
-      <ProfileBanner user={user} />
+      <ProfileBanner
+        user={user}
+        reviewCount={userReviews.length}
+        moviesWatched={moviesWatched.length}
+        seriesWatched={seriesWatched.length}
+      />
       <div className="p-5 py-10 max-w-screen-xl mx-auto">
         {/* Tabs */}
         <div className="space-y-5">
@@ -52,34 +63,42 @@ export default function ProfilePage({
         </div>
         {userReviews.length > 0 && (
           <div>
-            <div className='mb-4 space-x-2 mt-4 flex justify-end items-center'>
+            <div className="mb-4 space-x-2 mt-4 flex justify-end items-center">
               <label>Sort By:</label>
-              <select 
-              className="bg-orange-500/60 p-2 rounded-md"
-
-              onChange={(e) => setSortBy(e.target.value)}
+              <select
+                className="bg-orange-500/60 p-2 rounded-md"
+                onChange={e => setSortBy(e.target.value)}
               >
                 <option
-                className='rounded-md hover:bg-orange-700/60'
-                
-                value={"title"}>Title</option>
+                  className="rounded-md hover:bg-orange-700/60"
+                  value={'title'}
+                >
+                  Title
+                </option>
                 <option
-                
-                className='rounded-md hover:bg-orange-700/60'
-                value={"rating"}>Rating</option>
+                  className="rounded-md hover:bg-orange-700/60"
+                  value={'rating'}
+                >
+                  Rating
+                </option>
               </select>
               <label>Order:</label>
               <select
-              className="bg-orange-500/60 p-2 rounded-md "
-              onChange={(e) => setOrder(e.target.value)}
+                className="bg-orange-500/60 p-2 rounded-md "
+                onChange={e => setOrder(e.target.value)}
               >
-                <option value={"asc"} 
-                className='rounded-md hover:bg-orange-700/60'
-                >Ascending</option>
                 <option
-                className='rounded-md hover:bg-orange-700/60 decoration-orange-500/60'
-                
-                value={"desc"}>Descending</option>
+                  value={'asc'}
+                  className="rounded-md hover:bg-orange-700/60"
+                >
+                  Ascending
+                </option>
+                <option
+                  className="rounded-md hover:bg-orange-700/60 decoration-orange-500/60"
+                  value={'desc'}
+                >
+                  Descending
+                </option>
               </select>
             </div>
             <div className="space-y-5 py-10">
