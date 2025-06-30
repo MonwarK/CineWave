@@ -31,7 +31,6 @@ export default function VideoPlayer({
   const [hasLateSaved, setHasLateSaved] = useState(false);
 
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const videoSessionSeconds = useStopwatch({
     autoStart: isPlaying,
@@ -112,11 +111,8 @@ export default function VideoPlayer({
       const timestamp = Math.round(data?.currentTime);
 
       if (!(episode == data.episode && season == data.season)) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('season', data.season);
-        params.set('episode', data.episode);
-
-        router.replace(`?${params.toString()}`);
+        const newUrl = `?season=${data.season}&episode=${data.episode}`;
+        window.history.replaceState(null, '', newUrl);
       }
 
       // If Video Played
