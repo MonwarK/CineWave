@@ -17,6 +17,7 @@ export default function SignUpPage({ paramEmail }: { paramEmail?: string }) {
   const [isFormOpen, setIsFormOpen] = useState(true);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState(paramEmail || '');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -72,6 +73,12 @@ export default function SignUpPage({ paramEmail }: { paramEmail?: string }) {
               placeholder="Last Name"
               value={lastName}
               onChange={(e: any) => setLastName(e.target.value)}
+              required
+            />
+            <TextBox
+              placeholder="Username"
+              value={username}
+              onChange={(e: any) => setUsername(e.target.value)}
               required
             />
             <TextBox
