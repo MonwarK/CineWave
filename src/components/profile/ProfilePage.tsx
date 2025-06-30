@@ -1,11 +1,11 @@
 'use client';
+import { FinishedMedia } from '@/types/FinishedMedia';
 import { Review } from '@/types/Review';
 import { User } from '@/types/User';
 import { useState } from 'react';
 import Header from '../main/Header';
 import ProfileBanner from './ProfileBanner';
 import ProfileReviewListItem from './ProfileReviewListItem';
-import { FinishedMedia } from '@/types/FinishedMedia';
 
 export default function ProfilePage({
   user,
@@ -29,6 +29,10 @@ export default function ProfilePage({
         : b.movie_title.localeCompare(a.movie_title);
     } else if (sortBy === 'rating') {
       return order === 'asc' ? a.rating - b.rating : b.rating - a.rating;
+    } else if (sortBy === "updated_at") {
+      return order === 'asc'
+        ? new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+        : new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
     }
     return 0;
   });
@@ -80,6 +84,12 @@ export default function ProfilePage({
                   value={'rating'}
                 >
                   Rating
+                </option>
+                <option
+                  className="rounded-md hover:bg-orange-700/60"
+                  value={'updated_at'}
+                >
+                  Updated At
                 </option>
               </select>
               <label>Order:</label>
