@@ -3,11 +3,31 @@ import {
   getUserData,
   getUserReviews,
 } from '@/app/db/queries';
-import ProfilePage from '@/components/profile/ProfilePage';
+import UserProfile from '@/components/profile/UserProfile';
+import { Metadata, ResolvedMetadata } from 'next';
 
-type Params = Promise<{ id: string }>;
 
-export default async function Profile({ params }: { params: Params }) {
+type Props = {
+  params: Promise<{id: string}>
+}
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvedMetadata
+): Promise<Metadata> {
+  const { id } = params;
+
+  const user = await getUserData(id);
+
+  return {
+    title: `${user.first_name} ${user.last_name}'s Profile`,
+    description: `View the profile and activity of user  ${user.first_name} ${user.last_name}.`,
+  };
+}
+
+
+
+export default async function Profile({ params }: Props) {
   const { id } = await params;
 
   const user = await getUserData(id);
@@ -23,9 +43,11 @@ export default async function Profile({ params }: { params: Params }) {
   const userReviews = await getUserReviews(id);
   const finishedMovies = await getMediaProgress(id);
 
+
   return (
-    <ProfilePage
+    <UserProfile
       user={user}
+      userId={id}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
       currentTab="reviews"

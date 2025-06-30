@@ -9,11 +9,11 @@ import { auth } from '@clerk/nextjs/server';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Your Profile ",
+  title: "Your Series Watched",
 
 }
 
-export default async function UserProfilePage() {
+export default async function UserSeriesPage() {
   const { userId } = await auth();
   if (!userId) return;
 
@@ -26,7 +26,7 @@ export default async function UserProfilePage() {
       user={user}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
-      currentTab="reviews"
+      currentTab="series"
     />
   );
 }

@@ -1,9 +1,10 @@
 import ProfileSubscriptionPage from '@/components/profile/ProfileSubscriptionPage';
 import { getCurrentPlan } from '@/utils/getCurrentPlan';
 import { auth } from '@clerk/nextjs/server';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Profile | Cinewave',
+export const metadata: Metadata = {
+  title: 'Profile',
 };
 
 export default async function CustomProfilePage() {

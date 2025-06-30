@@ -4,10 +4,11 @@ import { Review } from '@/types/Review';
 import { User } from '@/types/User';
 import Header from '../main/Header';
 import ProfileBanner from './ProfileBanner';
-import ProfileTabs from './ProfileTabs';
 import ProfileReviews from './ProfileReviews';
+import ProfileTabs from './ProfileTabs';
+import UserWatched from './UserWatched';
 
-export default function ProfilePage({
+export default function UserProfile({
   user,
   userId,
   userReviews,
@@ -23,6 +24,8 @@ export default function ProfilePage({
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
   const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
 
+  console.log(userId)
+
   return (
     <div>
       <Header />
@@ -34,10 +37,20 @@ export default function ProfilePage({
         seriesWatched={seriesWatched.length}
       />
       <div className="p-5 py-10 max-w-screen-xl mx-auto">
-        <ProfileTabs currentTab={currentTab} />
+        {userId ? (
+          <ProfileTabs currentTab={currentTab} userId={userId}/>
+        ) : (
+          <ProfileTabs currentTab={currentTab} />
+        )}
 
         {currentTab === 'reviews' && (
           <ProfileReviews userReviews={userReviews} />
+        )}
+        {currentTab === "movies" && (
+          <UserWatched finishedMedia={moviesWatched} mediaType='movies' />
+        )}
+        {currentTab === "series" && (
+          <UserWatched finishedMedia={seriesWatched} mediaType='series' />
         )}
       </div>
     </div>

@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction } from 'react';
 
-export default function ProfileTabs({ currentTab }: { currentTab: string }) {
+export default function ProfileTabs({ currentTab, userId }: { currentTab: string, userId?:string }) {
   const tabs = [
     {
       id: 1,
@@ -30,7 +29,7 @@ export default function ProfileTabs({ currentTab }: { currentTab: string }) {
     <div className="space-y-5">
       <div className="flex space-x-10">
         {tabs.map(tab => (
-          <Link href={`/profile/${tab.tabName}`}>
+          <Link href={userId ? `/profile/${userId}/${tab.tabName}` : `/profile/${tab.tabName}`}>
             <div
               key={`tab_name_${tab.tabName}-${tab.id}`}
               className={clsx(

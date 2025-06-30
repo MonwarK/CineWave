@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ProfileReviewListItem from './ProfileReviewListItem';
 import { Review } from '@/types/Review';
+import { useState } from 'react';
+import ProfileReviewListItem from './ProfileReviewListItem';
 
 export default function ProfileReviews({
   userReviews,
@@ -70,8 +70,8 @@ export default function ProfileReviews({
           </select>
         </div>
         <div className="space-y-5 py-10">
-          {sortedMovies?.map((review, idx) => (
-            <ProfileReviewListItem key={idx} review={review} />
+          {sortedMovies?.map((review) => (
+            <ProfileReviewListItem key={review.id} review={review} />
           ))}
         </div>
       </div>

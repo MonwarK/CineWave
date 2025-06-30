@@ -21,12 +21,12 @@ export async function generateMetadata(
   const user = await getUserData(id);
 
   return {
-    title: `${user.first_name} ${user.last_name}'s Reviews`,
+    title: `${user.first_name} ${user.last_name}'s Watched Movies`,
     description: `View the profile and activity of user  ${user.first_name} ${user.last_name}.`,
   };
 }
 
-export default async function UserReviewsPage({ params }: Props) {
+export default async function UserMoviesPage({ params }: Props) {
   const { id } = await params;
 
 
@@ -40,7 +40,7 @@ export default async function UserReviewsPage({ params }: Props) {
       userId={id}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
-      currentTab="reviews"
+      currentTab="movies"
     />
   );
 }
