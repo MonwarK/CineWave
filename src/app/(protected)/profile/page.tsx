@@ -21,6 +21,7 @@ export default async function UserProfile() {
       userId={userId}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
+      currentTab="reviews"
     />
   );
 }

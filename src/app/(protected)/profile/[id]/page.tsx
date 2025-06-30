@@ -28,6 +28,7 @@ export default async function Profile({ params }: { params: Params }) {
       user={user}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
+      currentTab="reviews"
     />
   );
 }
