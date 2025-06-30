@@ -18,6 +18,7 @@ export default async function UserProfile() {
   return (
     <ProfilePage
       user={user}
+      userId={userId}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
     />

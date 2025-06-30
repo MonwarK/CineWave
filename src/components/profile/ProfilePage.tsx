@@ -9,10 +9,12 @@ import ProfileReviewListItem from './ProfileReviewListItem';
 
 export default function ProfilePage({
   user,
+  userId,
   userReviews,
   finishedMovies,
 }: {
   user: User;
+  userId?: string;
   userReviews: Review[];
   finishedMovies: FinishedMedia[];
 }) {
@@ -42,6 +44,7 @@ export default function ProfilePage({
       <Header />
       <ProfileBanner
         user={user}
+        userId={userId}
         reviewCount={userReviews.length}
         moviesWatched={moviesWatched.length}
         seriesWatched={seriesWatched.length}
