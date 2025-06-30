@@ -36,7 +36,7 @@ export default function MovieRowSection({
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
     >
-      <h2 className="text-3xl font-bold mb-8">{title}</h2>
+      <h2 className="text-3xl font-bold mb-2">{title}</h2>
 
       <motion.div ref={containerRef} className="overflow-hidden">
         <motion.div

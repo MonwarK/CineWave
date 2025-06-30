@@ -38,7 +38,7 @@ export default function Sections({
 
   return (
     <>
-      <div className="py-16 space-y-18 max-w-screen-xl w-full mx-auto px-5">
+      <div className="py-20 space-y-10 max-w-screen-xl w-full mx-auto px-5">
         {continueWatching && continueWatching?.length > 0 && (
           <ContinueWatching
             continueWatching={continueWatching}
