@@ -13,10 +13,17 @@ export const metadata = {
 export default async function ListPage() {
   const { userId } = await auth();
 
+  const now = new Date();
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(now.getMonth() - 1);
+
   const { data: seriesProgress, error: seriesProgressError } = await supabase
     .from('series_progress')
     .select('*')
-    .eq('user_id', userId);
+    .eq('user_id', userId)
+    .gte('updated_at', oneMonthAgo.toISOString())
+    .lte('updated_at', now.toISOString())
+    .order('updated_at', { ascending: false });
 
   return (
     <div>

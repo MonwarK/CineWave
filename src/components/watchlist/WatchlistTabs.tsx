@@ -3,9 +3,9 @@
 import { SavedMovie } from '@/types/SavedMovies';
 import { SeriesProgress } from '@/types/SeriesProgress';
 import clsx from 'clsx';
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { WatchlistGrid } from './WatchlistGrid';
+import ContinueWatching from './ContinueWatching';
 
 interface Props {
   savedMovies: SavedMovie[];
@@ -68,34 +68,12 @@ export default function WatchlistTabs({
       </div>
 
       <div>
-        <section>
-          {continueWatching.length > 0 && (
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-2xl uppercase font-bold">
-                Continue Watching
-              </h2>
-              <button
-                className="text-sm text-orange-400 hover:underline cursor-pointer"
-                onClick={() => setShowContinueWatching(prev => !prev)}
-              >
-                {showContinueWatching ? 'Hide' : 'Show'}
-              </button>
-            </div>
-          )}
-          <AnimatePresence initial={false}>
-            {showContinueWatching && (
-              <motion.div
-                key="continue"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <WatchlistGrid items={continueWatching} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </section>
+        <div className="mb-5">
+          <ContinueWatching
+            continueWatching={continueWatching}
+            intialShowContinueWatching={showContinueWatching}
+          />
+        </div>
 
         {savedMovies.length > 0 && isActive === 0 && (
           <section>

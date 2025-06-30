@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { containerVariants, itemVariants } from "@/motion/variants/motion";
-import MovieRowItem from "./MovieRowItem";
-import { Movie } from "@/types/Movie";
+import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { containerVariants } from '@/motion/variants/motion';
+import MovieRowItem from './MovieRowItem';
+import { Movie } from '@/types/Movie';
 
 export default function MovieRowSection({
   title,
@@ -25,8 +25,8 @@ export default function MovieRowSection({
     };
 
     updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
   }, [movies]);
 
   return (
@@ -35,9 +35,8 @@ export default function MovieRowSection({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
-      className="max-w-screen-xl w-full mx-auto px-10"
     >
-      <h2 className="text-3xl font-bold mb-8">{title}</h2>
+      <h2 className="text-3xl font-bold mb-2">{title}</h2>
 
       <motion.div ref={containerRef} className="overflow-hidden">
         <motion.div

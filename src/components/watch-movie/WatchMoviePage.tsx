@@ -57,6 +57,13 @@ export default function WatchMoviePage({
     }
   }, [movie.id]);
 
+  useEffect(() => {
+    if (episode !== searchEpisodeParam || season !== searchSeasonParam) {
+      setSeason(searchSeasonParam);
+      setEpisode(searchEpisodeParam);
+    }
+  }, [searchSeasonParam, searchEpisodeParam]);
+
   return (
     <div className="flex flex-col">
       <WatchTopBar

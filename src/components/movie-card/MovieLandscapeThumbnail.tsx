@@ -34,6 +34,10 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
   const [isTapped, setIsTapped] = useState(false);
   const isFull = isFullMovie(movie);
 
+  const isReleased =
+    isFull &&
+    new Date() >= new Date(movie.release_date || movie.first_air_date);
+
   const imagePath = isFull ? movie.backdrop_path : movie.poster_path;
 
   const title = movie.title || (isFull ? movie.name : '');
@@ -83,26 +87,51 @@ export default function MovieLandscapeThumbnail({ movie, isMovie }: Props) {
               </div>
 
               <div className="flex items-center space-x-2">
-                <Link
-                  href={
-                    isMovie
-                      ? `/movies/watch/${movieId}`
-                      : `/series/watch/${movieId}`
-                  }
-                  target="_blank"
-                >
-                  <button className="bg-[#d36013] hover:opacity-80 transition text-white cursor-pointer px-4 py-2 rounded-full uppercase font-bold flex items-center space-x-1">
-                    <Play size={14} className="fill-white" />
-                    <p>
-                      Play{' '}
-                      {isSeriesProgress(movie) && (
-                        <React.Fragment>
-                          • S{movie.season} E{movie.episode}
-                        </React.Fragment>
-                      )}
-                    </p>
-                  </button>
-                </Link>
+                {isFull && isReleased && (
+                  <Link
+                    href={
+                      isMovie
+                        ? `/movies/watch/${movieId}`
+                        : `/series/watch/${movieId}`
+                    }
+                    target="_blank"
+                  >
+                    <button className="bg-[#d36013] hover:opacity-80 transition text-white cursor-pointer px-4 py-2 rounded-full uppercase font-bold flex items-center space-x-1">
+                      <Play size={14} className="fill-white" />
+                      <p>
+                        Play{' '}
+                        {isSeriesProgress(movie) && (
+                          <React.Fragment>
+                            • S{movie.season} E{movie.episode}
+                          </React.Fragment>
+                        )}
+                      </p>
+                    </button>
+                  </Link>
+                )}
+
+                {!isFull && (
+                  <Link
+                    href={
+                      isMovie
+                        ? `/movies/watch/${movieId}`
+                        : `/series/watch/${movieId}`
+                    }
+                    target="_blank"
+                  >
+                    <button className="bg-[#d36013] hover:opacity-80 transition text-white cursor-pointer px-4 py-2 rounded-full uppercase font-bold flex items-center space-x-1">
+                      <Play size={14} className="fill-white" />
+                      <p>
+                        Play{' '}
+                        {isSeriesProgress(movie) && (
+                          <React.Fragment>
+                            • S{movie.season} E{movie.episode}
+                          </React.Fragment>
+                        )}
+                      </p>
+                    </button>
+                  </Link>
+                )}
 
                 <Link
                   href={isMovie ? `/movies/${movieId}` : `/series/${movieId}`}
