@@ -18,13 +18,30 @@ export default function ProfileBanner({
     year: 'numeric',
   });
 
+  const bannerImagesOptions = [
+    'https://image.tmdb.org/t/p/w1920/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
+    'https://image.tmdb.org/t/p/w1920/l3ycQYwWmbz7p8otwbomFDXIEhn.jpg',
+    'https://image.tmdb.org/t/p/w1920/kU98MbVVgi72wzceyrEbClZmMFe.jpg',
+    'https://image.tmdb.org/t/p/w1920/2rmK7mnchw9Xr3XdiTFSxTTLXqv.jpg',
+    'https://image.tmdb.org/t/p/w1920/2w8FaLwwJTWr6ExUMeVgT2Th5YT.jpg',
+    'https://image.tmdb.org/t/p/w1920/xuJ0F9RfKvVSJNDg2usurQ9WvY5.jpg',
+    'https://i.redd.it/0xmh4dv0mfg81.png',
+  ];
+
+  const bannerImage =
+    bannerImagesOptions[Math.floor(Math.random() * bannerImagesOptions.length)];
+
   return (
     <div className="flex flex-col justify-center items-center p-0">
-      <div className="relative w-full overflow-hidden min-h-[40vh] lg:min-h-[50vh] text-white flex flex-col justify-end">
+      <div className="relative w-full overflow-hidden min-h-[20vh] md:min-h-[40vh] lg:min-h-[50vh] text-white flex flex-col justify-end">
         <div className="absolute z-0 inset-0 h-full">
           <img
             className="h-full w-full object-none object-center absolute top-0 left-0 brightness-50 -z-10"
-            src="https://image.tmdb.org/t/p/w1920/kU98MbVVgi72wzceyrEbClZmMFe.jpg"
+            src={bannerImage}
+          />
+          <img
+            className="h-full w-full object-cover object-center absolute top-0 left-0 brightness-30 blur-sm -z-20"
+            src={bannerImage}
           />
         </div>
 
