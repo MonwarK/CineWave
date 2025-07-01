@@ -1,6 +1,6 @@
-import { getUserData } from "@/app/db/queries";
+"use server"
 import { supabase } from "@/libs/supabaseClient";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { unlockAchievement } from "./unlockAchievement";
 
 type Review = {
@@ -13,10 +13,9 @@ type Review = {
 }
 
 export const submitReview = async ({ movieId, isMovie, rating, review, movieTitle, posterPath }: Review) => {
-  const { userId } = await auth();
-  if(!userId) return;
+  const user = await currentUser();
+  if(!user) return;
 
-  const user = await getUserData(userId);
   const res = await fetch("/api/reviews", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -35,13 +34,12 @@ export const submitReview = async ({ movieId, isMovie, rating, review, movieTitl
     console.error("Review failed", json.error);
   } 
 
-    console.log("Review saved!", json.review);
 
 
     const { count, error} = await supabase
     .from("movie_reviews")
     .select("*", { count: "exact", head: true})
-    .eq("user_id", userId);
+    .eq("user_id", user.id);
 
     if(error) {
       console.error("Failed to count reviews", error)
@@ -49,15 +47,15 @@ export const submitReview = async ({ movieId, isMovie, rating, review, movieTitl
 
     switch(count) {
       case 1: 
-      await unlockAchievement(userId, "First Review")
+      await unlockAchievement(user.id, "First Review")
       break;
       case 10:
-      await unlockAchievement(userId, "Reviewer Lv1")
+      await unlockAchievement(user.id, "Reviewer Lv1")
       break;
       case 50:
-      await unlockAchievement(userId, "Reviewer Lv2")
+      await unlockAchievement(user.id, "Reviewer Lv2")
       case 100:
-      await unlockAchievement(userId, "Reviewer Lv3")
+      await unlockAchievement(user.id, "Reviewer Lv3")
       break;
       default:
       break;
