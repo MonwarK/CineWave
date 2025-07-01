@@ -6,13 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx src/scripts/seed.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.20.2",
     "@supabase/supabase-js": "^2.50.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.0.1",
     "framer-motion": "^12.16.0",
     "lucide-react": "^0.513.0",
     "next": "15.3.3",
@@ -22,7 +24,8 @@
     "react-fast-marquee": "^1.6.5",
     "react-markdown": "^10.1.0",
     "react-timer-hook": "^4.0.5",
-    "remark-breaks": "^4.0.0"
+    "remark-breaks": "^4.0.0",
+    "tsx": "^4.20.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
