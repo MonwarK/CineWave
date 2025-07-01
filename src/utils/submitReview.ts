@@ -16,24 +16,36 @@ export const submitReview = async ({ movieId, isMovie, rating, review, movieTitl
   const user = await currentUser();
   if(!user) return;
 
-  const res = await fetch("/api/reviews", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      movie_id: movieId,
-      is_movie: isMovie,
-      rating,
-      review,
-      movie_title: movieTitle,
-      poster_path: posterPath,
-    }),
+  // const res = await fetch("/api/reviews", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({
+  //     movie_id: movieId,
+  //     is_movie: isMovie,
+  //     rating,
+  //     review,
+  //     movie_title: movieTitle,
+  //     poster_path: posterPath,
+  //   }),
+  // });
+
+  const { error: insertError } = await supabase.from("movie_reviews").insert({
+    movie_id: movieId,
+    is_movie: isMovie,
+    rating,
+    review,
+    movie_title: movieTitle,
+    poster_path: posterPath,
+    user_id: user.id,
   });
 
-  const json = await res.json();
-  if (!res.ok) {
-    console.error("Review failed", json.error);
+
+  if (insertError) {
+    console.error("Review failed", insertError.message);
   } 
 
+
+  console.log("Review Saved!")
 
 
     const { count, error} = await supabase
