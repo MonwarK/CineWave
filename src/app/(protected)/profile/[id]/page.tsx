@@ -6,10 +6,9 @@ import {
 import UserProfile from '@/components/profile/UserProfile';
 import { Metadata, ResolvedMetadata } from 'next';
 
-
 type Props = {
-  params: Promise<{id: string}>
-}
+  params: Promise<{ id: string }>;
+};
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -24,8 +23,6 @@ export async function generateMetadata(
     description: `View the profile and activity of user  ${user.first_name} ${user.last_name}.`,
   };
 }
-
-
 
 export default async function Profile({ params }: Props) {
   const { id } = await params;
@@ -42,7 +39,6 @@ export default async function Profile({ params }: Props) {
 
   const userReviews = await getUserReviews(id);
   const finishedMovies = await getMediaProgress(id);
-
 
   return (
     <UserProfile

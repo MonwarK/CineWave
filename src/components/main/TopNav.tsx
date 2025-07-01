@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function TopNav({ navigation, setIsSidenavOpen }: Props) {
-  const { isLoaded } = useUser();
+  const { isLoaded, user } = useUser();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -69,7 +69,7 @@ export default function TopNav({ navigation, setIsSidenavOpen }: Props) {
                   <UserButton.Action
                     label="View Profile"
                     labelIcon={<User size={16} />}
-                    onClick={() => router.push('/profile')}
+                    onClick={() => router.push(`/profile/${user?.id}`)}
                   />
                   <UserButton.Action
                     label="Subscription Plans"
