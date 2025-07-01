@@ -29,7 +29,7 @@ export default function ProfileBannerImage({
           {/* Modal Button */}
           <SquaredButton
             onClick={() => openModal()}
-            variant="primary"
+            variant="secondary"
             className="absolute right-5 top-20 z-10 opacity-0 group-hover:opacity-100 ease-out duration-300 transition-all"
           >
             Choose Banner
