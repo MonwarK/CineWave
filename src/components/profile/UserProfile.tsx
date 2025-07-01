@@ -4,7 +4,7 @@ import { Review } from '@/types/Review';
 import { User } from '@/types/User';
 import Header from '../main/Header';
 import ProfileBanner from './profile-banner/ProfileBanner';
-import ProfileReviews from './ProfileReviews';
+import ProfileReviews from './profile-reviews/ProfileReviews';
 import ProfileTabs from './ProfileTabs';
 import UserWatched from './UserWatched';
 
