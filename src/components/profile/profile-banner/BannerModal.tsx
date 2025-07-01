@@ -94,7 +94,7 @@ export default function BannerModal({
                     <img
                       src={image}
                       alt={`Banner ${idx + 1}`}
-                      className="rounded-lg object-cover w-full h-28"
+                      className="rounded-lg object-cover w-full max-h-40"
                     />
                   </div>
                 ))}
