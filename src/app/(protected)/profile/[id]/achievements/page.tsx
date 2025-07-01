@@ -1,4 +1,5 @@
 import {
+  getAchievements,
   getMediaProgress,
   getUserData,
   getUserReviews,
@@ -29,22 +30,10 @@ export async function generateMetadata(
 export default async function UserAchievementsPage({ params }: Props) {
   const { id } = params;
 
-  const { data: achievements, error } = await supabase
-    .from('user_achievements')
-    .select(
-      `*,
-    achievements (
-      title,
-      description,
-      icon_url
-    )
-  `
-    )
-    .eq('user_id', id);
-
   const user = await getUserData(id);
   const userReviews = await getUserReviews(id);
   const finishedMovies = await getMediaProgress(id);
+  const achievements = await getAchievements(id);
 
   return (
     <UserProfile
