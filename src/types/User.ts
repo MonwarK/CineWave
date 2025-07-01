@@ -5,5 +5,5 @@ export type User = {
   email: string;
   profile_image_url: string;
   created_at: Date;
-  banner: String;
+  banner: string;
 };
