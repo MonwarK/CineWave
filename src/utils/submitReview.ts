@@ -1,6 +1,4 @@
-"use server"
 import { supabase } from "@/libs/supabaseClient";
-import { currentUser } from "@clerk/nextjs/server";
 import { unlockAchievement } from "./unlockAchievement";
 
 type Review = {
@@ -10,38 +8,29 @@ type Review = {
   review: string;
   movieTitle: string;
   posterPath: string;
+  userId: string;
 }
 
-export const submitReview = async ({ movieId, isMovie, rating, review, movieTitle, posterPath }: Review) => {
-  const user = await currentUser();
-  if(!user) return;
+export const submitReview = async ({ movieId, isMovie, rating, review, movieTitle, posterPath, userId }: Review) => {
+  
 
-  // const res = await fetch("/api/reviews", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify({
-  //     movie_id: movieId,
-  //     is_movie: isMovie,
-  //     rating,
-  //     review,
-  //     movie_title: movieTitle,
-  //     poster_path: posterPath,
-  //   }),
-  // });
 
-  const { error: insertError } = await supabase.from("movie_reviews").insert({
-    movie_id: movieId,
-    is_movie: isMovie,
-    rating,
-    review,
-    movie_title: movieTitle,
-    poster_path: posterPath,
-    user_id: user.id,
+  const res = await fetch("/api/reviews", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      movie_id: movieId,
+      is_movie: isMovie,
+      rating,
+      review,
+      movie_title: movieTitle,
+      poster_path: posterPath,
+    }),
   });
 
-
-  if (insertError) {
-    console.error("Review failed", insertError.message);
+  const json = await res.json();
+  if (!res.ok) {
+    console.error("Review failed", json.error);
   } 
 
 
@@ -51,7 +40,7 @@ export const submitReview = async ({ movieId, isMovie, rating, review, movieTitl
     const { count, error} = await supabase
     .from("movie_reviews")
     .select("*", { count: "exact", head: true})
-    .eq("user_id", user.id);
+    .eq("user_id", userId);
 
     if(error) {
       console.error("Failed to count reviews", error)
@@ -59,19 +48,17 @@ export const submitReview = async ({ movieId, isMovie, rating, review, movieTitl
 
     switch(count) {
       case 1: 
-      await unlockAchievement(user.id, "First Review")
+      await unlockAchievement(userId, "First Review")
       break;
       case 10:
-      await unlockAchievement(user.id, "Reviewer Lv1")
+      await unlockAchievement(userId, "Reviewer Lv1")
       break;
       case 50:
-      await unlockAchievement(user.id, "Reviewer Lv2")
+      await unlockAchievement(userId, "Reviewer Lv2")
       case 100:
-      await unlockAchievement(user.id, "Reviewer Lv3")
+      await unlockAchievement(userId, "Reviewer Lv3")
       break;
       default:
       break;
     }
-
-    
   };

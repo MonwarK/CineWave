@@ -1,18 +1,18 @@
 'use client';
 
 import { Movie } from '@/types/Movie';
+import { Review } from '@/types/Review';
+import { submitReview } from '@/utils/submitReview';
+import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import Header from '../main/Header';
 import Content from '../other/Content';
+import Loader from '../ui/Loader';
 import ReviewForm from './ReviewForm';
 import ReviewHeader from './ReviewHeader';
 import ReviewList from './ReviewList';
 import ReviewOverview from './ReviewOverview';
 import ReviewTags from './ReviewTags';
-import { submitReview } from '@/utils/submitReview';
-import { Review } from '@/types/Review';
-import { useUser } from '@clerk/nextjs';
-import Loader from '../ui/Loader';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
   const { user } = useUser();
@@ -59,6 +59,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       review,
       movieTitle: movie.title || movie.name || '',
       posterPath: movie.poster_path,
+      userId: user?.id as string
     }).then(() => setIsLoading(true));
   };
 
