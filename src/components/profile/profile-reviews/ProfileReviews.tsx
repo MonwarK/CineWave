@@ -7,7 +7,7 @@ export default function ProfileReviews({
 }: {
   userReviews: Review[];
 }) {
-  const [sortBy, setSortBy] = useState('title');
+  const [sortBy, setSortBy] = useState('updated_at');
   const [order, setOrder] = useState('desc');
 
   const sortedMovies = [...userReviews].sort((a, b) => {
