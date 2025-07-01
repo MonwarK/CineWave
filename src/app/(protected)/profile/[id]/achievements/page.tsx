@@ -4,6 +4,7 @@ import {
   getUserReviews,
 } from '@/app/db/queries';
 import UserProfile from '@/components/profile/UserProfile';
+import { supabase } from '@/libs/supabaseClient';
 
 import { Metadata, ResolvedMetadata } from 'next';
 
@@ -28,6 +29,19 @@ export async function generateMetadata(
 export default async function UserAchievementsPage({ params }: Props) {
   const { id } = params;
 
+  const { data: achievements, error } = await supabase
+    .from('user_achievements')
+    .select(
+      `*,
+    achievements (
+      title,
+      description,
+      icon_url
+    )
+  `
+    )
+    .eq('user_id', id);
+
   const user = await getUserData(id);
   const userReviews = await getUserReviews(id);
   const finishedMovies = await getMediaProgress(id);
@@ -38,6 +52,7 @@ export default async function UserAchievementsPage({ params }: Props) {
       userId={id}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
+      achievements={achievements || []}
       currentTab="achievements"
     />
   );

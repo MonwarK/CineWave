@@ -7,24 +7,25 @@ import ProfileBanner from './profile-banner/ProfileBanner';
 import ProfileReviews from './profile-reviews/ProfileReviews';
 import ProfileTabs from './ProfileTabs';
 import UserWatched from './UserWatched';
+import { UserAchievements } from '@/types/Achievements';
 
 export default function UserProfile({
   user,
   userId,
   userReviews,
   finishedMovies,
+  achievements,
   currentTab,
 }: {
   user: User;
   userId?: string;
   userReviews: Review[];
   finishedMovies: FinishedMedia[];
+  achievements?: UserAchievements[];
   currentTab: string;
 }) {
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
   const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
-
-  console.log(userId);
 
   return (
     <div>
