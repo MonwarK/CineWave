@@ -5,6 +5,7 @@ import { useState } from 'react';
 import BannerModal from './BannerModal';
 import ProfileBannerImage from './ProfileBannerImage';
 import ProfileBannerInfo from './ProfileBannerInfo';
+import { updateUserBanner } from '@/utils/updateUserBanner';
 
 export default function ProfileBanner({
   user,
@@ -33,6 +34,7 @@ export default function ProfileBanner({
   };
 
   const onBannerSave = (banner: string) => {
+    updateUserBanner(banner);
     setCurrentBanner(banner);
     setBannerPreview(banner);
     setIsOpen(false);

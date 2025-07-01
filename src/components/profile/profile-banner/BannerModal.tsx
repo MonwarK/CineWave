@@ -2,7 +2,7 @@ import { Dispatch, ReactNode, useEffect, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { noOpacity, visibleOpacity } from '@/motion/variants/opacity';
-import SquaredButton from '../ui/SquaredButton';
+import SquaredButton from '../../ui/SquaredButton';
 import clsx from 'clsx';
 
 interface Props {
@@ -62,27 +62,30 @@ export default function BannerModal({
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-            className="bg-neutral-900 border-orange-600/50 border p-6 rounded-lg shadow-lg relative max-w-md w-full"
+            className="bg-neutral-900 border-orange-600/50 border p-6 rounded-lg shadow-lg relative max-w-md w-full max-h-[700px] overflow-hidden flex flex-col"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center">
-              <h2
-                className="text-xl text-center font-bold text-white mb-2"
-                id="modal-title"
-              >
-                {title || 'Modal Title'}
+            {/* Modal Header */}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-white">
+                {title || 'Choose a Banner'}
               </h2>
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-300 cursor-pointer"
+                className="text-gray-500 hover:text-gray-300 text-lg"
+                aria-label="Close banner selection"
               >
                 ✕
               </button>
             </div>
-            <div className="text-gray-300">
+
+            {/* Scrollable Image Grid */}
+            <div className="flex-1 overflow-y-auto pr-1">
               <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
                 {bannerImagesOptions.map((image, idx) => (
                   <div
+                    key={idx}
+                    onClick={() => setBannerPreview(image)}
                     className={clsx(
                       'border-2 border-transparent p-0.5 rounded-lg cursor-pointer hover:border-white transition duration-100',
                       image === bannerPreview && 'border-white'
@@ -90,15 +93,16 @@ export default function BannerModal({
                   >
                     <img
                       src={image}
-                      onClick={() => setBannerPreview(image)}
-                      className={'h-[100px] mx-auto object-fill rounded-lg'}
+                      alt={`Banner ${idx + 1}`}
+                      className="rounded-lg object-cover w-full h-28"
                     />
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="px-1 pt-5 space-y-3">
+            {/* Save Button */}
+            <div className="pt-5">
               <SquaredButton
                 className="w-full"
                 onClick={() => onBannerSave(bannerPreview)}

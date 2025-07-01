@@ -3,7 +3,7 @@ import { FinishedMedia } from '@/types/FinishedMedia';
 import { Review } from '@/types/Review';
 import { User } from '@/types/User';
 import Header from '../main/Header';
-import ProfileBanner from './ProfileBanner';
+import ProfileBanner from './profile-banner/ProfileBanner';
 import ProfileReviews from './ProfileReviews';
 import ProfileTabs from './ProfileTabs';
 import UserWatched from './UserWatched';
@@ -24,7 +24,7 @@ export default function UserProfile({
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
   const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
 
-  console.log(userId)
+  console.log(userId);
 
   return (
     <div>
@@ -38,7 +38,7 @@ export default function UserProfile({
       />
       <div className="p-5 py-10 max-w-screen-xl mx-auto">
         {userId ? (
-          <ProfileTabs currentTab={currentTab} userId={userId}/>
+          <ProfileTabs currentTab={currentTab} userId={userId} />
         ) : (
           <ProfileTabs currentTab={currentTab} />
         )}
@@ -46,11 +46,11 @@ export default function UserProfile({
         {currentTab === 'reviews' && (
           <ProfileReviews userReviews={userReviews} />
         )}
-        {currentTab === "movies" && (
-          <UserWatched finishedMedia={moviesWatched} mediaType='movies' />
+        {currentTab === 'movies' && (
+          <UserWatched finishedMedia={moviesWatched} mediaType="movies" />
         )}
-        {currentTab === "series" && (
-          <UserWatched finishedMedia={seriesWatched} mediaType='series' />
+        {currentTab === 'series' && (
+          <UserWatched finishedMedia={seriesWatched} mediaType="series" />
         )}
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import SquaredButton from '../ui/SquaredButton';
+import SquaredButton from '../../ui/SquaredButton';
 
 interface Props {
   bannerPreview: string;
