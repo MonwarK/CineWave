@@ -8,7 +8,7 @@ export default function ProfileReviews({
   userReviews: Review[];
 }) {
   const [sortBy, setSortBy] = useState('title');
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
   const sortedMovies = [...userReviews].sort((a, b) => {
     if (sortBy === 'title') {
@@ -28,49 +28,56 @@ export default function ProfileReviews({
   return (
     userReviews.length > 0 && (
       <div>
-        <div className="mb-4 space-x-2 mt-4 flex justify-end items-center">
-          <label>Sort By:</label>
-          <select
-            className="bg-orange-500/60 p-2 rounded-md"
-            onChange={e => setSortBy(e.target.value)}
-          >
-            <option
-              className="rounded-md hover:bg-orange-700/60"
-              value={'title'}
+        <div className="mb-4 space-x-5 mt-4 flex justify-end items-center">
+          <div className="space-x-2">
+            <label>Sort By:</label>
+            <select
+              className="bg-orange-500/60 p-2 rounded-md"
+              onChange={e => setSortBy(e.target.value)}
             >
-              Title
-            </option>
-            <option
-              className="rounded-md hover:bg-orange-700/60"
-              value={'rating'}
+              <option
+                className="rounded-md hover:bg-orange-700/60"
+                value={'updated_at'}
+              >
+                Recent
+              </option>
+              <option
+                className="rounded-md hover:bg-orange-700/60"
+                value={'title'}
+              >
+                Title
+              </option>
+              <option
+                className="rounded-md hover:bg-orange-700/60"
+                value={'rating'}
+              >
+                Rating
+              </option>
+            </select>
+          </div>
+          <div className="space-x-2">
+            <label>Order:</label>
+            <select
+              className="bg-orange-500/60 p-2 rounded-md "
+              onChange={e => setOrder(e.target.value)}
             >
-              Rating
-            </option>
-            <option
-              className="rounded-md hover:bg-orange-700/60"
-              value={'updated_at'}
-            >
-              Updated At
-            </option>
-          </select>
-          <label>Order:</label>
-          <select
-            className="bg-orange-500/60 p-2 rounded-md "
-            onChange={e => setOrder(e.target.value)}
-          >
-            <option value={'asc'} className="rounded-md hover:bg-orange-700/60">
-              Ascending
-            </option>
-            <option
-              className="rounded-md hover:bg-orange-700/60 decoration-orange-500/60"
-              value={'desc'}
-            >
-              Descending
-            </option>
-          </select>
+              <option
+                className="rounded-md hover:bg-orange-700/60 decoration-orange-500/60"
+                value={'desc'}
+              >
+                Descending
+              </option>
+              <option
+                value={'asc'}
+                className="rounded-md hover:bg-orange-700/60"
+              >
+                Ascending
+              </option>
+            </select>
+          </div>
         </div>
         <div className="space-y-5 py-10">
-          {sortedMovies?.map((review) => (
+          {sortedMovies?.map(review => (
             <ProfileReviewListItem key={review.id} review={review} />
           ))}
         </div>
