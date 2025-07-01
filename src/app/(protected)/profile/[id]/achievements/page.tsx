@@ -5,7 +5,6 @@ import {
   getUserReviews,
 } from '@/app/db/queries';
 import UserProfile from '@/components/profile/UserProfile';
-import { supabase } from '@/libs/supabaseClient';
 
 import { Metadata, ResolvedMetadata } from 'next';
 
@@ -14,7 +13,7 @@ type Props = {
 };
 
 export async function generateMetadata(
-  { params }: { params: { id: string } },
+  { params }: Props,
   parent: ResolvedMetadata
 ): Promise<Metadata> {
   const { id } = params;
