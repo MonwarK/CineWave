@@ -7,10 +7,9 @@ import UserProfile from '@/components/profile/UserProfile';
 
 import { Metadata, ResolvedMetadata } from 'next';
 
-
 type Props = {
-  params: Promise<{id: string}>
-}
+  params: { id: string };
+};
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -27,8 +26,7 @@ export async function generateMetadata(
 }
 
 export default async function UserAchievementsPage({ params }: Props) {
-  const { id } = await params;
-
+  const { id } = params;
 
   const user = await getUserData(id);
   const userReviews = await getUserReviews(id);
