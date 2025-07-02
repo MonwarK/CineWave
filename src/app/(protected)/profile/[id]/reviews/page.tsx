@@ -5,30 +5,23 @@ import {
 } from '@/app/db/queries';
 import UserProfile from '@/components/profile/UserProfile';
 
-import { Metadata, ResolvedMetadata } from 'next';
-
-
 type Props = {
-  params: Promise<{id: string}>
-}
+  params: Promise<{ id: string }>;
+};
 
-export async function generateMetadata(
-  { params }: { params: { id: string } },
-  parent: ResolvedMetadata
-): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata({ params }: any) {
+  const { id } = await params;
 
   const user = await getUserData(id);
 
   return {
     title: `${user.first_name} ${user.last_name}'s Reviews`,
-    description: `View the profile and activity of user  ${user.first_name} ${user.last_name}.`,
+    description: `View the profile and activity of user ${user.first_name} ${user.last_name}.`,
   };
 }
 
 export default async function UserReviewsPage({ params }: Props) {
   const { id } = await params;
-
 
   const user = await getUserData(id);
   const userReviews = await getUserReviews(id);

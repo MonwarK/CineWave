@@ -35,9 +35,33 @@ export async function getMediaProgress(id: string) {
 
   const { data, error } = await supabase
     .from('user_finished_media')
-    .select("*")
+    .select('*')
     .eq('user_id', id)
     .order('finished_at', { ascending: false });
+
+  if (error) {
+    console.log('Error fetching user media from supabase', error);
+    return;
+  }
+
+  return data;
+}
+
+export async function getAchievements(id: string) {
+  if (!id) return;
+
+  const { data, error } = await supabase
+    .from('user_achievements')
+    .select(
+      `*,
+      achievements (
+        title,
+        description,
+        icon_url
+      )
+    `
+    )
+    .eq('user_id', id);
 
   if (error) {
     console.log('Error fetching user media from supabase', error);

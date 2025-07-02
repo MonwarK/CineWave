@@ -45,9 +45,7 @@ export default function VideoPlayer({
     const watchedLateEnough = baseTime >= runtime * 0.8;
 
     if (isMovie) {
-      console.log(1);
       if (watchedLateEnough && !hasLateSaved) {
-        console.log('Hello');
         completeWatched();
         setHasLateSaved(true);
       }
