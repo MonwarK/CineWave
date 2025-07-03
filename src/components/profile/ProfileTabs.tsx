@@ -1,6 +1,29 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 
+const tabs = [
+  {
+    id: 1,
+    text: 'Reviews',
+    tabName: 'reviews',
+  },
+  {
+    id: 2,
+    text: 'Movies Watched',
+    tabName: 'movies',
+  },
+  {
+    id: 3,
+    text: 'Series Watched',
+    tabName: 'series',
+  },
+  {
+    id: 4,
+    text: 'Achievements',
+    tabName: 'achievements',
+  },
+];
+
 export default function ProfileTabs({
   currentTab,
   userId,
@@ -8,29 +31,6 @@ export default function ProfileTabs({
   currentTab: string;
   userId: string;
 }) {
-  const tabs = [
-    {
-      id: 1,
-      text: 'Reviews',
-      tabName: 'reviews',
-    },
-    {
-      id: 2,
-      text: 'Movies Watched',
-      tabName: 'movies',
-    },
-    {
-      id: 3,
-      text: 'Series Watched',
-      tabName: 'series',
-    },
-    {
-      id: 4,
-      text: 'Achievements',
-      tabName: 'achievements',
-    },
-  ];
-
   return (
     <div className="space-y-5">
       <div className="flex justify-between md:justify-start md:space-x-10">
