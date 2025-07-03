@@ -12,6 +12,8 @@ import {
   UserAchievements as UserAchiementsType,
 } from '@/types/Achievements';
 import UserAchievements from './profile-achievements/UserAchievements';
+import { toast } from 'react-toastify';
+import Toast from '../ui/Toast';
 
 export default function UserProfile({
   user,

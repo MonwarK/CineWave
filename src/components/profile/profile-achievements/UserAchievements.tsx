@@ -11,6 +11,7 @@ export default function UserAchievements() {
   const reviewsAchievements = achievements.filter(x => x.type === 'Review');
   const moviesAchievements = achievements.filter(x => x.type === 'Movie');
   const seriesAchievements = achievements.filter(x => x.type === 'Series');
+  const episodesAchievements = achievements.filter(x => x.type === 'Episode');
 
   const isAchievementUnlocked = (achievement_id: string) =>
     userAchievements?.filter(
@@ -41,6 +42,12 @@ export default function UserAchievements() {
         <UserAchievementSection
           title="Series"
           achievements={seriesAchievements}
+          isAchievementUnlocked={isAchievementUnlocked}
+        />
+
+        <UserAchievementSection
+          title="Episodes"
+          achievements={episodesAchievements}
           isAchievementUnlocked={isAchievementUnlocked}
         />
       </div>
