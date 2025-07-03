@@ -1,9 +1,22 @@
+import Toast from '@/components/ui/Toast';
 import { toast } from 'react-toastify';
 
-export const notify = (text: string, type: string = 'primary') => {
+export const notify = (
+  title: string,
+  description: string,
+  type: string = 'primary'
+) => {
   if (type === 'primary') {
-    toast(text, {
-      className: '!bg-[#d36013] !text-white font-bold',
+    toast(Toast, {
+      data: {
+        title,
+        content: description,
+      },
+      className: '!p-0 !bg-transparent',
+      ariaLabel: title,
+      autoClose: false,
+      progress: 0.3,
+      icon: false,
       theme: 'colored',
     });
   }

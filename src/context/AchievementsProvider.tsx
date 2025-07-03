@@ -55,53 +55,76 @@ export const AchievementsProvider = ({
     const reviewsCount =
       (await getUserReviews(user.id).then(x => x?.length)) || 0;
 
-    const firstAchievement = userAchievements.find(
-      x => x.achievements.title === 'First Review'
-    );
-    const tenReviewsAchievementsUnlocked = userAchievements.find(
-      x => x.achievements.title === 'Reviewer Lv1'
-    );
-    const fiftyReviewsAchievementsUnlocked = userAchievements.find(
-      x => x.achievements.title === 'Reviewer Lv2'
-    );
-    const hundredReviewsAchievementsUnlocked = userAchievements.find(
-      x => x.achievements.title === 'Reviewer Lv3'
+    const reviewAchievements = achievements.filter(x => x.type === 'Review');
+
+    const firstAchievementUnlocked = userAchievements.find(
+      x => x.achievements.title === reviewAchievements[0].title
     );
 
-    if (reviewsCount >= 1 && !firstAchievement) {
-      unlockAchievement(user.id, 'First Review').then(newAchievement => {
-        if (newAchievement) {
-          setUserAchievements(prev => [...prev, newAchievement]);
-          notify('🏆 Achievement Unlocked: First Review');
+    const secondAchievementUnlocked = userAchievements.find(
+      x => x.achievements.title === reviewAchievements[1].title
+    );
+    const thirdAchievementUnlocked = userAchievements.find(
+      x => x.achievements.title === reviewAchievements[2].title
+    );
+    const fourthAchievementUnlocked = userAchievements.find(
+      x => x.achievements.title === reviewAchievements[3].title
+    );
+
+    if (reviewsCount >= 1 && !firstAchievementUnlocked) {
+      unlockAchievement(user.id, reviewAchievements[0].title).then(
+        newAchievement => {
+          if (newAchievement) {
+            setUserAchievements(prev => [...prev, newAchievement]);
+            notify(
+              `🏆 Achievement Unlocked: ${reviewAchievements[0].title}`,
+              reviewAchievements[0].description
+            );
+          }
         }
-      });
+      );
     }
 
-    if (reviewsCount >= 10 && !tenReviewsAchievementsUnlocked) {
-      unlockAchievement(user.id, 'Reviewer Lv1').then(newAchievement => {
-        if (newAchievement) {
-          setUserAchievements(prev => [...prev, newAchievement]);
-          notify('🏆 Achievement Unlocked: Reviewer Lvl1');
+    if (reviewsCount >= 10 && !secondAchievementUnlocked) {
+      unlockAchievement(user.id, reviewAchievements[1].title).then(
+        newAchievement => {
+          if (newAchievement) {
+            setUserAchievements(prev => [...prev, newAchievement]);
+            notify(
+              `🏆 Achievement Unlocked: ${reviewAchievements[1].title}`,
+              reviewAchievements[1].description
+            );
+          }
         }
-      });
+      );
     }
 
-    if (reviewsCount >= 50 && !fiftyReviewsAchievementsUnlocked) {
-      unlockAchievement(user.id, 'Reviewer Lv2').then(newAchievement => {
-        if (newAchievement) {
-          setUserAchievements(prev => [...prev, newAchievement]);
-          notify('🏆 Achievement Unlocked: Reviewer Lvl2');
+    if (reviewsCount >= 50 && !thirdAchievementUnlocked) {
+      unlockAchievement(user.id, reviewAchievements[2].title).then(
+        newAchievement => {
+          if (newAchievement) {
+            setUserAchievements(prev => [...prev, newAchievement]);
+            notify(
+              `🏆 Achievement Unlocked: ${reviewAchievements[2].title}`,
+              reviewAchievements[2].description
+            );
+          }
         }
-      });
+      );
     }
 
-    if (reviewsCount >= 100 && !hundredReviewsAchievementsUnlocked) {
-      unlockAchievement(user.id, 'Reviewer Lv3').then(newAchievement => {
-        if (newAchievement) {
-          setUserAchievements(prev => [...prev, newAchievement]);
-          notify('🏆 Achievement Unlocked: Reviewer Lvl3');
+    if (reviewsCount >= 100 && !fourthAchievementUnlocked) {
+      unlockAchievement(user.id, reviewAchievements[3].title).then(
+        newAchievement => {
+          if (newAchievement) {
+            setUserAchievements(prev => [...prev, newAchievement]);
+            notify(
+              `🏆 Achievement Unlocked: ${reviewAchievements[3].title}`,
+              reviewAchievements[3].description
+            );
+          }
         }
-      });
+      );
     }
   };
 

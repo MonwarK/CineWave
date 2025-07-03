@@ -1,27 +1,21 @@
-import { useAchievements } from '@/context/AchievementsProvider';
-import {
-  Achievement,
-  UserAchievements as UserAchievementsType,
-} from '@/types/Achievements';
+import { Achievement } from '@/types/Achievements';
 import clsx from 'clsx';
 import React from 'react';
 
-export default function UserAchievements() {
-  const { achievements, userAchievements } = useAchievements();
-
-  const isAchievementUnlocked = (achievement_id: string) =>
-    userAchievements?.filter(
-      (x: UserAchievementsType) => x.achievement_id === achievement_id
-    )?.[0]?.achievement_id !== achievement_id && ' opacity-30 grayscale-100';
-
+export default function UserAchievementSection({
+  title,
+  achievements,
+  isAchievementUnlocked,
+}: {
+  title: string;
+  achievements: Achievement[];
+  isAchievementUnlocked: (id: string) => boolean;
+}) {
   return (
-    <div className="py-10 space-y-10">
+    <div>
       <div>
-        <h1 className="text-center text-3xl uppercase font-medium">
-          Achievements
-        </h1>
+        <h2 className="text-xl uppercase font-medium mb-5">{title}</h2>
       </div>
-
       <div className="space-y-5">
         {achievements?.map(achievement => (
           <div

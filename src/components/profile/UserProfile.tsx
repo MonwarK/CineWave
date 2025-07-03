@@ -11,7 +11,7 @@ import {
   Achievement,
   UserAchievements as UserAchiementsType,
 } from '@/types/Achievements';
-import UserAchievements from './UserAchievements';
+import UserAchievements from './profile-achievements/UserAchievements';
 
 export default function UserProfile({
   user,

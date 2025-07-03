@@ -48,7 +48,12 @@ export async function getMediaProgress(id: string) {
 }
 
 export async function getAchievements() {
-  const { data, error } = await supabase.from('achievements').select(`*`);
+  const { data, error } = await supabase
+    .from('achievements')
+    .select(`*`)
+    .order('order');
+
+  console.log(data);
 
   if (error) {
     console.log('Error fetching achiements from supabase', error);
@@ -68,7 +73,9 @@ export async function getUserAchievements(id: string) {
       achievements (
         title,
         description,
-        icon_url
+        icon_url,
+        type,
+        order
       )
     `
     )
