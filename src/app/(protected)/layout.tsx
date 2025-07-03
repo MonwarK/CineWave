@@ -6,6 +6,8 @@ import { Achievement, UserAchievements } from '@/types/Achievements';
 import { SavedMovie } from '@/types/SavedMovies';
 import { auth } from '@clerk/nextjs/server';
 import { getAchievements, getUserAchievements } from '../db/queries';
+import { ToastContainer } from 'react-toastify';
+import React from 'react';
 
 export default async function ProtectedLayout({
   children,
@@ -25,14 +27,17 @@ export default async function ProtectedLayout({
   const userAchievements = await getUserAchievements(userId);
 
   return (
-    <SavedMoviesProvider initialMovies={savedMovies as SavedMovie[]}>
-      <AchievementsProvider
-        initialAchievements={achievements as Achievement[]}
-        initialUserAchievements={userAchievements as UserAchievements[]}
-      >
-        <div className="min-h-[90vh] bg-zinc-900/50 pb-10">{children}</div>
-        <Footer />
-      </AchievementsProvider>
-    </SavedMoviesProvider>
+    <React.Fragment>
+      <SavedMoviesProvider initialMovies={savedMovies as SavedMovie[]}>
+        <AchievementsProvider
+          initialAchievements={achievements as Achievement[]}
+          initialUserAchievements={userAchievements as UserAchievements[]}
+        >
+          <div className="min-h-[90vh] bg-zinc-900/50 pb-10">{children}</div>
+          <Footer />
+        </AchievementsProvider>
+      </SavedMoviesProvider>
+      <ToastContainer />
+    </React.Fragment>
   );
 }

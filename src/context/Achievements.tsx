@@ -1,11 +1,13 @@
 'use client';
 
 import { getUserReviews } from '@/app/db/queries';
+import { notify } from '@/libs/notification';
 import { Achievement, UserAchievements } from '@/types/Achievements';
 import { Review } from '@/types/Review';
 import { unlockAchievement } from '@/utils/unlockAchievement';
 import { useUser } from '@clerk/nextjs';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 type AchievementsContextType = {
   achievements: Achievement[];
@@ -70,18 +72,18 @@ export const AchievementsProvider = ({
 
     if (reviewsCount >= 1 && !firstAchievement) {
       unlockAchievement(user.id, 'First Review').then(newAchievement => {
-        console.log(newAchievement);
         if (newAchievement) {
           setUserAchievements(prev => [...prev, newAchievement]);
+          notify('🏆 Achievement Unlocked: First Review');
         }
       });
     }
 
     if (reviewsCount >= 10 && !tenReviewsAchievementsUnlocked) {
       unlockAchievement(user.id, 'Reviewer Lv1').then(newAchievement => {
-        console.log(newAchievement);
         if (newAchievement) {
           setUserAchievements(prev => [...prev, newAchievement]);
+          notify('🏆 Achievement Unlocked: Reviewer Lvl1');
         }
       });
     }
@@ -90,6 +92,7 @@ export const AchievementsProvider = ({
       unlockAchievement(user.id, 'Reviewer Lv2').then(newAchievement => {
         if (newAchievement) {
           setUserAchievements(prev => [...prev, newAchievement]);
+          notify('🏆 Achievement Unlocked: Reviewer Lvl2');
         }
       });
     }
@@ -98,6 +101,7 @@ export const AchievementsProvider = ({
       unlockAchievement(user.id, 'Reviewer Lv3').then(newAchievement => {
         if (newAchievement) {
           setUserAchievements(prev => [...prev, newAchievement]);
+          notify('🏆 Achievement Unlocked: Reviewer Lvl3');
         }
       });
     }
