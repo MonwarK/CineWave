@@ -78,11 +78,49 @@ export default function VideoSection({ ...props }) {
     });
   };
 
+  const markEpisodeWatched = async (season: number, episode: number) => {
+    const res = await fetch('/api/watched-episode', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ show_id: movie.id, season, episode }),
+    });
+
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error);
+    return json;
+  };
+
+  const deleteSeriesProgress = async (showId: string) => {
+    const response = await fetch('/api/series-progress', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ showId }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Failed to delete:', errorData.error);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Deleted:', data.message);
+    return data;
+  };
+
   return (
     <div className="flex-1">
       <VideoPlayer
         videoSrc={videoSrc}
         saveProgress={isMovie ? undefined : saveProgress}
+        deleteSeriesProgress={
+          isMovie ? undefined : () => deleteSeriesProgress(movie.id)
+        }
+        markEpisodeWatched={isMovie ? undefined : markEpisodeWatched}
         completeWatched={() => saveCompletedMedia(movie)}
         isMovie={isMovie}
         runtime={

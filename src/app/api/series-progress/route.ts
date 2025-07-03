@@ -39,3 +39,34 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ data }, { status: 200 });
 }
+
+export async function DELETE(req: NextRequest) {
+  const { userId } = getAuth(req);
+
+  if (!userId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const body = await req.json();
+  const { showId } = body;
+
+  if (!showId) {
+    return NextResponse.json({ error: 'Missing show_id' }, { status: 400 });
+  }
+
+  const { error } = await supabase
+    .from('series_progress')
+    .delete()
+    .eq('user_id', userId)
+    .eq('show_id', showId);
+
+  if (error) {
+    console.error('Supabase delete error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(
+    { message: 'Deleted successfully' },
+    { status: 200 }
+  );
+}
