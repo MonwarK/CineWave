@@ -1,19 +1,17 @@
 'use client';
-import { FinishedMedia } from '@/types/FinishedMedia';
-import { Review } from '@/types/Review';
-import { User } from '@/types/User';
-import Header from '../main/Header';
-import ProfileBanner from './profile-banner/ProfileBanner';
-import ProfileReviews from './profile-reviews/ProfileReviews';
-import ProfileTabs from './ProfileTabs';
-import UserWatched from './UserWatched';
 import {
   Achievement,
   UserAchievements as UserAchiementsType,
 } from '@/types/Achievements';
+import { FinishedMedia } from '@/types/FinishedMedia';
+import { Review } from '@/types/Review';
+import { User } from '@/types/User';
+import Header from '../main/Header';
 import UserAchievements from './profile-achievements/UserAchievements';
-import { toast } from 'react-toastify';
-import Toast from '../ui/Toast';
+import ProfileBanner from './profile-banner/ProfileBanner';
+import ProfileReviews from './profile-reviews/ProfileReviews';
+import ProfileTabs from './ProfileTabs';
+import UserWatched from './UserWatched';
 
 export default function UserProfile({
   user,
@@ -21,6 +19,7 @@ export default function UserProfile({
   userReviews,
   finishedMovies,
   currentTab,
+  episodesWatched
 }: {
   user: User;
   userId: string;
@@ -29,6 +28,7 @@ export default function UserProfile({
   achievements?: Achievement[];
   userAchievements?: UserAchiementsType[];
   currentTab: string;
+  episodesWatched: number;
 }) {
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
   const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
@@ -42,6 +42,7 @@ export default function UserProfile({
         reviewCount={userReviews.length}
         moviesWatched={moviesWatched.length}
         seriesWatched={seriesWatched.length}
+        episodesWatched={episodesWatched}
       />
       <div className="p-5 py-10 max-w-screen-xl mx-auto">
         <ProfileTabs currentTab={currentTab} userId={userId} />

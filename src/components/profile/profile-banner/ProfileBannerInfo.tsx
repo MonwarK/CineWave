@@ -1,11 +1,11 @@
 import { User } from '@/types/User';
-import React from 'react';
 
 interface Props {
   user: User;
   reviewCount: number;
   moviesWatched: number;
   seriesWatched: number;
+  episodesWatched: number;
 }
 
 export default function ProfileBannerInfo({
@@ -13,6 +13,7 @@ export default function ProfileBannerInfo({
   reviewCount,
   moviesWatched,
   seriesWatched,
+  episodesWatched
 }: Props) {
   const username = user.first_name.toLowerCase();
   const dateJoined = new Date(user.created_at).toLocaleString('en-US', {
@@ -59,7 +60,7 @@ export default function ProfileBannerInfo({
               {/* More Info */}
               <div className="flex flex-col gap-5 md:flex-row md:justify-between md:items-center text-sm text-gray-400">
                 {/* Watch stats */}
-                <div className="flex gap-5 py-2">
+                <div className="flex flex-wrap gap-5 py-2">
                   <span className="cursor-pointer">
                     <strong className="text-white mr-1">{reviewCount}</strong>{' '}
                     Reviews
@@ -73,6 +74,11 @@ export default function ProfileBannerInfo({
                   <span className="cursor-pointer">
                     <strong className="text-white mr-1">{seriesWatched}</strong>{' '}
                     Series Completed
+                  </span>
+                  <span>|</span>
+                  <span className="cursor-pointer">
+                    <strong className="text-white mr-1">{episodesWatched || 0}</strong>{' '}
+                    Episodes Watched
                   </span>
                 </div>
               </div>

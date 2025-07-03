@@ -1,11 +1,11 @@
 'use client';
 
 import { User } from '@/types/User';
+import { updateUserBanner } from '@/utils/updateUserBanner';
 import { useState } from 'react';
 import BannerModal from './BannerModal';
 import ProfileBannerImage from './ProfileBannerImage';
 import ProfileBannerInfo from './ProfileBannerInfo';
-import { updateUserBanner } from '@/utils/updateUserBanner';
 
 export default function ProfileBanner({
   user,
@@ -13,12 +13,14 @@ export default function ProfileBanner({
   reviewCount,
   moviesWatched,
   seriesWatched,
+  episodesWatched
 }: {
   user: User;
   userId?: string;
   reviewCount: number;
   moviesWatched: number;
   seriesWatched: number;
+  episodesWatched: number;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentBanner, setCurrentBanner] = useState(
@@ -63,6 +65,7 @@ export default function ProfileBanner({
           reviewCount={reviewCount}
           moviesWatched={moviesWatched}
           seriesWatched={seriesWatched}
+          episodesWatched={episodesWatched}
         />
       </div>
     </div>

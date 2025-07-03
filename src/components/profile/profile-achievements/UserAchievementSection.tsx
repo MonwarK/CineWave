@@ -2,7 +2,7 @@ import { Achievement } from '@/types/Achievements';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function UserAchievementSection({
   title,
