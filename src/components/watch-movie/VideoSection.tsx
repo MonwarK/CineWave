@@ -5,6 +5,7 @@ import EpisodeSelector from './EpisodeSelector';
 import Overview from './Overview';
 import { Episode, Movie } from '@/types/Movie';
 import { saveCompletedMedia } from '@/utils/completeMedia';
+import { useAchievements } from '@/context/AchievementsProvider';
 
 export default function VideoSection({ ...props }) {
   const {
@@ -21,6 +22,12 @@ export default function VideoSection({ ...props }) {
   } = props;
 
   const [videoSrc, setVideoSrc] = useState('');
+  const {
+    checkEpisodesAchievements,
+    checkMoviesAchievements,
+    checkSeriesAchievements,
+  } = useAchievements();
+
   const currentEpisodeData = episodesBySeason?.[season]?.find(
     (ep: Episode) => ep.episode_number == episode
   );
@@ -89,6 +96,8 @@ export default function VideoSection({ ...props }) {
 
     const json = await res.json();
     if (!res.ok) throw new Error(json.error);
+
+    checkEpisodesAchievements();
     return json;
   };
 
@@ -109,6 +118,7 @@ export default function VideoSection({ ...props }) {
 
     const data = await response.json();
     console.log('Deleted:', data.message);
+
     return data;
   };
 
@@ -121,7 +131,16 @@ export default function VideoSection({ ...props }) {
           isMovie ? undefined : () => deleteSeriesProgress(movie.id)
         }
         markEpisodeWatched={isMovie ? undefined : markEpisodeWatched}
-        completeWatched={() => saveCompletedMedia(movie)}
+        completeWatched={() => {
+          saveCompletedMedia(movie).then(() => {
+            if (isMovie) {
+              checkMoviesAchievements();
+              return;
+            }
+
+            checkSeriesAchievements();
+          });
+        }}
         isMovie={isMovie}
         runtime={
           isMovie ? movie.runtime * 60 : currentEpisodeData?.runtime * 60

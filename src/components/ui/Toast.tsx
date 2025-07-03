@@ -8,7 +8,7 @@ type CustomNotificationProps = ToastContentProps<{
 
 export default function Toast({ closeToast, data }: CustomNotificationProps) {
   return (
-    <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 backdrop-blur-sm ">
+    <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50 backdrop-blur-sm ">
       {/* Subtle top accent line */}
       <div className="h-1 bg-gradient-to-r from-orange-500 to-red-500"></div>
 

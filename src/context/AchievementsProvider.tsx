@@ -120,7 +120,7 @@ export const AchievementsProvider = ({
 
     const finishedMovies = await getMediaProgress(user.id);
     const moviesWatched =
-      finishedMovies?.filter(x => x.is_movie === true).length || 0;
+      finishedMovies?.filter(x => x.is_movie === false).length || 0;
     const seriesAchievements = achievements.filter(x => x.type === 'Series');
 
     // Define the thresholds for each movie achievement
@@ -129,7 +129,7 @@ export const AchievementsProvider = ({
     // Loop through each threshold and check/unlock achievements
     thresholds.forEach((threshold, idx) => {
       const achievement = seriesAchievements[idx];
-      if (!achievement) return; // skip if achievement is missing
+      if (!achievement) return;
 
       const alreadyUnlocked = userAchievements.some(
         x => x.achievements.title === achievement.title
@@ -180,7 +180,14 @@ export const AchievementsProvider = ({
 
   return (
     <AchievementsContext.Provider
-      value={{ achievements, userAchievements, checkReviewsAchievements, checkMoviesAchievements, checkSeriesAchievements, checkEpisodesAchievements }}
+      value={{
+        achievements,
+        userAchievements,
+        checkReviewsAchievements,
+        checkMoviesAchievements,
+        checkSeriesAchievements,
+        checkEpisodesAchievements,
+      }}
     >
       {children}
     </AchievementsContext.Provider>

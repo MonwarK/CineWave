@@ -1,7 +1,6 @@
 import { FinishedMedia } from '@/types/FinishedMedia';
 import Link from 'next/link';
 import Header from '../main/Header';
-import SquaredButton from '../ui/SquaredButton';
 import MediaWatchedList from './profile-media-watched/MediaWatchedList';
 
 type Props = {

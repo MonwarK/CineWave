@@ -10,7 +10,7 @@ export default function MediaWatchedList({
   mediaWatched: FinishedMedia[];
 }) {
   return (
-    <div className="flex mx-auto flex-wrap gap-10 pt-4">
+    <div className="flex mx-auto flex-wrap gap-6.5 pt-4">
       {mediaWatched.map(media => (
         <MediaWatchedCard key={`media-item-${media.id}`} media={media} />
       ))}
