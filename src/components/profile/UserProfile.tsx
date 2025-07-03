@@ -28,7 +28,7 @@ export default function UserProfile({
   achievements?: Achievement[];
   userAchievements?: UserAchiementsType[];
   currentTab: string;
-  episodesWatched: number;
+  episodesWatched?: number;
 }) {
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
   const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
@@ -42,7 +42,7 @@ export default function UserProfile({
         reviewCount={userReviews.length}
         moviesWatched={moviesWatched.length}
         seriesWatched={seriesWatched.length}
-        episodesWatched={episodesWatched}
+        episodesWatched={episodesWatched || 0}
       />
       <div className="p-5 py-10 max-w-screen-xl mx-auto">
         <ProfileTabs currentTab={currentTab} userId={userId} />
