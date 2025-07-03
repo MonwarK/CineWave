@@ -13,13 +13,13 @@ export default function MediaWatchedList({
       {mediaWatched.map(media => (
         <div
           key={media.id}
-          className="overflow-hidden rounded-2xl border border-gray-700"
+          className="overflow-hidden rounded-2xl border border-gray-800/50"
         >
           <div className="relative">
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
-                className="w-52 h-80 object-fill mx-auto"
+                className="w-56 h-80 object-fill mx-auto"
               />
             </div>
             <div>
