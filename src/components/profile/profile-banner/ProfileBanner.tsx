@@ -42,7 +42,7 @@ export default function ProfileBanner({
 
   return (
     <div className="flex flex-col justify-center items-center p-0">
-      <div className="relative w-full overflow-hidden min-h-[20vh] md:min-h-[40vh] lg:min-h-[50vh] text-white flex flex-col justify-end">
+      <div className="relative w-full overflow-hidden min-h-[30vh] md:min-h-[40vh] lg:min-h-[50vh] text-white flex flex-col justify-end">
         <ProfileBannerImage
           bannerPreview={bannerPreview}
           isUser={userId === user.id}

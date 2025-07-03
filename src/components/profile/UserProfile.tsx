@@ -18,7 +18,7 @@ export default function UserProfile({
   currentTab,
 }: {
   user: User;
-  userId?: string;
+  userId: string;
   userReviews: Review[];
   finishedMovies: FinishedMedia[];
   achievements?: UserAchievements[];
@@ -38,11 +38,7 @@ export default function UserProfile({
         seriesWatched={seriesWatched.length}
       />
       <div className="p-5 py-10 max-w-screen-xl mx-auto">
-        {userId ? (
-          <ProfileTabs currentTab={currentTab} userId={userId} />
-        ) : (
-          <ProfileTabs currentTab={currentTab} />
-        )}
+        <ProfileTabs currentTab={currentTab} userId={userId} />
 
         {currentTab === 'reviews' && (
           <ProfileReviews userReviews={userReviews} />

@@ -1,7 +1,13 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 
-export default function ProfileTabs({ currentTab, userId }: { currentTab: string, userId?:string }) {
+export default function ProfileTabs({
+  currentTab,
+  userId,
+}: {
+  currentTab: string;
+  userId: string;
+}) {
   const tabs = [
     {
       id: 1,
@@ -27,13 +33,13 @@ export default function ProfileTabs({ currentTab, userId }: { currentTab: string
 
   return (
     <div className="space-y-5">
-      <div className="flex space-x-10">
+      <div className="flex justify-between md:justify-start md:space-x-10">
         {tabs.map(tab => (
-          <Link href={userId ? `/profile/${userId}/${tab.tabName}` : `/profile/${tab.tabName}`}>
+          <Link href={`/profile/${userId}/${tab.tabName}`}>
             <div
               key={`tab_name_${tab.tabName}-${tab.id}`}
               className={clsx(
-                'uppercase font-semibold text-xl  cursor-pointer pb-1 border-orange-400',
+                'uppercase font-semibold text-sm md:text-xl  cursor-pointer pb-1 border-orange-400',
                 currentTab === tab.tabName
                   ? 'text-white border-b-2'
                   : 'hover:border-b-2 text-gray-400 hover:text-white'

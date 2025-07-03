@@ -26,7 +26,7 @@ export default function ProfileBannerInfo({
         <div>
           <div className="flex items-center gap-10">
             {/* Image */}
-            <div>
+            <div className="hidden md:block">
               <img
                 className="h-28 rounded-full border-gray-700 duration-500 cursor-pointer"
                 src={user.profile_image_url}
@@ -35,16 +35,24 @@ export default function ProfileBannerInfo({
 
             {/* Profile Info */}
             <div className="py-2 space-y-3 flex-1">
-              <div>
-                <div>
-                  <p className="text-2xl font-bold mb-1">
-                    {user.first_name} {user.last_name}
-                  </p>
+              <div className="flex items-center">
+                <div className="md:hidden">
+                  <img
+                    className="h-16 rounded-full border-gray-700 duration-500 cursor-pointer"
+                    src={user.profile_image_url}
+                  />
                 </div>
-                <div className="text-sm text-gray-300 space-x-2">
-                  <span>@{username}</span>
-                  <span>•</span>
-                  <span>Joined {dateJoined}</span>
+                <div>
+                  <div>
+                    <p className="text-2xl font-bold mb-1">
+                      {user.first_name} {user.last_name}
+                    </p>
+                  </div>
+                  <div className="text-sm text-gray-300 space-x-2">
+                    <span>@{username}</span>
+                    <span>•</span>
+                    <span>Joined {dateJoined}</span>
+                  </div>
                 </div>
               </div>
 
