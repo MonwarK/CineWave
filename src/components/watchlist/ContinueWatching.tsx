@@ -70,10 +70,11 @@ export default function ContinueWatching({
                 drag="x"
                 dragConstraints={{ right: 0, left: dragWidth }}
                 className="flex gap-5 cursor-grab py-5"
-                viewport={{ once: true, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.5 }}
               >
                 {continueWatching.map(media => (
                   <motion.div
+                    key={`continue-watching-${media.id}`}
                     variants={itemVariants}
                     className="flex-none w-3/4 md:w-1/2 lg:w-1/3"
                   >
