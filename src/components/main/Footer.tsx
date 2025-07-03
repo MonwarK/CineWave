@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { useAuth } from "@clerk/nextjs";
-import { Star } from "lucide-react";
-import Link from "next/link";
+import { useAuth } from '@clerk/nextjs';
+import { Star } from 'lucide-react';
+import Link from 'next/link';
 
 const links = [
   {
-    name: "Discover",
-    url: "/discover",
+    name: 'Home',
+    link: '/discover',
   },
   {
-    name: "Shows",
-    url: "/series",
+    name: 'Trending',
+    link: '/trending',
   },
   {
-    name: "Movies",
-    url: "/movies",
+    name: 'TV Shows',
+    link: '/series',
   },
   {
-    name: "Recently Added",
-    url: "/recently-added",
+    name: 'Movies',
+    link: '/movies',
   },
   {
-    name: "Watchlist",
-    url: "/list",
+    name: 'My List',
+    link: '/list',
   },
 ];
 
@@ -54,10 +54,10 @@ export default function Footer() {
                 Quick Links
               </h3>
               <div className="grid grid-cols-2 gap-3">
-                {links?.map((link) => (
+                {links?.map(link => (
                   <Link
                     key={`link-${link.name}`}
-                    href={link.url}
+                    href={link.link}
                     className="text-sm text-zinc-400 hover:text-white transition-colors duration-200 hover:underline"
                   >
                     {link.name}
