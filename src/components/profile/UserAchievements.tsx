@@ -1,3 +1,4 @@
+import { useAchievements } from '@/context/Achievements';
 import {
   Achievement,
   UserAchievements as UserAchievementsType,
@@ -5,13 +6,9 @@ import {
 import clsx from 'clsx';
 import React from 'react';
 
-export default function UserAchievements({
-  achievements,
-  userAchievements,
-}: {
-  achievements?: Achievement[];
-  userAchievements?: UserAchievementsType[];
-}) {
+export default function UserAchievements() {
+  const { achievements, userAchievements } = useAchievements();
+
   const isAchievementUnlocked = (achievement_id: string) =>
     userAchievements?.filter(
       (x: UserAchievementsType) => x.achievement_id === achievement_id
@@ -45,7 +42,7 @@ export default function UserAchievements({
               </div>
               <div>
                 <h2 className="text-xl mb-1 font-bold">{achievement.title}</h2>
-                <p>{achievement.description}</p>
+                <p className="text-gray-400">{achievement.description}</p>
               </div>
             </div>
           </div>

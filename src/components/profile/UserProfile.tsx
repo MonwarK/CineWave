@@ -18,8 +18,6 @@ export default function UserProfile({
   userId,
   userReviews,
   finishedMovies,
-  achievements,
-  userAchievements,
   currentTab,
 }: {
   user: User;
@@ -55,12 +53,7 @@ export default function UserProfile({
         {currentTab === 'series' && (
           <UserWatched finishedMedia={seriesWatched} mediaType="series" />
         )}
-        {currentTab === 'achievements' && (
-          <UserAchievements
-            achievements={achievements}
-            userAchievements={userAchievements}
-          />
-        )}
+        {currentTab === 'achievements' && <UserAchievements />}
       </div>
     </div>
   );

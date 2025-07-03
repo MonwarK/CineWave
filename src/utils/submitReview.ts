@@ -45,20 +45,4 @@ export const submitReview = async ({
   if (error) {
     console.error('Failed to count reviews', error);
   }
-
-  switch (count) {
-    case 1:
-      await unlockAchievement(userId, 'First Review');
-      break;
-    case 10:
-      await unlockAchievement(userId, 'Reviewer Lv1');
-      break;
-    case 50:
-      await unlockAchievement(userId, 'Reviewer Lv2');
-    case 100:
-      await unlockAchievement(userId, 'Reviewer Lv3');
-      break;
-    default:
-      break;
-  }
 };

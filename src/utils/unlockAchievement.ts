@@ -1,16 +1,35 @@
-import { supabase } from "@/libs/supabaseClient";
+import { supabase } from '@/libs/supabaseClient';
 
 export async function unlockAchievement(userId: string, title: string) {
-  const { data: achievement, error} = await supabase
-  .from("achievements")
-  .select("id")
-  .eq("title", title)
-  .single();
+  const { data: achievement, error: achievementError } = await supabase
+    .from('achievements')
+    .select('id')
+    .eq('title', title)
+    .single();
 
-  if(error || !achievement) return;
+  if (achievementError || !achievement) return;
 
-  await supabase.from("user_achievements").upsert({
-    user_id: userId,
-    achievement_id: achievement.id,
-  })
+  const { data: unlockedAchievement, error: upsertError } = await supabase
+    .from('user_achievements')
+    .upsert(
+      {
+        user_id: userId,
+        achievement_id: achievement.id,
+      },
+      { onConflict: 'user_id,achievement_id' }
+    )
+    .select(
+      `*,
+      achievements (
+        title,
+        description,
+        icon_url
+      )
+    `
+    )
+    .single();
+
+  if (upsertError || !unlockedAchievement) return;
+
+  return unlockedAchievement;
 }

@@ -13,9 +13,11 @@ import ReviewHeader from './ReviewHeader';
 import ReviewList from './ReviewList';
 import ReviewOverview from './ReviewOverview';
 import ReviewTags from './ReviewTags';
+import { useAchievements } from '@/context/Achievements';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
   const { user } = useUser();
+  const { checkReviewsAchievements } = useAchievements();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMovie = movie.title ? true : false;
@@ -34,6 +36,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       );
       const json = await res.json();
       setReviews(json.reviews);
+      checkReviewsAchievements(reviews.length);
     };
 
     fetchReviews().then(() => setIsLoading(false));
@@ -59,8 +62,10 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       review,
       movieTitle: movie.title || movie.name || '',
       posterPath: movie.poster_path,
-      userId: user?.id as string
-    }).then(() => setIsLoading(true));
+      userId: user?.id as string,
+    }).then(() => {
+      setIsLoading(true);
+    });
   };
 
   const deleteReview = async (reviewId: string) => {
