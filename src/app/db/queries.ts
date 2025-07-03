@@ -47,6 +47,22 @@ export async function getMediaProgress(id: string) {
   return data;
 }
 
+export async function getEpisodesWatched(id: string) {
+  if(!id) return;
+
+  const { data, error } = await supabase
+  .from("watched_episodes")
+  .select("*")
+  .eq("user_id", id);
+
+  if(error) {
+    console.log("Error fetching episodes watched by user", error);
+    return
+  }
+
+  return data;
+}
+
 export async function getAchievements() {
   const { data, error } = await supabase
     .from('achievements')

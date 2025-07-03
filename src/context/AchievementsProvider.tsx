@@ -1,6 +1,6 @@
 'use client';
 
-import { getMediaProgress, getUserReviews } from '@/app/db/queries';
+import { getEpisodesWatched, getMediaProgress, getUserReviews } from '@/app/db/queries';
 import { notify } from '@/libs/notification';
 import { Achievement, UserAchievements } from '@/types/Achievements';
 import { unlockAchievement } from '@/utils/unlockAchievement';
@@ -49,6 +49,7 @@ export const AchievementsProvider = ({
     checkReviewsAchievements();
     checkMoviesAchievements();
     checkSeriesAchievements();
+    checkEpisodesAchievements();
   }, [user]);
 
   const checkReviewsAchievements = async () => {
@@ -132,6 +133,40 @@ export const AchievementsProvider = ({
       );
 
       if (moviesWatched >= threshold && !alreadyUnlocked) {
+        unlockAchievement(user.id, achievement.title).then(newAchievement => {
+          if (newAchievement) {
+            setUserAchievements(prev => [...prev, newAchievement]);
+            notify(
+              `🏆 Achievement Unlocked: ${achievement.title}`,
+              achievement.description
+            );
+          }
+        });
+      }
+    });
+ 
+  }
+
+  const checkEpisodesAchievements = async () => {
+    if (!user) return;
+
+    const episodesWatched = await getEpisodesWatched(user.id);
+    const episodesWatchedCount = episodesWatched?.length || 0;
+    const episodesAchievements = achievements.filter(x => x.type === 'Episodes');
+
+    // Define the thresholds for each movie achievement
+    const thresholds = [1, 10, 25, 50, 100, 250, 500, 1000];
+
+    // Loop through each threshold and check/unlock achievements
+    thresholds.forEach((threshold, idx) => {
+      const achievement = episodesAchievements[idx];
+      if (!achievement) return; // skip if achievement is missing
+
+      const alreadyUnlocked = userAchievements.some(
+        x => x.achievements.title === achievement.title
+      );
+
+      if (episodesWatchedCount >= threshold && !alreadyUnlocked) {
         unlockAchievement(user.id, achievement.title).then(newAchievement => {
           if (newAchievement) {
             setUserAchievements(prev => [...prev, newAchievement]);
