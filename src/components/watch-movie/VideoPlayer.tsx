@@ -1,10 +1,11 @@
-import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useStopwatch } from 'react-timer-hook';
 interface Props {
   videoSrc: string;
   runtime: number;
   saveProgress?: (season: number, episode: number) => void;
+  markEpisodeWatched?: (season: number, episode: number) => void;
+  deleteSeriesProgress?: () => void;
   completeWatched: () => void;
   isMovie: boolean;
   season?: number;
@@ -20,6 +21,8 @@ export default function VideoPlayer({
   runtime,
   saveProgress,
   completeWatched,
+  deleteSeriesProgress,
+  markEpisodeWatched,
   isMovie,
   season,
   episode,
@@ -29,8 +32,6 @@ export default function VideoPlayer({
   const [hasEarlySaved, setHasEarlySaved] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasLateSaved, setHasLateSaved] = useState(false);
-
-  const router = useRouter();
 
   const videoSessionSeconds = useStopwatch({
     autoStart: isPlaying,
@@ -51,7 +52,14 @@ export default function VideoPlayer({
       }
     }
 
-    if (!saveProgress || !season || !episode) return;
+    if (
+      !saveProgress ||
+      !season ||
+      !episode ||
+      !deleteSeriesProgress ||
+      !markEpisodeWatched
+    )
+      return;
 
     // Tracks current episode if user is on page for 30 seconds
     if (watchedMinEnough && !hasEarlySaved) {
@@ -66,12 +74,14 @@ export default function VideoPlayer({
     }
 
     if (watchedLateEnough && !hasLateSaved && nextEpisode) {
+      markEpisodeWatched(season, episode);
       saveProgress(nextEpisode.season, nextEpisode.episode);
       setHasLateSaved(true);
     }
 
     if (watchedLateEnough && !hasLateSaved && !nextEpisode) {
-      saveProgress(1, 1);
+      markEpisodeWatched(season, episode);
+      deleteSeriesProgress();
       completeWatched();
       setHasLateSaved(true);
     }

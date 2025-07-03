@@ -4,7 +4,7 @@ export type Achievement = {
   description: string;
   icon_url: string;
   created_at: Date;
-  type: 'Review' | 'Movie' | 'Series';
+  type: 'Review' | 'Movie' | 'Series' | "Episodes";
 };
 
 export type UserAchievements = {
