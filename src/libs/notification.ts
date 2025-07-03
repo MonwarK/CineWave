@@ -18,6 +18,7 @@ export const notify = (
       progress: 0.3,
       icon: false,
       theme: 'colored',
+      closeButton: false,
     });
   }
 };

@@ -1,6 +1,10 @@
 'use client';
 
-import { getEpisodesWatched, getMediaProgress, getUserReviews } from '@/app/db/queries';
+import {
+  getEpisodesWatched,
+  getMediaProgress,
+  getUserReviews,
+} from '@/app/db/queries';
 import { notify } from '@/libs/notification';
 import { Achievement, UserAchievements } from '@/types/Achievements';
 import { unlockAchievement } from '@/utils/unlockAchievement';
@@ -65,7 +69,7 @@ export const AchievementsProvider = ({
 
     thresholds.forEach((threshold, idx) => {
       const achievement = reviewAchievements[idx];
-      if (!achievement) return; 
+      if (!achievement) return;
 
       const alreadyUnlocked = userAchievements.some(
         x => x.achievements.title === achievement.title
@@ -75,10 +79,7 @@ export const AchievementsProvider = ({
         unlockAchievement(user.id, achievement.title).then(newAchievement => {
           if (newAchievement) {
             setUserAchievements(prev => [...prev, newAchievement]);
-            notify(
-              `🏆 Achievement Unlocked: ${achievement.title}`,
-              achievement.description
-            );
+            notify(`${achievement.title}`, achievement.description);
           }
         });
       }
@@ -89,14 +90,15 @@ export const AchievementsProvider = ({
     if (!user) return;
 
     const finishedMovies = await getMediaProgress(user.id);
-    const moviesWatched = finishedMovies?.filter(x => x.is_movie === true).length || 0;
+    const moviesWatched =
+      finishedMovies?.filter(x => x.is_movie === true).length || 0;
     const movieAchievements = achievements.filter(x => x.type === 'Movie');
 
     const thresholds = [1, 5, 10, 20, 25, 30];
 
     thresholds.forEach((threshold, idx) => {
       const achievement = movieAchievements[idx];
-      if (!achievement) return; 
+      if (!achievement) return;
 
       const alreadyUnlocked = userAchievements.some(
         x => x.achievements.title === achievement.title
@@ -106,10 +108,7 @@ export const AchievementsProvider = ({
         unlockAchievement(user.id, achievement.title).then(newAchievement => {
           if (newAchievement) {
             setUserAchievements(prev => [...prev, newAchievement]);
-            notify(
-              `🏆 Achievement Unlocked: ${achievement.title}`,
-              achievement.description
-            );
+            notify(`${achievement.title}`, achievement.description);
           }
         });
       }
@@ -120,7 +119,8 @@ export const AchievementsProvider = ({
     if (!user) return;
 
     const finishedMovies = await getMediaProgress(user.id);
-    const moviesWatched = finishedMovies?.filter(x => x.is_movie === true).length || 0;
+    const moviesWatched =
+      finishedMovies?.filter(x => x.is_movie === true).length || 0;
     const seriesAchievements = achievements.filter(x => x.type === 'Series');
 
     // Define the thresholds for each movie achievement
@@ -139,23 +139,19 @@ export const AchievementsProvider = ({
         unlockAchievement(user.id, achievement.title).then(newAchievement => {
           if (newAchievement) {
             setUserAchievements(prev => [...prev, newAchievement]);
-            notify(
-              `🏆 Achievement Unlocked: ${achievement.title}`,
-              achievement.description
-            );
+            notify(`${achievement.title}`, achievement.description);
           }
         });
       }
     });
- 
-  }
+  };
 
   const checkEpisodesAchievements = async () => {
     if (!user) return;
 
     const episodesWatched = await getEpisodesWatched(user.id);
     const episodesWatchedCount = episodesWatched?.length || 0;
-    const episodesAchievements = achievements.filter(x => x.type === 'Episodes');
+    const episodesAchievements = achievements.filter(x => x.type === 'Episode');
 
     // Define the thresholds for each movie achievement
     const thresholds = [1, 10, 25, 50, 100, 250, 500, 1000];
@@ -173,16 +169,12 @@ export const AchievementsProvider = ({
         unlockAchievement(user.id, achievement.title).then(newAchievement => {
           if (newAchievement) {
             setUserAchievements(prev => [...prev, newAchievement]);
-            notify(
-              `🏆 Achievement Unlocked: ${achievement.title}`,
-              achievement.description
-            );
+            notify(`${achievement.title}`, achievement.description);
           }
         });
       }
     });
- 
-  }
+  };
 
   if (!user) return null;
 
