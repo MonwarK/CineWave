@@ -1,4 +1,4 @@
-import { useAchievements } from '@/context/Achievements';
+import { useAchievements } from '@/context/AchievementsProvider';
 import {
   Achievement,
   UserAchievements as UserAchievementsType,

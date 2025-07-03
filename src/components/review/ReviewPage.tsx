@@ -13,7 +13,7 @@ import ReviewHeader from './ReviewHeader';
 import ReviewList from './ReviewList';
 import ReviewOverview from './ReviewOverview';
 import ReviewTags from './ReviewTags';
-import { useAchievements } from '@/context/Achievements';
+import { useAchievements } from '@/context/AchievementsProvider';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
   const { user } = useUser();
@@ -23,8 +23,6 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
   const isMovie = movie.title ? true : false;
 
   const usersReview = reviews.find((x: Review) => x.user_id === user?.id);
-
-  console.log(movie);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -36,10 +34,11 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       );
       const json = await res.json();
       setReviews(json.reviews);
-      checkReviewsAchievements(reviews.length);
     };
 
-    fetchReviews().then(() => setIsLoading(false));
+    fetchReviews().then(res => {
+      setIsLoading(false);
+    });
   }, [movie.id, isLoading]);
 
   const numberOfReviews = reviews.length;
@@ -65,6 +64,7 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       userId: user?.id as string,
     }).then(() => {
       setIsLoading(true);
+      checkReviewsAchievements();
     });
   };
 

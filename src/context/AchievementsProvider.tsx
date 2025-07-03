@@ -7,12 +7,11 @@ import { Review } from '@/types/Review';
 import { unlockAchievement } from '@/utils/unlockAchievement';
 import { useUser } from '@clerk/nextjs';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
 type AchievementsContextType = {
   achievements: Achievement[];
   userAchievements: UserAchievements[];
-  checkReviewsAchievements: (reviewsCount: number) => void;
+  checkReviewsAchievements: () => void;
 };
 
 const AchievementsContext = createContext<AchievementsContextType | undefined>(
@@ -48,14 +47,13 @@ export const AchievementsProvider = ({
   );
 
   useEffect(() => {
-    if (!user) return;
-    getUserReviews(user.id).then(reviews =>
-      checkReviewsAchievements(reviews?.length || 0)
-    );
+    checkReviewsAchievements();
   }, [user]);
 
-  const checkReviewsAchievements = (reviewsCount: number) => {
+  const checkReviewsAchievements = async () => {
     if (!user) return;
+    const reviewsCount =
+      (await getUserReviews(user.id).then(x => x?.length)) || 0;
 
     const firstAchievement = userAchievements.find(
       x => x.achievements.title === 'First Review'

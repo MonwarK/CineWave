@@ -1,5 +1,5 @@
 import Footer from '@/components/main/Footer';
-import { AchievementsProvider } from '@/context/Achievements';
+import { AchievementsProvider } from '@/context/AchievementsProvider';
 import { SavedMoviesProvider } from '@/context/SavedMoviesProvider';
 import { supabase } from '@/libs/supabaseClient';
 import { Achievement, UserAchievements } from '@/types/Achievements';
