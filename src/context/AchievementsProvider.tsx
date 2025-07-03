@@ -57,76 +57,28 @@ export const AchievementsProvider = ({
       (await getUserReviews(user.id).then(x => x?.length)) || 0;
 
     const reviewAchievements = achievements.filter(x => x.type === 'Review');
+    const thresholds = [1, 10, 50, 100];
 
-    const firstAchievementUnlocked = userAchievements.find(
-      x => x.achievements.title === reviewAchievements[0].title
-    );
+    thresholds.forEach((threshold, idx) => {
+      const achievement = reviewAchievements[idx];
+      if (!achievement) return; 
 
-    const secondAchievementUnlocked = userAchievements.find(
-      x => x.achievements.title === reviewAchievements[1].title
-    );
-    const thirdAchievementUnlocked = userAchievements.find(
-      x => x.achievements.title === reviewAchievements[2].title
-    );
-    const fourthAchievementUnlocked = userAchievements.find(
-      x => x.achievements.title === reviewAchievements[3].title
-    );
+      const alreadyUnlocked = userAchievements.some(
+        x => x.achievements.title === achievement.title
+      );
 
-    if (reviewsCount >= 1 && !firstAchievementUnlocked) {
-      unlockAchievement(user.id, reviewAchievements[0].title).then(
-        newAchievement => {
+      if (reviewsCount >= threshold && !alreadyUnlocked) {
+        unlockAchievement(user.id, achievement.title).then(newAchievement => {
           if (newAchievement) {
             setUserAchievements(prev => [...prev, newAchievement]);
             notify(
-              `🏆 Achievement Unlocked: ${reviewAchievements[0].title}`,
-              reviewAchievements[0].description
+              `🏆 Achievement Unlocked: ${achievement.title}`,
+              achievement.description
             );
           }
-        }
-      );
-    }
-
-    if (reviewsCount >= 10 && !secondAchievementUnlocked) {
-      unlockAchievement(user.id, reviewAchievements[1].title).then(
-        newAchievement => {
-          if (newAchievement) {
-            setUserAchievements(prev => [...prev, newAchievement]);
-            notify(
-              `🏆 Achievement Unlocked: ${reviewAchievements[1].title}`,
-              reviewAchievements[1].description
-            );
-          }
-        }
-      );
-    }
-
-    if (reviewsCount >= 50 && !thirdAchievementUnlocked) {
-      unlockAchievement(user.id, reviewAchievements[2].title).then(
-        newAchievement => {
-          if (newAchievement) {
-            setUserAchievements(prev => [...prev, newAchievement]);
-            notify(
-              `🏆 Achievement Unlocked: ${reviewAchievements[2].title}`,
-              reviewAchievements[2].description
-            );
-          }
-        }
-      );
-    }
-
-    if (reviewsCount >= 100 && !fourthAchievementUnlocked) {
-      unlockAchievement(user.id, reviewAchievements[3].title).then(
-        newAchievement => {
-          if (newAchievement) {
-            setUserAchievements(prev => [...prev, newAchievement]);
-            notify(
-              `🏆 Achievement Unlocked: ${reviewAchievements[3].title}`,
-              reviewAchievements[3].description
-            );
-          }
-        }
-      );
-    }
+        });
+      }
+    });
   };
 
   const checkMoviesAchievements = async () => {
