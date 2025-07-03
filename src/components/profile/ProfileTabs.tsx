@@ -35,7 +35,10 @@ export default function ProfileTabs({
     <div className="space-y-5">
       <div className="flex justify-between md:justify-start md:space-x-10">
         {tabs.map(tab => (
-          <Link href={`/profile/${userId}/${tab.tabName}`}>
+          <Link
+            key={`profile-${tab.tabName}`}
+            href={`/profile/${userId}/${tab.tabName}`}
+          >
             <div
               key={`tab_name_${tab.tabName}-${tab.id}`}
               className={clsx(

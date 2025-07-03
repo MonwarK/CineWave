@@ -9,7 +9,7 @@ export default function MediaWatchedCard({ media }: { media: FinishedMedia }) {
       <div className="relative">
         <div>
           <img
-            src={`https://image.tmdb.org/t/p/w200${media.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w780${media.poster_path}`}
             className="w-56 h-80 object-fill mx-auto"
           />
         </div>

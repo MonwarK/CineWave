@@ -7,7 +7,11 @@ import ProfileBanner from './profile-banner/ProfileBanner';
 import ProfileReviews from './profile-reviews/ProfileReviews';
 import ProfileTabs from './ProfileTabs';
 import UserWatched from './UserWatched';
-import { UserAchievements } from '@/types/Achievements';
+import {
+  Achievement,
+  UserAchievements as UserAchiementsType,
+} from '@/types/Achievements';
+import UserAchievements from './UserAchievements';
 
 export default function UserProfile({
   user,
@@ -15,13 +19,15 @@ export default function UserProfile({
   userReviews,
   finishedMovies,
   achievements,
+  userAchievements,
   currentTab,
 }: {
   user: User;
   userId: string;
   userReviews: Review[];
   finishedMovies: FinishedMedia[];
-  achievements?: UserAchievements[];
+  achievements?: Achievement[];
+  userAchievements?: UserAchiementsType[];
   currentTab: string;
 }) {
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
@@ -48,6 +54,12 @@ export default function UserProfile({
         )}
         {currentTab === 'series' && (
           <UserWatched finishedMedia={seriesWatched} mediaType="series" />
+        )}
+        {currentTab === 'achievements' && (
+          <UserAchievements
+            achievements={achievements}
+            userAchievements={userAchievements}
+          />
         )}
       </div>
     </div>
