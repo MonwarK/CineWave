@@ -1,4 +1,5 @@
 import {
+  getEpisodesWatched,
   getMediaProgress,
   getUserData,
   getUserReviews,
@@ -35,6 +36,8 @@ export default async function Profile({ params }: Props) {
 
   const userReviews = await getUserReviews(id);
   const finishedMovies = await getMediaProgress(id);
+  const episodesWatched = await getEpisodesWatched(id);
+  
 
   return (
     <UserProfile
