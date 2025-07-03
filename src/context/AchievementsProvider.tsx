@@ -15,6 +15,9 @@ type AchievementsContextType = {
   achievements: Achievement[];
   userAchievements: UserAchievements[];
   checkReviewsAchievements: () => void;
+  checkMoviesAchievements: () => void;
+  checkSeriesAchievements: () => void;
+  checkEpisodesAchievements: () => void;
 };
 
 const AchievementsContext = createContext<AchievementsContextType | undefined>(
@@ -177,7 +180,7 @@ export const AchievementsProvider = ({
 
   return (
     <AchievementsContext.Provider
-      value={{ achievements, userAchievements, checkReviewsAchievements }}
+      value={{ achievements, userAchievements, checkReviewsAchievements, checkMoviesAchievements, checkSeriesAchievements, checkEpisodesAchievements }}
     >
       {children}
     </AchievementsContext.Provider>
