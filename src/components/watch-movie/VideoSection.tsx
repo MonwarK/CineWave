@@ -118,7 +118,6 @@ export default function VideoSection({ ...props }) {
 
     const data = await response.json();
     console.log('Deleted:', data.message);
-
     return data;
   };
 
