@@ -1,9 +1,8 @@
 'use client';
 
-import { getUserReviews } from '@/app/db/queries';
+import { getMediaProgress, getUserReviews } from '@/app/db/queries';
 import { notify } from '@/libs/notification';
 import { Achievement, UserAchievements } from '@/types/Achievements';
-import { Review } from '@/types/Review';
 import { unlockAchievement } from '@/utils/unlockAchievement';
 import { useUser } from '@clerk/nextjs';
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -48,6 +47,8 @@ export const AchievementsProvider = ({
 
   useEffect(() => {
     checkReviewsAchievements();
+    checkMoviesAchievements();
+    checkSeriesAchievements();
   }, [user]);
 
   const checkReviewsAchievements = async () => {
@@ -127,6 +128,71 @@ export const AchievementsProvider = ({
       );
     }
   };
+
+  const checkMoviesAchievements = async () => {
+    if (!user) return;
+
+    const finishedMovies = await getMediaProgress(user.id);
+    const moviesWatched = finishedMovies?.filter(x => x.is_movie === true).length || 0;
+    const movieAchievements = achievements.filter(x => x.type === 'Movie');
+
+    const thresholds = [1, 5, 10, 20, 25, 30];
+
+    thresholds.forEach((threshold, idx) => {
+      const achievement = movieAchievements[idx];
+      if (!achievement) return; 
+
+      const alreadyUnlocked = userAchievements.some(
+        x => x.achievements.title === achievement.title
+      );
+
+      if (moviesWatched >= threshold && !alreadyUnlocked) {
+        unlockAchievement(user.id, achievement.title).then(newAchievement => {
+          if (newAchievement) {
+            setUserAchievements(prev => [...prev, newAchievement]);
+            notify(
+              `🏆 Achievement Unlocked: ${achievement.title}`,
+              achievement.description
+            );
+          }
+        });
+      }
+    });
+  };
+
+  const checkSeriesAchievements = async () => {
+    if (!user) return;
+
+    const finishedMovies = await getMediaProgress(user.id);
+    const moviesWatched = finishedMovies?.filter(x => x.is_movie === true).length || 0;
+    const seriesAchievements = achievements.filter(x => x.type === 'Series');
+
+    // Define the thresholds for each movie achievement
+    const thresholds = [1, 5, 10, 20, 25, 30];
+
+    // Loop through each threshold and check/unlock achievements
+    thresholds.forEach((threshold, idx) => {
+      const achievement = seriesAchievements[idx];
+      if (!achievement) return; // skip if achievement is missing
+
+      const alreadyUnlocked = userAchievements.some(
+        x => x.achievements.title === achievement.title
+      );
+
+      if (moviesWatched >= threshold && !alreadyUnlocked) {
+        unlockAchievement(user.id, achievement.title).then(newAchievement => {
+          if (newAchievement) {
+            setUserAchievements(prev => [...prev, newAchievement]);
+            notify(
+              `🏆 Achievement Unlocked: ${achievement.title}`,
+              achievement.description
+            );
+          }
+        });
+      }
+    });
+ 
+  }
 
   if (!user) return null;
 
