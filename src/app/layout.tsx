@@ -2,6 +2,7 @@ import ClerkWrapper from '@/components/providers/ClerkWrapper';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
+import { ToastContainer } from 'react-toastify';
 const roboto = Roboto({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
@@ -10,12 +11,12 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: {
     template: '%s | CineWave',
-    absolute: "CineWave"
+    absolute: 'CineWave',
   },
   description: 'Your new streaming home.',
   openGraph: {
-    description: "Your new streaming home."
-  }
+    description: 'Your new streaming home.',
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.className} bg-zinc-950`}>
         <ClerkWrapper>{children}</ClerkWrapper>
+        <ToastContainer position="top-right" />
       </body>
     </html>
   );

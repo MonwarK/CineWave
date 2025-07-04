@@ -6,7 +6,6 @@ import { Achievement, UserAchievements } from '@/types/Achievements';
 import { SavedMovie } from '@/types/SavedMovies';
 import { auth } from '@clerk/nextjs/server';
 import { getAchievements, getUserAchievements } from '../db/queries';
-import { ToastContainer } from 'react-toastify';
 import React from 'react';
 
 export default async function ProtectedLayout({
@@ -37,7 +36,6 @@ export default async function ProtectedLayout({
           <Footer />
         </AchievementsProvider>
       </SavedMoviesProvider>
-      <ToastContainer />
     </React.Fragment>
   );
 }

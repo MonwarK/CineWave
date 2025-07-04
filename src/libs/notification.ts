@@ -3,22 +3,21 @@ import { toast } from 'react-toastify';
 
 export const notify = (
   title: string,
-  description: string,
+  description?: string,
   type: string = 'primary'
 ) => {
   if (type === 'primary') {
     toast(Toast, {
       data: {
         title,
-        content: description,
+        content: description || '',
       },
-      className: '!p-0 !bg-transparent',
+      className: '!p-0 !bg-transparent !justify-end !shadow-none',
       ariaLabel: title,
-      autoClose: false,
-      progress: 0.3,
       icon: false,
       theme: 'colored',
       closeButton: false,
+      autoClose: 3000,
     });
   }
 };

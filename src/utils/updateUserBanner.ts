@@ -1,3 +1,5 @@
+import { notify } from '@/libs/notification';
+
 export const updateUserBanner = async (imageUrl: string) => {
   const res = await fetch('/api/update-user-banner', {
     method: 'POST',
@@ -10,5 +12,6 @@ export const updateUserBanner = async (imageUrl: string) => {
   const data = await res.json();
   if (data.success) {
     console.log('User updated');
+    notify('Banner updated');
   }
 };

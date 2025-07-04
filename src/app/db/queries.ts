@@ -48,16 +48,16 @@ export async function getMediaProgress(id: string) {
 }
 
 export async function getEpisodesWatched(id: string) {
-  if(!id) return;
+  if (!id) return;
 
   const { data, error } = await supabase
-  .from("watched_episodes")
-  .select("*")
-  .eq("user_id", id);
+    .from('watched_episodes')
+    .select('*')
+    .eq('user_id', id);
 
-  if(error) {
-    console.log("Error fetching episodes watched by user", error);
-    return
+  if (error) {
+    console.log('Error fetching episodes watched by user', error);
+    return;
   }
 
   return data;
