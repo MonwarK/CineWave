@@ -45,7 +45,8 @@ export const AchievementsProvider = ({
   initialAchievements,
   initialUserAchievements,
 }: ProviderProps) => {
-  const { user } = useUser();
+  const { isLoaded, user } = useUser();
+  if (!isLoaded) return null;
 
   const achievements = initialAchievements || [];
   const [userAchievements, setUserAchievements] = useState(

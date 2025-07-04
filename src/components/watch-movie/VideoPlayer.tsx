@@ -28,7 +28,7 @@ export default function VideoPlayer({
   episode,
   nextEpisode,
 }: Props) {
-  const [baseTime, setBaseTime] = useState(20);
+  const [baseTime, setBaseTime] = useState(5);
   const [hasEarlySaved, setHasEarlySaved] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasLateSaved, setHasLateSaved] = useState(false);
@@ -94,6 +94,7 @@ export default function VideoPlayer({
     setHasLateSaved(false);
 
     setBaseTime(0);
+    videoSessionSeconds.pause();
     videoSessionSeconds.reset();
   }, [season, episode]);
 

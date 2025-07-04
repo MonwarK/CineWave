@@ -6,8 +6,6 @@ import UserAchievementSection from './UserAchievementSection';
 export default function UserAchievements() {
   const { achievements, userAchievements } = useAchievements();
 
-  console.log(achievements);
-
   const reviewsAchievements = achievements.filter(x => x.type === 'Review');
   const moviesAchievements = achievements.filter(x => x.type === 'Movie');
   const seriesAchievements = achievements.filter(x => x.type === 'Series');

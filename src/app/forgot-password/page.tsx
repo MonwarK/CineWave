@@ -71,8 +71,6 @@ export default function ForgotPasswordPage() {
           setIsLoading(true);
           setActive({ session: result.createdSessionId });
           setError('');
-        } else {
-          console.log(result);
         }
       })
       .catch(err => {

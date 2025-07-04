@@ -69,8 +69,6 @@ export async function getAchievements() {
     .select(`*`)
     .order('order');
 
-  console.log(data);
-
   if (error) {
     console.log('Error fetching achiements from supabase', error);
     return;
