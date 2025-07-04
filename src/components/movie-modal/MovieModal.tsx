@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { noOpacity, visibleOpacity } from "@/motion/variants/opacity";
-import { Movie } from "@/types/Movie";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import MainInfo from "./MainInfo";
+import { noOpacity, visibleOpacity } from '@/motion/variants/opacity';
+import { Movie } from '@/types/Movie';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import MainInfo from './MainInfo';
 
 type Props = {
   movie: Movie | null;
@@ -12,14 +12,13 @@ type Props = {
 };
 
 export default function MovieModal({ movie, onClose }: Props) {
-  const [trailerKey, setTrailerKey] = useState("");
+  const [trailerKey, setTrailerKey] = useState('');
   const [fullMovie, setFullMovie] = useState<Movie>();
-
 
   useEffect(() => {
     if (!movie) return;
 
-    const mediaType = movie.media_type || (movie.name ? "tv" : "movie");
+    const mediaType = movie.media_type || (movie.name ? 'tv' : 'movie');
 
     async function fetchDetailsAndTrailer() {
       if (!movie) return;
@@ -39,15 +38,15 @@ export default function MovieModal({ movie, onClose }: Props) {
         const videoData = await videoRes.json();
         const trailer = videoData.results?.find(
           (v: any) =>
-            (v.type === "Trailer" ||
-              v.type === "Featurette" ||
-              v.type === "Clip" ||
-              v.type === "Opening Credits") &&
-            v.site === "YouTube"
+            (v.type === 'Trailer' ||
+              v.type === 'Featurette' ||
+              v.type === 'Clip' ||
+              v.type === 'Opening Credits') &&
+            v.site === 'YouTube'
         );
-        setTrailerKey(trailer?.key || "");
+        setTrailerKey(trailer?.key || '');
       } catch (err) {
-        console.error("Failed to fetch movie details or trailer", err);
+        console.error('Failed to fetch movie details or trailer', err);
       }
     }
     fetchDetailsAndTrailer();
@@ -70,9 +69,9 @@ export default function MovieModal({ movie, onClose }: Props) {
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 200, damping: 25 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 25 }}
             className="bg-neutral-900 text-white rounded-xl overflow-hidden w-full max-w-xl relative shadow-lg pb-5"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           >
             {trailerKey ? (
               <iframe

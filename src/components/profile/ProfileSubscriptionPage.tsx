@@ -1,22 +1,21 @@
-"use client";
+'use client';
 
-import Footer from "@/components/main/Footer";
-import { PricingTable, useUser } from "@clerk/nextjs";
-import Header from "../main/Header";
-import UserCard from "./UserCard";
+import { PricingTable, useUser } from '@clerk/nextjs';
+import Header from '../main/Header';
+import UserCard from './UserCard';
 
 interface Props {
-  currentPlan: string | undefined;
+  currentPlan?: string | undefined;
 }
 
-export default function ProfilePage({ currentPlan }: Props) {
+export default function ProfileSubscriptionPage({ currentPlan }: Props) {
   const { user } = useUser();
 
-  const dateCreated = new Date(user?.createdAt || "");
-  const formatted = dateCreated.toLocaleString("en-UK", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const dateCreated = new Date(user?.createdAt || '');
+  const formatted = dateCreated.toLocaleString('en-UK', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
 
   return (
@@ -36,8 +35,8 @@ export default function ProfilePage({ currentPlan }: Props) {
             newSubscriptionRedirectUrl="/profile"
             appearance={{
               elements: {
-                pricingTableCardDescription: "pt-1 pb-3",
-                pricingTable: "z-0 relative",
+                pricingTableCardDescription: 'pt-1 pb-3',
+                pricingTable: 'z-0 relative',
               },
             }}
           />

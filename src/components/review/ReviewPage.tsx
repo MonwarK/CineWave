@@ -1,28 +1,28 @@
 'use client';
 
 import { Movie } from '@/types/Movie';
+import { Review } from '@/types/Review';
+import { submitReview } from '@/utils/submitReview';
+import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import Header from '../main/Header';
 import Content from '../other/Content';
+import Loader from '../ui/Loader';
 import ReviewForm from './ReviewForm';
 import ReviewHeader from './ReviewHeader';
 import ReviewList from './ReviewList';
 import ReviewOverview from './ReviewOverview';
 import ReviewTags from './ReviewTags';
-import { submitReview } from '@/utils/submitReview';
-import { Review } from '@/types/Review';
-import { useUser } from '@clerk/nextjs';
-import Loader from '../ui/Loader';
+import { useAchievements } from '@/context/AchievementsProvider';
 
 export default function ReviewPage({ movie }: { movie: Movie }) {
   const { user } = useUser();
+  const { checkReviewsAchievements } = useAchievements();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMovie = movie.title ? true : false;
 
   const usersReview = reviews.find((x: Review) => x.user_id === user?.id);
-
-  console.log(movie);
 
   useEffect(() => {
     if (!isLoading) return;
@@ -36,7 +36,9 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       setReviews(json.reviews);
     };
 
-    fetchReviews().then(() => setIsLoading(false));
+    fetchReviews().then(res => {
+      setIsLoading(false);
+    });
   }, [movie.id, isLoading]);
 
   const numberOfReviews = reviews.length;
@@ -59,7 +61,11 @@ export default function ReviewPage({ movie }: { movie: Movie }) {
       review,
       movieTitle: movie.title || movie.name || '',
       posterPath: movie.poster_path,
-    }).then(() => setIsLoading(true));
+      userId: user?.id as string,
+    }).then(() => {
+      setIsLoading(true);
+      checkReviewsAchievements();
+    });
   };
 
   const deleteReview = async (reviewId: string) => {

@@ -20,7 +20,7 @@ export default function SearchBarSection({
 
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="bg-gray-800/60 border border-gray-600/40 p-2 rounded-md flex items-center"
+        className="bg-zinc-800/50 border border-orange-600/40 p-2 rounded-md flex items-center"
       >
         <div className="flex-1 px-4">
           <input

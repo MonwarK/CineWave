@@ -3,9 +3,10 @@ import Content from '@/components/other/Content';
 import WatchlistSection from '@/components/watchlist/WatchlistSection';
 import { supabase } from '@/libs/supabaseClient';
 import { auth } from '@clerk/nextjs/server';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'My Saved List | Cinewave',
+export const metadata: Metadata = {
+  title: 'My Saved List',
   description:
     'View your saved movies and TV shows on Cinewave. Continue watching or pick up where you left off.',
 };

@@ -1,10 +1,10 @@
 import { Review } from '@/types/Review';
+import { useUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
-import { Check, EllipsisVertical, X } from 'lucide-react';
+import { Check, EllipsisVertical, MoveDown, MoveUp, X } from 'lucide-react';
 import React, { useState } from 'react';
 import Markdown from 'react-markdown';
 import NumberRating from '../other/NumberRating';
-import { useUser } from '@clerk/nextjs';
 
 interface Props {
   review: Review;
@@ -29,6 +29,9 @@ export default function ReviewListItem({
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
+  
+  const [count, setCount] = useState(0);
+
 
   const shouldShowToggle =
     review.review.split('\n').length > 3 || review.review.length > 300;
@@ -42,6 +45,12 @@ export default function ReviewListItem({
       {/* Top Section */}
       <div>
         <div className="flex items-center space-x-5">
+            {/* Upvote / Downvote */}
+      <div className='flex flex-col space-y-1 items-center'>
+        <MoveUp className="h-4 w-4 cursor-pointer" onClick={() => setCount((prev) => prev + 1)}  />
+        <span>{count}</span>
+        <MoveDown className="h-4 w-4 cursor-pointer"  onClick={() => setCount((prev) => prev - 1)}  />
+      </div>
           {/* Profile Picture */}
           <div>
             <img

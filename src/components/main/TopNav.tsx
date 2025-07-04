@@ -1,9 +1,9 @@
-import { UserButton, useUser } from "@clerk/nextjs";
-import classNames from "classnames";
-import { CreditCard, Menu, Search } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Dispatch, SetStateAction } from "react";
+import { UserButton, useUser } from '@clerk/nextjs';
+import classNames from 'classnames';
+import { CreditCard, Menu, Search, User } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   navigation: {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function TopNav({ navigation, setIsSidenavOpen }: Props) {
-  const { isLoaded } = useUser();
+  const { isLoaded, user } = useUser();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -38,14 +38,14 @@ export default function TopNav({ navigation, setIsSidenavOpen }: Props) {
 
         {/* Navigation */}
         <div className="hidden lg:flex items-center text-sm text-gray-300 text-center font-medium">
-          {navigation.map((navItem) => (
+          {navigation.map(navItem => (
             <Link
               key={`top-nav-${navItem.name}`}
               className={classNames(
-                "hover:text-white cursor-pointer border-b-3 py-5 w-28",
+                'hover:text-white cursor-pointer border-b-3 py-5 w-28',
                 {
-                  "border-transparent": pathname !== navItem.link,
-                  "border-orange-500 text-white": pathname === navItem.link,
+                  'border-transparent': pathname !== navItem.link,
+                  'border-orange-500 text-white': pathname === navItem.link,
                 }
               )}
               href={navItem.link}
@@ -67,9 +67,14 @@ export default function TopNav({ navigation, setIsSidenavOpen }: Props) {
               <UserButton>
                 <UserButton.MenuItems>
                   <UserButton.Action
+                    label="View Profile"
+                    labelIcon={<User size={16} />}
+                    onClick={() => router.push(`/profile/${user?.id}`)}
+                  />
+                  <UserButton.Action
                     label="Subscription Plans"
                     labelIcon={<CreditCard size={16} />}
-                    onClick={() => router.push("/profile")}
+                    onClick={() => router.push('/profile/subscription')}
                   />
                 </UserButton.MenuItems>
               </UserButton>

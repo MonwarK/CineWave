@@ -1,8 +1,9 @@
 import Header from '@/components/main/Header';
 import MoviesListPage from '@/components/MoviesListPage.tsx/MoviesListPage';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'TV Shows | Cinewave',
+export const metadata: Metadata = {
+  title: 'TV Shows',
   description:
     'Browse the most popular and trending TV shows right now on Cinewave. Discover your next favorite series today!',
 };

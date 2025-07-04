@@ -1,10 +1,10 @@
-import React from 'react';
-import Header from '../main/Header';
 import { Lock } from 'lucide-react';
+import { Metadata } from 'next';
 import Link from 'next/link';
+import Header from '../main/Header';
 
-export const metadata = {
-  title: 'Subscription Required | CineWave',
+export const metadata: Metadata = {
+  title: 'Subscription Required',
 };
 
 export default function SubscriptionLocked() {

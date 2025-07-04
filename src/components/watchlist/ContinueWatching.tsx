@@ -1,10 +1,8 @@
-import { AnimatePresence } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
-import { WatchlistGrid } from './WatchlistGrid';
-import { motion } from 'framer-motion';
-import { SeriesProgress } from '@/types/SeriesProgress';
-import MovieLandscapeThumbnail from '../movie-card/MovieLandscapeThumbnail';
 import { containerVariants, itemVariants } from '@/motion/variants/motion';
+import { SeriesProgress } from '@/types/SeriesProgress';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import MovieLandscapeThumbnail from '../movie-card/MovieLandscapeThumbnail';
 
 export default function ContinueWatching({
   continueWatching,
@@ -43,7 +41,7 @@ export default function ContinueWatching({
     <div className="space-y-1">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl uppercase font-bold">Continue Watching</h2>
-        {showToggle && (
+        {continueWatching.length > 0 &&showToggle && (
           <button
             className="text-sm text-orange-400 hover:underline cursor-pointer"
             onClick={() => setShowWatching(!showWatching)}
