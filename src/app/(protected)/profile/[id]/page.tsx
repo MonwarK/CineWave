@@ -37,7 +37,6 @@ export default async function Profile({ params }: Props) {
   const userReviews = await getUserReviews(id);
   const finishedMovies = await getMediaProgress(id);
   const episodesWatched = await getEpisodesWatched(id);
-  
 
   return (
     <UserProfile
@@ -45,6 +44,7 @@ export default async function Profile({ params }: Props) {
       userId={id}
       userReviews={userReviews || []}
       finishedMovies={finishedMovies || []}
+      episodesWatched={episodesWatched?.length || 0}
       currentTab="reviews"
     />
   );
