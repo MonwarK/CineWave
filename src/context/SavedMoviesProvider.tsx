@@ -1,5 +1,6 @@
 'use client';
 
+import { notify } from '@/libs/notification';
 import { Movie } from '@/types/Movie';
 import { SavedMovie } from '@/types/SavedMovies';
 import { removeMovie } from '@/utils/removeMovie';
@@ -44,6 +45,11 @@ export const SavedMoviesProvider = ({
       .then(res => res.json())
       .then(json => {
         setSavedMovies(prev => [...prev, json.data[0]]);
+        const title = '🎬 Added to Library';
+        const description = `${
+          movie.title || movie.name
+        } is now available in your watchlist.`;
+        notify(title, description);
       })
       .catch(e => console.log(e));
   };

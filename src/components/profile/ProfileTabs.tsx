@@ -33,7 +33,7 @@ export default function ProfileTabs({
 }) {
   return (
     <div className="space-y-5">
-      <div className="flex justify-between flex-wrap md:justify-start md:gap-0 gap-4 md:space-x-10">
+      <div className="flex flex-wrap md:justify-start md:gap-0 gap-4 md:space-x-10">
         {tabs.map(tab => (
           <Link
             key={`profile-${tab.tabName}`}

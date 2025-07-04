@@ -12,6 +12,6 @@ export const updateUserBanner = async (imageUrl: string) => {
   const data = await res.json();
   if (data.success) {
     console.log('User updated');
-    notify('Banner updated');
+    notify('✅ Banner updated');
   }
 };
