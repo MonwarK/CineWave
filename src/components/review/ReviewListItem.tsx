@@ -5,6 +5,7 @@ import { Check, EllipsisVertical, MoveDown, MoveUp, X } from 'lucide-react';
 import React, { useState } from 'react';
 import Markdown from 'react-markdown';
 import NumberRating from '../other/NumberRating';
+import Link from 'next/link';
 
 interface Props {
   review: Review;
@@ -29,9 +30,8 @@ export default function ReviewListItem({
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
-  
-  const [count, setCount] = useState(0);
 
+  const [count, setCount] = useState(0);
 
   const shouldShowToggle =
     review.review.split('\n').length > 3 || review.review.length > 300;
@@ -45,12 +45,18 @@ export default function ReviewListItem({
       {/* Top Section */}
       <div>
         <div className="flex items-center space-x-5">
-            {/* Upvote / Downvote */}
-      <div className='flex flex-col space-y-1 items-center'>
-        <MoveUp className="h-4 w-4 cursor-pointer" onClick={() => setCount((prev) => prev + 1)}  />
-        <span>{count}</span>
-        <MoveDown className="h-4 w-4 cursor-pointer"  onClick={() => setCount((prev) => prev - 1)}  />
-      </div>
+          {/* Upvote / Downvote */}
+          {/* <div className="flex flex-col space-y-1 items-center">
+            <MoveUp
+              className="h-4 w-4 cursor-pointer"
+              onClick={() => setCount(prev => prev + 1)}
+            />
+            <span>{count}</span>
+            <MoveDown
+              className="h-4 w-4 cursor-pointer"
+              onClick={() => setCount(prev => prev - 1)}
+            />
+          </div> */}
           {/* Profile Picture */}
           <div>
             <img
@@ -62,9 +68,11 @@ export default function ReviewListItem({
 
           {/* Username and time sent */}
           <div className="flex-1 space-y-1">
-            <p className="font-semibold text-sm">
-              {review.users.first_name} {review.users.last_name}
-            </p>
+            <Link href={`/profile/${review.user_id}`} target="_blank">
+              <p className="font-semibold text-sm">
+                {review.users.first_name} {review.users.last_name}
+              </p>
+            </Link>
             <p className="text-xs text-gray-500">
               {review.updated_at !== review.created_at
                 ? `Updated at ${new Date(review.updated_at).toUTCString()}`

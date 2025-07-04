@@ -10,7 +10,7 @@ export default function MediaWatchedCard({ media }: { media: FinishedMedia }) {
         <div>
           <img
             src={`https://image.tmdb.org/t/p/w780${media.poster_path}`}
-            className="w-56 h-80 object-fill mx-auto"
+            className="w-full object-cover mx-auto"
           />
         </div>
         <div>

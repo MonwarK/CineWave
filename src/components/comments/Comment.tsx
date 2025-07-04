@@ -1,4 +1,5 @@
 import { Comment as CommentType } from '@/types/Comment';
+import Link from 'next/link';
 import React from 'react';
 
 export default function Comment({ comment }: { comment: CommentType }) {
@@ -13,9 +14,11 @@ export default function Comment({ comment }: { comment: CommentType }) {
       <div className="flex-1 space-y-2">
         <div className="flex justify-between items-center">
           {/* Name */}
-          <div>
-            {comment.users.first_name} {comment.users.last_name}
-          </div>
+          <Link href={`/profile/${comment.user_id}`} target="_blank">
+            <div className="cursor-pointer">
+              {comment.users.first_name} {comment.users.last_name}
+            </div>
+          </Link>
           <div className="text-xs text-zinc-500">
             {new Date(comment.created_at).toUTCString()}
           </div>
