@@ -30,12 +30,14 @@ export default async function UserAchievementsPage({ params }: Props) {
   const userReviews = await getUserReviews(id);
   const finishedMovies = await getMediaProgress(id);
   const episodesWatched = await getEpisodesWatched(id);
+  const userAchievements = await getUserAchievements(id);
 
   return (
     <UserProfile
       user={user}
       userId={id}
       userReviews={userReviews || []}
+      userAchievements={userAchievements}
       finishedMovies={finishedMovies || []}
       episodesWatched={episodesWatched?.length || 0}
       currentTab="achievements"

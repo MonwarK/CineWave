@@ -18,17 +18,17 @@ export default function UserProfile({
   userId,
   userReviews,
   finishedMovies,
+  userAchievements,
   currentTab,
-  episodesWatched
+  episodesWatched,
 }: {
   user: User;
   userId: string;
   userReviews: Review[];
   finishedMovies: FinishedMedia[];
-  achievements?: Achievement[];
   userAchievements?: UserAchiementsType[];
   currentTab: string;
-  episodesWatched?: number;
+  episodesWatched: number;
 }) {
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
   const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
@@ -56,7 +56,9 @@ export default function UserProfile({
         {currentTab === 'series' && (
           <UserWatched finishedMedia={seriesWatched} mediaType="series" />
         )}
-        {currentTab === 'achievements' && <UserAchievements />}
+        {currentTab === 'achievements' && userAchievements && (
+          <UserAchievements userAchievements={userAchievements} />
+        )}
       </div>
     </div>
   );

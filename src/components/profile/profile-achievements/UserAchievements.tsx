@@ -3,8 +3,12 @@ import { UserAchievements as UserAchievementsType } from '@/types/Achievements';
 import React from 'react';
 import UserAchievementSection from './UserAchievementSection';
 
-export default function UserAchievements() {
-  const { achievements, userAchievements } = useAchievements();
+export default function UserAchievements({
+  userAchievements,
+}: {
+  userAchievements: UserAchievementsType[];
+}) {
+  const { achievements } = useAchievements();
 
   const reviewsAchievements = achievements.filter(x => x.type === 'Review');
   const moviesAchievements = achievements.filter(x => x.type === 'Movie');
@@ -12,7 +16,7 @@ export default function UserAchievements() {
   const episodesAchievements = achievements.filter(x => x.type === 'Episode');
 
   const isAchievementUnlocked = (achievement_id: string) =>
-    userAchievements?.filter(
+    userAchievements.filter(
       (x: UserAchievementsType) => x.achievement_id === achievement_id
     )?.[0]?.achievement_id !== achievement_id;
 
