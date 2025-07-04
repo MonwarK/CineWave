@@ -8,6 +8,15 @@ import { auth } from '@clerk/nextjs/server';
 
 type Params = Promise<{ id: string }>;
 
+export async function generateMetadata({ params }: any) {
+  const movie: Movie = await fetchMovieById(params.id);
+
+  return {
+    title: `Watching ${movie.title} | Cinewave`,
+    description: `Watch ${movie.title} now on Cinewave.`,
+  };
+}
+
 export default async function MovieWatchPage({ params }: { params: Params }) {
   const { id } = await params;
   const movie: Movie = await fetchMovieById(id);
