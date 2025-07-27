@@ -23,7 +23,7 @@ export default function UserWatched({ finishedMedia, mediaType }: Props) {
         <div className="pt-20 text-center h-full space-y-3 text-xl font-bold uppercase">
           <p className="text-gray-400">Uh oh, the list is empty {'(◕︿◕)'}</p>
           <Link href={isNoMoviesWatched ? '/movies' : '/series'}>
-            <p className="text-blue-500 cursor-pointer">
+            <p className="text-orange-500 cursor-pointer">
               Discover {isNoMoviesWatched ? 'movies' : 'series'} here
             </p>
           </Link>

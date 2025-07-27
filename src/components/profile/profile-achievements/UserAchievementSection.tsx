@@ -16,7 +16,6 @@ export default function UserAchievementSection({
   const [isOpen, setIsOpen] = useState(true);
 
   const Chevron = isOpen ? ChevronUp : ChevronDown;
-
   return (
     <div>
       <div className="flex items-center justify-between pb-5">
@@ -39,7 +38,7 @@ export default function UserAchievementSection({
               <div
                 key={achievement.id}
                 className={clsx(
-                  'bg-zinc-800 rounded-lg border border-zinc-700 p-5',
+                  'bg-zinc-800 rounded-md border border-zinc-700 border-l-orange-500 p-5',
                   isAchievementUnlocked(achievement.id) &&
                     'opacity-30 grayscale-100'
                 )}

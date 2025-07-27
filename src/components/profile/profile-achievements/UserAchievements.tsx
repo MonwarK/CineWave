@@ -1,6 +1,5 @@
 import { useAchievements } from '@/context/AchievementsProvider';
 import { UserAchievements as UserAchievementsType } from '@/types/Achievements';
-import React from 'react';
 import UserAchievementSection from './UserAchievementSection';
 
 export default function UserAchievements({

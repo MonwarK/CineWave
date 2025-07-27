@@ -1,7 +1,6 @@
 'use client';
 import {
-  Achievement,
-  UserAchievements as UserAchiementsType,
+  UserAchievements as UserAchiementsType
 } from '@/types/Achievements';
 import { FinishedMedia } from '@/types/FinishedMedia';
 import { Review } from '@/types/Review';
@@ -32,6 +31,8 @@ export default function UserProfile({
 }) {
   const moviesWatched = finishedMovies.filter(x => x.is_movie === true);
   const seriesWatched = finishedMovies.filter(x => x.is_movie === false);
+
+
 
   return (
     <div>
