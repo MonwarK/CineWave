@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { XIcon } from 'lucide-react';
-import React from 'react';
 import { ToastContentProps } from 'react-toastify';
 
 type CustomNotificationProps = ToastContentProps<{
