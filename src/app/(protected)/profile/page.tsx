@@ -1,23 +1,14 @@
-import ProfilePage from '@/components/profile/ProfilePage';
-import { getCurrentPlan } from '@/utils/getCurrentPlan';
 import { auth } from '@clerk/nextjs/server';
+import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-export const metadata = {
-  title: 'Profile | Cinewave',
+export const metadata: Metadata = {
+  title: 'Your Profile ',
 };
 
-export default async function CustomProfilePage() {
-  const { has } = await auth();
+export default async function UserProfilePage() {
+  const { userId } = await auth();
+  if (!userId) return;
 
-  const hasStarterPlan = has({ plan: 'starter' });
-  const hasStandardPlan = has({ plan: 'standard_plan' });
-  const hasPremiumPlan = has({ plan: 'premium' });
-
-  const currentPlan = getCurrentPlan(
-    hasStarterPlan,
-    hasStandardPlan,
-    hasPremiumPlan
-  );
-
-  return <ProfilePage currentPlan={currentPlan} />;
+  redirect(`/profile/${userId}`);
 }

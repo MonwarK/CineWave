@@ -11,4 +11,5 @@ export type Review = {
   updated_at: Date;
   user_id: string;
   users: User;
+  count?: number;
 };

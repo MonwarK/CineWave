@@ -10,7 +10,7 @@ export default function MovieGenres({
         <div className="text-2xl font-semibold mb-2">Genres</div>
         <div className="flex flex-wrap gap-4">
           {genres.map((genre, idx) => (
-            <div key={idx} className="bg-gray-700/50 px-3 py-1 rounded-full">
+            <div key={genre.name} className="bg-gray-700/50 px-3 py-1 rounded-full">
               {genre.name}
             </div>
           ))}

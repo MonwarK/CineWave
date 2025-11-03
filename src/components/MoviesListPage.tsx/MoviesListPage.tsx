@@ -31,8 +31,6 @@ export default function MoviesListPage({
 
     const fetchMovies = async () => {
       const movieData = await fetchTopRated(isMovie ? 'movie' : 'tv', page);
-
-      console.log(movieData);
       setMovies(movieData);
     };
 

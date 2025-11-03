@@ -15,9 +15,10 @@ import {
   fetchUpcoming,
 } from '@/utils/api';
 import { auth } from '@clerk/nextjs/server';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Discover Movies & TV Shows | CineWave',
+export const metadata: Metadata = {
+  title: 'Discover Movies & TV Shows',
   description:
     'Browse trending, popular, and recommended movies and TV shows on CineWave. Find your next favorite watch.',
 };

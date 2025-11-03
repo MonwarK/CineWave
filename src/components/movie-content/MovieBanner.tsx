@@ -3,6 +3,7 @@
 import SquaredButton from '@/components/ui/SquaredButton';
 import { useSavedMovies } from '@/context/SavedMoviesProvider';
 import { Movie } from '@/types/Movie';
+import { updateUserBanner } from '@/utils/updateUserBanner';
 import { Check, Clapperboard, Heart, Play, Plus, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -60,13 +61,24 @@ export default function MovieBanner({
   }, [movie]);
 
   return (
-    <div className="flex flex-col justify-center items-center p-0">
+    <div className="flex flex-col justify-center items-center p-0 group">
       <div className="relative w-full overflow-hidden min-h-[50vh] text-white flex flex-col justify-end">
         <div className="absolute z-0 inset-0 h-full">
           <img
             className="h-full w-full object-cover object-top absolute top-0 left-0 brightness-50 -z-10"
             src={`https://image.tmdb.org/t/p/w1920${movie.backdrop_path}`}
           />
+          <SquaredButton
+            variant="secondary"
+            className="absolute right-5 top-20 opacity-0 group-hover:opacity-100 ease-out duration-300 transition-all"
+            onClick={() =>
+              updateUserBanner(
+                `https://image.tmdb.org/t/p/w1920${movie.backdrop_path}`
+              )
+            }
+          >
+            Set as Banner
+          </SquaredButton>
         </div>
 
         <div className="relative z-0 p-4 mx-auto w-full container space-y-10 mb-5 mt-20 flex items-center space-x-4 justify-between gap-15">

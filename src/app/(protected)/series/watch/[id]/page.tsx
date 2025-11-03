@@ -9,6 +9,15 @@ import { supabase } from '@/libs/supabaseClient';
 
 type Params = Promise<{ id: string }>;
 
+export async function generateMetadata({ params }: any) {
+  const show: Movie = await fetchTVById(params.id);
+
+  return {
+    title: `Watching ${show.name} | Cinewave`,
+    description: `Watch ${show.name} now on Cinewave.`,
+  };
+}
+
 export default async function MovieWatchPage({ params }: { params: Params }) {
   const { userId } = await auth();
   const { id } = await params;
